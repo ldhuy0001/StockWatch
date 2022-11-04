@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1059322081515",
+    "project_id": "stockwatch-assistant",
+    "storage_bucket": "stockwatch-assistant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059322081515:android:9067a8c95b74fa0a71ceae",
+        "android_client_info": {
+          "package_name": "com.example.stockwatch_assistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059322081515-nfsv1dvd1u7cqaam97753caaalr84pq1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stockwatch_assistant",
+            "certificate_hash": "ccd43529687beec14cf89d8497a9d1cceec56f88"
+          }
+        },
+        {
+          "client_id": "1059322081515-uu52o5kv0j3le8c55lnhmtk07ph4jv3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsRANRrRnqQVuEjLwWvZJ7vxCt08ZSzFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059322081515-uu52o5kv0j3le8c55lnhmtk07ph4jv3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
