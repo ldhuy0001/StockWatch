@@ -32,3 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+
+//Example API call for symbol=TSLA and interval=5min
+//https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=CUZFO32ID30TEUX6
+
+//Example API call for all active stock listing. Unfortunately, api return CSV file instead of JSON
+//https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo
