@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 //Set up signInLauncher
     private val signInLauncher =
         registerForActivityResult(FirebaseAuthUIActivityResultContract()){
-//            viewModel.updateTest()
+
         }
 
 //onCreate function
@@ -28,5 +28,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.observeUserName().observe(this){
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
         }
+
+
     }
 }
