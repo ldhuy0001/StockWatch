@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
 import com.example.stockwatch_assistant.alphaVantageAPI.AlphaVantageAPI
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMetaRepository
@@ -22,10 +23,10 @@ class MainViewModel : ViewModel(){
 
     private var username = MutableLiveData("Empty!")
 
-
-
-    private var stockMetaList: List<StockMeta> = emptyList()
-    private var stockMeta = MutableLiveData<List<StockMeta>>()
+//Create LiveData for stockRow
+    private var stockMetaList = MediatorLiveData<List<StockMeta>>()
+    val stockMetaListLiveData: LiveData<List<StockMeta>>
+        get() = stockMetaList
 
 
     fun observeUserName(): LiveData<String>{
@@ -36,33 +37,24 @@ class MainViewModel : ViewModel(){
         username.postValue(FirebaseAuth.getInstance().currentUser?.displayName)
     }
 
+//Fetch data all stock from Alpha Vantage API
     fun netPosts() = viewModelScope.launch(
         context = viewModelScope.coroutineContext
             + Dispatchers.IO)  {
-
             stockListFetchedFromAPI = stockMetaRepository.getStocks()
-//            stockMetaRepository.getStocks()
+        stockMetaList.postValue(stockListFetchedFromAPI)
         Log.d("ck","here is stock list \n $stockListFetchedFromAPI")
     }
 
+//Need to store list of all stocks in local storage
 
-    fun setSearchTerm(s: String) {
-
-        //example
-//        var filteredList: List<RedditPost> = redditPostsList.filter {
-//            it.searchFor(s)
-//        }
-//        Log.d("XXX", "$s search size: " + filteredList.size)
-//        redditPosts.postValue(filteredList)
-
-        var filteredList: List<StockMeta> =   stockMetaList.filter {
-            it.searchFor(s)
+//searchStock
+    fun searchStock(searchTerm : String):Boolean {
+        var searchListResult: List<StockMeta> = stockListFetchedFromAPI.filter{
+            it.searchFor(searchTerm)
         }
-        Log.d("XXX", "$s search size: " + filteredList.size)
-        stockMeta.postValue(filteredList)
-
+        stockMetaList.postValue(searchListResult)
+        return searchListResult.isEmpty()
     }
-
-
 
 }

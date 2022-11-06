@@ -9,28 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
-import com.example.stockwatch_assistant.databinding.FragmentRvBinding
-import com.example.stockwatch_assistant.databinding.RowBinding
+import com.example.stockwatch_assistant.databinding.StockRowBinding
 
-class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context) :
+class StockRowAdapter(private val viewModel: MainViewModel) :
     ListAdapter<StockMeta, StockRowAdapter.ViewHolder>(StockDiff()) {
 
-
-    //added
-    private var _binding: FragmentRvBinding? = null
-
-    // This property is only valid between onCreateView and onDestroyView.
-    private val binding get() = _binding!!
-
-
     // ViewHolder pattern holds row binding
-    inner class ViewHolder(val rowBinding : RowBinding)
-        : RecyclerView.ViewHolder(rowBinding.root) {
+    inner class ViewHolder(val stockRowBinding : StockRowBinding)
+        : RecyclerView.ViewHolder(stockRowBinding.root) {
         init {
-            //XXX Write me.
+            stockRowBinding.root.setOnClickListener {
 
-            //set on-click listener
-            rowBinding.root.setOnClickListener {
+//Stock Details will be in here
 //            val selected = "You selected $position ${getItem(position).name}"
 //            Snackbar.make(it, selected, Snackbar.LENGTH_LONG).show()
 
@@ -39,23 +29,20 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        //XXX Write me.
-        val stockBinding = RowBinding.inflate(
+        val stockRowBinding = StockRowBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(stockBinding)
+        return ViewHolder(stockRowBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //XXX Write me.
-
-        //get the item position
         val item = getItem(position)
-        val stockBinding = holder.rowBinding
-        // change the text and time
-        stockBinding.stockRow_name.text = item.name
-        stockBinding.stockRow_symbol.text = item.symbol
-        stockBinding.stockRow_exchange.text = item.exchange
+        val stockRowBinding = holder.stockRowBinding
+
+        stockRowBinding.stockRowName.text = item.name
+        stockRowBinding.stockRowSymbol.text = item.symbol
+        stockRowBinding.stockRowExchange.text = item.exchange
+
     }
 
 

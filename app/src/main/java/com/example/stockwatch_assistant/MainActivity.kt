@@ -4,8 +4,10 @@ import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
+import androidx.core.widget.addTextChangedListener
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -29,6 +31,18 @@ class MainActivity : AppCompatActivity() {
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
         }
 
+        var adapter = StockRowAdapter(viewModel)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
+
+        viewModel.stockMetaListLiveData.observe(this){
+            list -> adapter.submitList(list)
+            adapter.notifyDataSetChanged()
+        }
+
+        binding.searchBar.addTextChangedListener(){
+            viewModel.searchStock(it.toString())
+        }
         viewModel.netPosts()
     }
 }
