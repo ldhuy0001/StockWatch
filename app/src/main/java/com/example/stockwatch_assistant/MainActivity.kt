@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
         }
 
-
+        viewModel.netPosts()
     }
 }
 
