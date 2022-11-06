@@ -37,4 +37,7 @@ class MainViewModel : ViewModel(){
 //            stockMetaRepository.getStocks()
         Log.d("ck","here is stock list \n $stockListFetchedFromAPI")
     }
+
+
+
 }
