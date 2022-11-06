@@ -18,14 +18,15 @@ data class StockMeta(
 //    val status: String,
 ){
     companion object {
-        private fun searchStockInfo(searchTerm: String, fulltext: String): Boolean {
-            return fulltext.contains(searchTerm)
+        private fun searchStockInfo(searchTerm: String, fulltext: String): Int {
+//            return fulltext.contains(searchTerm)
+            return fulltext.indexOf(searchTerm, ignoreCase = true)
         }
     }
 
     fun searchFor(searchTerm: String):Boolean {
         val searchName = searchStockInfo(searchTerm,name)
         val searchSymbols = searchStockInfo(searchTerm,symbol)
-        return searchName || searchSymbols
+        return searchName != -1 || searchSymbols != -1
     }
 }
