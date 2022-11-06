@@ -10,7 +10,7 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
 import com.example.stockwatch_assistant.databinding.FragmentRvBinding
-import com.example.stockwatch_assistant.databinding.SongRowBinding
+import com.example.stockwatch_assistant.databinding.RowBinding
 
 class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context) :
     ListAdapter<StockMeta, StockRowAdapter.ViewHolder>(StockDiff()) {
@@ -24,26 +24,26 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
 
     // ViewHolder pattern holds row binding
-    inner class ViewHolder(val songRowBinding : SongRowBinding)
-        : RecyclerView.ViewHolder(songRowBinding.root) {
+    inner class ViewHolder(val rowBinding : RowBinding)
+        : RecyclerView.ViewHolder(rowBinding.root) {
         init {
             //XXX Write me.
 
             //set on-click listener
-            songRowBinding.root.setOnClickListener {
+            rowBinding.root.setOnClickListener {
 //            val selected = "You selected $position ${getItem(position).name}"
 //            Snackbar.make(it, selected, Snackbar.LENGTH_LONG).show()
-                clickListener(songRowBinding.root, getItem(bindingAdapterPosition).name)
+
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         //XXX Write me.
-        val songBinding = SongRowBinding.inflate(
+        val stockBinding = RowBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(songBinding)
+        return ViewHolder(stockBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,11 +51,11 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
         //get the item position
         val item = getItem(position)
-        val songBinding = holder.songRowBinding
+        val stockBinding = holder.rowBinding
         // change the text and time
-        songBinding.stockRow_name.text = item.name
-        songBinding.stockRow_symbol.text = item.symbol
-        songBinding.stockRow_exchange.text = item.exchange
+        stockBinding.stockRow_name.text = item.name
+        stockBinding.stockRow_symbol.text = item.symbol
+        stockBinding.stockRow_exchange.text = item.exchange
     }
 
 

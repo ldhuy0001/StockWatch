@@ -21,6 +21,13 @@ class MainViewModel : ViewModel(){
     private val stockMetaRepository = StockMetaRepository(alphaVantageApi)
 
     private var username = MutableLiveData("Empty!")
+
+
+
+    private var stockMetaList: List<StockMeta> = emptyList()
+    private var stockMeta = MutableLiveData<List<StockMeta>>()
+
+
     fun observeUserName(): LiveData<String>{
         return username
     }
@@ -36,6 +43,24 @@ class MainViewModel : ViewModel(){
             stockListFetchedFromAPI = stockMetaRepository.getStocks()
 //            stockMetaRepository.getStocks()
         Log.d("ck","here is stock list \n $stockListFetchedFromAPI")
+    }
+
+
+    fun setSearchTerm(s: String) {
+
+        //example
+//        var filteredList: List<RedditPost> = redditPostsList.filter {
+//            it.searchFor(s)
+//        }
+//        Log.d("XXX", "$s search size: " + filteredList.size)
+//        redditPosts.postValue(filteredList)
+
+        var filteredList: List<StockMeta> =   stockMetaList.filter {
+            it.searchFor(s)
+        }
+        Log.d("XXX", "$s search size: " + filteredList.size)
+        stockMeta.postValue(filteredList)
+
     }
 
 
