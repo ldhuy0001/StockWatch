@@ -16,6 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.stockwatch_assistant.fragments.AllStocksFragment
 import com.example.stockwatch_assistant.fragments.HomeFragment
 import com.example.stockwatch_assistant.fragments.NewsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -93,8 +99,9 @@ class MainActivity : AppCompatActivity() {
         }
     viewModel.netPosts()
 
-    replaceFragment(homeFragment)
+//    replaceFragment(homeFragment)
 
+    //youtube method
     binding.bottomNavigation.setOnNavigationItemSelectedListener {
         when(it.itemId){
             R.id.ic_home -> replaceFragment(homeFragment)
@@ -103,6 +110,24 @@ class MainActivity : AppCompatActivity() {
         }
         true
     }
+
+    //professor method
+//    val navView: BottomNavigationView = binding.bottomNavigation
+//
+//    val navController = findNavController(R.id.fragment_container)
+//    // Passing each menu ID as a set of Ids because each
+//    // menu should be considered as top level destinations.
+//
+//    //need fix
+//    val appBarConfiguration = AppBarConfiguration(
+//        setOf(
+//            R.id., R.id.navigation_select, R.id.navigation_favorites
+//        )
+//    )
+//    setupActionBarWithNavController(navController, appBarConfiguration)
+//    navView.setupWithNavController(navController)
+//    // Navigation sets the title to "Simple"
+//    supportActionBar?.title = "Simple Album List"
 
 
     }
