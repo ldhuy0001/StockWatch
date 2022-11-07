@@ -1,6 +1,7 @@
 package com.example.stockwatch_assistant
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,8 +12,20 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 import com.example.stockwatch_assistant.databinding.StockRowBinding
 
-class StockRowAdapter(private val viewModel: MainViewModel) :
+class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context) :
     ListAdapter<StockMeta, StockRowAdapter.ViewHolder>(StockDiff()) {
+
+
+
+    private fun getPos(holder: ViewHolder): Int {
+        val position = holder.adapterPosition
+        // notifyDataSetChanged was called, so position is not known
+        if (position == RecyclerView.NO_POSITION) {
+            return holder.layoutPosition
+        }
+        return position
+    }
+
 
     // ViewHolder pattern holds row binding
     inner class ViewHolder(val stockRowBinding : StockRowBinding)
@@ -20,9 +33,19 @@ class StockRowAdapter(private val viewModel: MainViewModel) :
         init {
             stockRowBinding.root.setOnClickListener {
 
-//Stock Details will be in here
-//            val selected = "You selected $position ${getItem(position).name}"
-//            Snackbar.make(it, selected, Snackbar.LENGTH_LONG).show()
+                var intent = Intent(context, OnePost::class.java)
+                var position = getPos(this)
+//                var item = viewModel.redditPostsLiveData.value!![position]
+                var item = viewModel.stockMetaListLiveData.value!![position]
+                intent.putExtra("stockName", item.name.toString())
+                intent.putExtra("stockSymbol", item.symbol.toString())
+//                intent.putExtra("thumbnail", item.thumbnailURL)
+//                intent.putExtra("link", item.imageURL)
+                context.startActivity(intent)
+
+
+
+
 
             }
         }

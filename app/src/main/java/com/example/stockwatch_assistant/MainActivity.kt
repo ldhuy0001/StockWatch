@@ -3,7 +3,9 @@ package com.example.stockwatch_assistant
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: StockRowAdapter
 
 //Set up signInLauncher
     private val signInLauncher =
@@ -29,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         rv.addItemDecoration(dividerItemDecoration)
     }
 
+//hide keyboard when search text is empty
+    fun hideKeyboard() {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
+    }
+
 //onCreate function
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +50,8 @@ class MainActivity : AppCompatActivity() {
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
         }
 
-        var adapter = StockRowAdapter(viewModel)
+//        var adapter = StockRowAdapter(viewModel, requireContext())
+        adapter = StockRowAdapter(viewModel = viewModel, context = this)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
@@ -53,6 +63,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.searchBar.addTextChangedListener(){
+
+            if (it.toString().isEmpty())
+            {
+                hideKeyboard()
+            }
+
             viewModel.searchStock(it.toString())
         }
         viewModel.netPosts()

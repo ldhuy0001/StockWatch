@@ -12,9 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StockWatchAssistant"
         tools:targetApi="31">
+        <activity
+            android:name=".OnePost"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/alpha_vantage_key" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
