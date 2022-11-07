@@ -66,31 +66,31 @@ class MainActivity : AppCompatActivity() {
 
         AuthInit(viewModel, signInLauncher)
         viewModel.updateTest()
-        viewModel.observeUserName().observe(this){
-            binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
-        }
-
-//        var adapter = StockRowAdapter(viewModel, requireContext())
-        adapter = StockRowAdapter(viewModel = viewModel, context = this)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
-
-        initRecyclerViewDividers(binding.recyclerView)
-
-        viewModel.stockMetaListLiveData.observe(this){
-            list -> adapter.submitList(list)
-            adapter.notifyDataSetChanged()
-        }
-
-        binding.searchBar.addTextChangedListener(){
-
-            if (it.toString().isEmpty())
-            {
-                hideKeyboard()
-            }
-
-            viewModel.searchStock(it.toString())
-        }
+//        viewModel.observeUserName().observe(this){
+//            binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
+//        }
+//
+////        var adapter = StockRowAdapter(viewModel, requireContext())
+//        adapter = StockRowAdapter(viewModel = viewModel, context = this)
+//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+//        binding.recyclerView.adapter = adapter
+//
+//        initRecyclerViewDividers(binding.recyclerView)
+//
+//        viewModel.stockMetaListLiveData.observe(this){
+//            list -> adapter.submitList(list)
+//            adapter.notifyDataSetChanged()
+//        }
+//
+//        binding.searchBar.addTextChangedListener(){
+//
+//            if (it.toString().isEmpty())
+//            {
+//                hideKeyboard()
+//            }
+//
+//            viewModel.searchStock(it.toString())
+//        }
 
 
     viewModel.netPosts()
