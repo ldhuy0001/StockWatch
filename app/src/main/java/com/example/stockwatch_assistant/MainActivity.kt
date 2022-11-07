@@ -10,13 +10,33 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stockwatch_assistant.fragments.AllStocksFragment
+import com.example.stockwatch_assistant.fragments.HomeFragment
+import com.example.stockwatch_assistant.fragments.NewsFragment
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: StockRowAdapter
+
+    private val homeFragment = HomeFragment()
+    private val allStocksFragment = AllStocksFragment()
+    private val newsFragment = NewsFragment()
+
+    private fun replaceFragment(fragment: Fragment) {
+        if(fragment !=null){
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fragment)
+            transaction.commit()
+        }
+
+    }
+
+
+
 
 //Set up signInLauncher
     private val signInLauncher =
@@ -71,7 +91,20 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.searchStock(it.toString())
         }
-        viewModel.netPosts()
+    viewModel.netPosts()
+
+    replaceFragment(homeFragment)
+
+    binding.bottomNavigation.setOnNavigationItemSelectedListener {
+        when(it.itemId){
+            R.id.ic_home -> replaceFragment(homeFragment)
+            R.id.ic_list -> replaceFragment(allStocksFragment)
+            R.id.ic_news -> replaceFragment(newsFragment)
+        }
+        true
+    }
+
+
     }
 }
 
