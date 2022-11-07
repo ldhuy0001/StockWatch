@@ -91,9 +91,11 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.searchStock(it.toString())
         }
+
+
     viewModel.netPosts()
 
-//    replaceFragment(homeFragment)
+    replaceFragment(homeFragment)
 
     //youtube method
     binding.bottomNavigation.setOnNavigationItemSelectedListener {
