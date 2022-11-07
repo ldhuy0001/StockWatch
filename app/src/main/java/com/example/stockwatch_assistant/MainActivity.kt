@@ -13,9 +13,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stockwatch_assistant.fragments.AllStocksFragment
-import com.example.stockwatch_assistant.fragments.HomeFragment
-import com.example.stockwatch_assistant.fragments.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import androidx.navigation.findNavController
@@ -33,12 +30,9 @@ class MainActivity : AppCompatActivity() {
     private val newsFragment = NewsFragment()
 
     private fun replaceFragment(fragment: Fragment) {
-        if(fragment !=null){
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, fragment)
             transaction.commit()
-        }
-
     }
 
 
