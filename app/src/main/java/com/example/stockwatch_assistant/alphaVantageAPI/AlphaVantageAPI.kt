@@ -30,9 +30,11 @@ interface AlphaVantageAPI {
             .host("www.alphavantage.co")
             .build()
 
-        fun create(): AlphaVantageAPI = create(httpUrl)
 
-        private fun create(httpUrl: HttpUrl): AlphaVantageAPI{
+//create unique url for csv file
+        fun createURLForCSV(): AlphaVantageAPI = createURLForCSV(httpUrl)
+
+        private fun createURLForCSV(httpUrl: HttpUrl): AlphaVantageAPI{
             val client = OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply {
                     this.level = HttpLoggingInterceptor.Level.BASIC

@@ -18,7 +18,7 @@ class MainViewModel : ViewModel(){
 
     private lateinit var stockListFetchedFromAPI: List<StockMeta>
 
-    private val alphaVantageApi = AlphaVantageAPI.create()
+    private val alphaVantageApi = AlphaVantageAPI.createURLForCSV()
     private val stockMetaRepository = StockMetaRepository(alphaVantageApi)
 
     private var username = MutableLiveData("Empty!")
