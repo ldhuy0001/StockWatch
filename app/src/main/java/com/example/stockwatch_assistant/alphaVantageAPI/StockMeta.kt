@@ -18,8 +18,7 @@ data class StockMeta(
 //    val status: String,
 ){
     companion object {
-        private fun searchStockInfo(searchTerm: String, fulltext: String): Int {
-//            return fulltext.contains(searchTerm)
+        private fun searchStockInfo(searchTerm: String, fulltext: String): Int{
             return fulltext.indexOf(searchTerm, ignoreCase = true)
         }
     }
