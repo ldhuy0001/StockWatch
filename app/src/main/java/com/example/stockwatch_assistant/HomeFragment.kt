@@ -76,8 +76,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 for (document in result) {
                     Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
 
-
-
                     var test:StockMeta = StockMeta(symbol = document.data["stockSymbol"].toString(),
                         name = document.data["stockName"].toString(), exchange = document.data["stockExchange"].toString())
 

@@ -88,6 +88,23 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
                     viewModel.removeFavorite(it)
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
                     Log.d("isFav", "removeItem")
+
+
+
+//                    db.collection("Favorites")
+//                        .document(photoMeta.firestoreID)
+//                        .delete()
+//                        .addOnSuccessListener {
+//                            Log.d(javaClass.simpleName,"Note delete ${photoMeta.byteSize} ${photoMeta.firestoreID}")
+//                            dbFetchPhotoMeta(sortInfo,photoMetaList)
+//                        }
+//                        .addOnFailureListener { e->
+//                            Log.d(javaClass.simpleName,"Note deleting FAILED")
+//                        }
+
+
+
+
                 } else {
                     viewModel.addFavorite(it)
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
