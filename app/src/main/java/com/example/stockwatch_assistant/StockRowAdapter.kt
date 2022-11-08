@@ -63,6 +63,7 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
         stockRowBinding.stockRoot.setOnClickListener {
 
             intent.putExtra("stockSymbol", item.symbol)
+            intent.putExtra("stockName", item.name)
             context.startActivity(intent)
 
         }

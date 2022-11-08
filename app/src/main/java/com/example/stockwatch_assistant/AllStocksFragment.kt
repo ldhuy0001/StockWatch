@@ -63,6 +63,8 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
 
         initRecyclerViewDividers(binding.recyclerView)
 
+
+
         viewModel.stockMetaListLiveData.observe(viewLifecycleOwner){
                 list -> adapter.submitList(list)
             adapter.notifyDataSetChanged()

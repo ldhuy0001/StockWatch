@@ -42,7 +42,7 @@ class FavoritesAdapter(private val viewModel: MainViewModel, private val context
                 notifyItemRemoved(position)
             }
 
-            
+
         }
     }
 

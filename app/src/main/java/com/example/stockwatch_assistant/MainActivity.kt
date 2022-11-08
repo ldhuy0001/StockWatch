@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 //add simple divider
-    private fun initRecyclerViewDividers(rv: RecyclerView) {
+    fun initRecyclerViewDividers(rv: RecyclerView) {
         // Let's have dividers between list items
         val dividerItemDecoration = DividerItemDecoration(
             rv.context, LinearLayoutManager.VERTICAL )

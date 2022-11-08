@@ -45,9 +45,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-//        Log.d(TAG, "onCreateView ${viewModel.selected}")
 
-//        binding.hello.text = "test"
 
         viewModel.observeUserName().observe(viewLifecycleOwner){
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
@@ -57,8 +55,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.recyclerViewFavorite.layoutManager = LinearLayoutManager(binding.recyclerViewFavorite.context)
         binding.recyclerViewFavorite.adapter = adapter
 
-
-
+        (activity as MainActivity).initRecyclerViewDividers(binding.recyclerViewFavorite)
 
         viewModel.favoritesListLiveData.observe(requireActivity()) {
                 list -> adapter.submitList(list)
@@ -66,10 +63,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             Log.d("XXX", "list: " + list)
             adapter.notifyDataSetChanged()
         }
-
-
-
-
 
         return root
     }
