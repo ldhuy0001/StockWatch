@@ -36,18 +36,13 @@ class OnePost : AppCompatActivity() {
 
         viewModel.stockDetailsLiveData.observe(this){
             onePostBinding.stockName.text = stockName
-
-//            onePostBinding.stockSymbol.text = "Symbol: " + it.symbol
             onePostBinding.stockSector.text = Html.fromHtml("<b>" +"Sector: "+"</b>"+it.sector)
-
             onePostBinding.stockIndustry.text = Html.fromHtml("<b>" +"Industry: "+"</b>"+it.industry)
 
             if (it.description == "None" || it.description.isEmpty()) {
                 onePostBinding.stockDescription.text = "N/A"
             }
             else onePostBinding.stockDescription.text = Html.fromHtml("<b>" +"Description: "+"</b>"+it.description)
-
-//            onePostBinding.stockDescription.text = Html.fromHtml("<b>" +"Description: "+"</b>"+it.description)
 
             Log.d("onePost", "${it.dividendYield} ${it.peRatio} ${it.weekHigh52} ${it.weekLow52}")
 
