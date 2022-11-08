@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
@@ -29,15 +30,30 @@ class OnePost : AppCompatActivity() {
         val stockSymbol: String = intent.getStringExtra("stockSymbol").toString()
         val stockName: String = intent.getStringExtra("stockName").toString()
         Log.d("ck","symbol $stockSymbol")
+
+
+//        val dialog = progressDialog(message = "Please wait a bit…", title = "Fetching data")
+//        dialog.show()
+////....
+//        dialog.dismiss()
+
+
         viewModel.netStockDetails(stockSymbol)
 
 //        supportActionBar!!.title = "One Post"
         supportActionBar!!.title = stockSymbol
 
+
+
         viewModel.stockDetailsLiveData.observe(this){
             onePostBinding.stockName.text = stockName
             onePostBinding.stockSector.text = Html.fromHtml("<b>" +"Sector: "+"</b>"+it.sector)
             onePostBinding.stockIndustry.text = Html.fromHtml("<b>" +"Industry: "+"</b>"+it.industry)
+
+            if (onePostBinding.stockName.text == stockName) {
+                onePostBinding.indeterminateBar.visibility = View.INVISIBLE
+                onePostBinding.indeterminateBarBackground.visibility = View.INVISIBLE
+            }
 
             if (it.description == "None" || it.description.isEmpty()) {
                 onePostBinding.stockDescription.text = "N/A"
