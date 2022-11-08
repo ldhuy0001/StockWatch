@@ -36,11 +36,18 @@ class MainViewModel : ViewModel(){
     val stockDetailsLiveData : LiveData<StockDetails>
         get() = stockDetails
 
-
+//favorites
     private var fList: MutableList<StockMeta> = mutableListOf()
     private var favoritesListMutableLiveData = MutableLiveData<List<StockMeta>>()
     val favoritesListLiveData: LiveData<List<StockMeta>>
         get() = favoritesListMutableLiveData
+
+    //firebase
+    private val dbHelp = ViewModelDBHelper()
+
+    fun fetchStockMeta() {
+//        dbHelp.fetchInitialStocks(favoritesListMutableLiveData)
+    }
 
     fun observeUserName(): LiveData<String>{
         return username

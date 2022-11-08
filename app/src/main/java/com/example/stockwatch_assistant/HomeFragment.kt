@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.stockwatch_assistant.databinding.RecyclerMainBinding
 import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
 
@@ -23,6 +25,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
 
     private lateinit var adapter: StockRowAdapter
+
+    val db = Firebase.firestore
 
 //    private var _bindingHome: FragmentHomeBinding? = null
 //    private val bindingHome get() = _bindingHome!!
@@ -63,6 +67,24 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             Log.d("XXX", "list: " + list)
             adapter.notifyDataSetChanged()
         }
+
+
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("read", "${document.id} => ${document.data}")
+
+//                   viewModel.addFavorite()
+
+
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("read", "Error getting documents.", exception)
+            }
+
+
 
         return root
     }
