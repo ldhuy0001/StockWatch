@@ -2,10 +2,14 @@ package com.example.stockwatch_assistant
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
 
 class OnePost : AppCompatActivity() {
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_one_post)
@@ -28,13 +32,17 @@ class OnePost : AppCompatActivity() {
 //            actionBar.title = "One Post"
 //        }
 
-
-        val stockName: String = intent.getStringExtra("stockName").toString()
         val stockSymbol: String = intent.getStringExtra("stockSymbol").toString()
+        Log.d("ck","symbol $stockSymbol")
+        viewModel.netStockDetails(stockSymbol)
 
-
-        onePostBinding.stockName.text = stockName
-        onePostBinding.stockSymbol.text = "stockSymbol: " + stockSymbol
+        viewModel.stockDetailsLiveData.observe(this){
+            onePostBinding.stockName.text = it.name
+            onePostBinding.stockSymbol.text = "stockSymbol: " + it.symbol
+            onePostBinding.stockDescription.text = it.description
+        }
+//        onePostBinding.stockName.text = stockName
+//        onePostBinding.stockSymbol.text = "stockSymbol: " + stockSymbol
 
 
 

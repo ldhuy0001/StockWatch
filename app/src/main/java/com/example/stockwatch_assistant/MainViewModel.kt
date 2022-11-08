@@ -9,17 +9,20 @@ import kotlinx.coroutines.launch
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
-import com.example.stockwatch_assistant.alphaVantageAPI.AlphaVantageAPI
-import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
-import com.example.stockwatch_assistant.alphaVantageAPI.StockMetaRepository
+import com.example.stockwatch_assistant.alphaVantageAPI.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 
 class MainViewModel : ViewModel(){
 
     private lateinit var stockListFetchedFromAPI: List<StockMeta>
+    private val alphaVantageApiForCSV = AlphaVantageAPI.createURLForCSV()
+    private val stockMetaRepository = StockMetaRepository(alphaVantageApiForCSV)
 
-    private val alphaVantageApi = AlphaVantageAPI.createURLForCSV()
-    private val stockMetaRepository = StockMetaRepository(alphaVantageApi)
+//    private lateinit var stockDetailFetchedFromAPI: LiveData<StockDetails>
+    private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
+    private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
+
 
     private var username = MutableLiveData("Empty!")
 
@@ -28,6 +31,10 @@ class MainViewModel : ViewModel(){
     val stockMetaListLiveData: LiveData<List<StockMeta>>
         get() = stockMetaList
 
+//Create LiveData for stockDetail
+    private var stockDetails = MutableLiveData<StockDetails>()
+    val stockDetailsLiveData : LiveData<StockDetails>
+        get() = stockDetails
 
     fun observeUserName(): LiveData<String>{
         return username
@@ -57,4 +64,22 @@ class MainViewModel : ViewModel(){
         return searchListResult.isEmpty()
     }
 
+//Fetch stock details from API
+//    fun netStockDetails()  = viewModelScope.launch (
+//        context = viewModelScope.coroutineContext
+//                + Dispatchers.IO ) : StockDetails {
+//        stockDetails.postValue(stockDetailsRepository.getStockDetails())
+//        Log.d("ck","here is stock details =========== \n $stockDetails")
+//        Log.d("ck", "here is stock details value =========== \n ${stockDetails.value}")
+//    return stockDetails.value
+//    }
+
+    fun netStockDetails(symbol : String) = viewModelScope.launch (
+        context = viewModelScope.coroutineContext
+                + Dispatchers.IO ) {
+        stockDetails.postValue(stockDetailsRepository.getStockDetails(symbol))
+//        delay(10000L)
+        Log.d("ck","here is stock details =========== \n $stockDetails")
+        Log.d("ck", "here is stock details value =========== \n ${stockDetails.value}")
+    }
 }

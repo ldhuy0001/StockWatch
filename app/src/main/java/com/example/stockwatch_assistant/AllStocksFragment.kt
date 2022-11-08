@@ -33,6 +33,8 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
         val dividerItemDecoration = DividerItemDecoration(
             rv.context, LinearLayoutManager.VERTICAL )
         rv.addItemDecoration(dividerItemDecoration)
+
+
     }
 
 
@@ -48,8 +50,6 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
 //        Log.d(TAG, "onCreateView ${viewModel.selected}")
 
 //        binding.hello.text = "test"
-
-
 
 
 
