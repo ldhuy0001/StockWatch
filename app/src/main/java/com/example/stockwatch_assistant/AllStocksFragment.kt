@@ -85,6 +85,13 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
 //            viewModel.searchStock(it.toString())
 //        }
 
+
+
+
+
+
+
+
         binding.searchBar.queryHint = "Search"
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -100,13 +107,19 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+
+                if (newText.toString().isEmpty())
+            {
+                (activity as MainActivity).hideKeyboard()
+            }
+
+
+
                 viewModel.searchStock(newText.toString())
                 return false
             }
 
         })
-
-
 
 
 

@@ -42,10 +42,17 @@ class OnePost : AppCompatActivity() {
             onePostBinding.stockName.text = it.name
 
 //            onePostBinding.stockSymbol.text = "Symbol: " + it.symbol
-            onePostBinding.stockSymbol.text = Html.fromHtml("<b>" +"Symbol: "+"</b>"+it.symbol)
+            onePostBinding.stockSector.text = Html.fromHtml("<b>" +"Sector: "+"</b>"+it.sector)
+
+            onePostBinding.stockIndustry.text = Html.fromHtml("<b>" +"Industry: "+"</b>"+it.industry)
 
 //            onePostBinding.stockDescription.text = "Description: " + it.description
             onePostBinding.stockDescription.text = Html.fromHtml("<b>" +"Description: "+"</b>"+it.description)
+
+            onePostBinding.divYieldValue.text = it.dividendYield
+            onePostBinding.peValue.text = it.peRatio
+            onePostBinding.wkHigh52Value.text = it.weekHigh52
+            onePostBinding.wkLow52Value.text = it.weekLow52
         }
 //        onePostBinding.stockName.text = stockName
 //        onePostBinding.stockSymbol.text = "stockSymbol: " + stockSymbol
