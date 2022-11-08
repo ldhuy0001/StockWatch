@@ -24,7 +24,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     private lateinit var adapter: StockRowAdapter
 
-
 //    private var _bindingHome: FragmentHomeBinding? = null
 //    private val bindingHome get() = _bindingHome!!
 
@@ -50,16 +49,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
 //        binding.hello.text = "test"
 
-
-
-
-
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         viewModel.observeUserName().observe(viewLifecycleOwner){
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
         }
@@ -72,12 +61,23 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
 
         viewModel.favoritesListLiveData.observe(requireActivity()) {
-
                 list -> adapter.submitList(list)
             Log.d("XXX", "list size: " + list.size)
             Log.d("XXX", "list: " + list)
             adapter.notifyDataSetChanged()
         }
+
+
+
+
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
 
 //        rowSubredditBinding.rowFav.setOnClickListener {
 //            val position = getPos(this)
@@ -86,6 +86,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 //            rowSubredditBinding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
 //            notifyItemRemoved(position)
 //        }
+
+
 
 
 

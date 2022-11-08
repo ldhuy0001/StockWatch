@@ -90,7 +90,6 @@ class MainViewModel : ViewModel(){
     }
 
 
-
     //favorites stuff
     fun isFavorite(item: StockMeta): Boolean {
         return fList.contains(item)
@@ -104,6 +103,10 @@ class MainViewModel : ViewModel(){
     fun removeFavorite(item: StockMeta) {
         fList.remove(item)
         favoritesListMutableLiveData.postValue(fList)
+    }
+
+    fun getFavoriteItem(position: Int): StockMeta {
+        return fList[position]
     }
 
 

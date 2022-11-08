@@ -34,11 +34,7 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
         val dividerItemDecoration = DividerItemDecoration(
             rv.context, LinearLayoutManager.VERTICAL )
         rv.addItemDecoration(dividerItemDecoration)
-
-
     }
-
-
 
 
     override fun onCreateView(
@@ -48,12 +44,9 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
     ): View {
         _binding = FragmentAllStocksBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
 //        Log.d(TAG, "onCreateView ${viewModel.selected}")
-
 //        binding.hello.text = "test"
-
-
-
         return root
     }
 
@@ -75,56 +68,25 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             adapter.notifyDataSetChanged()
         }
 
-//        binding.searchBar.addTextChangedListener(){
-//
-////            if (it.toString().isEmpty())
-////            {
-////                hideKeyboard()
-////            }
-//
-//            viewModel.searchStock(it.toString())
-//        }
-
-
-
-
-
-
-
-
         binding.searchBar.queryHint = "Search"
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchBar.clearFocus()
-//                if (viewModel.searchStock(query.toString())) {
-//
-//                }
-
                 viewModel.searchStock(query.toString())
 
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-
                 if (newText.toString().isEmpty())
             {
                 (activity as MainActivity).hideKeyboard()
             }
-
-
-
                 viewModel.searchStock(newText.toString())
                 return false
             }
 
         })
-
-
-
-
     }
-
-
 }

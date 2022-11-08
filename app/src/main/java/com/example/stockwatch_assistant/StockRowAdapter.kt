@@ -2,6 +2,7 @@ package com.example.stockwatch_assistant
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
@@ -38,46 +39,10 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
     inner class ViewHolder(val stockRowBinding : StockRowBinding)
         : RecyclerView.ViewHolder(stockRowBinding.root) {
         init {
-//            stockRowBinding.root.setOnClickListener {
-//                viewModel.stockDetailsLiveData.observe(LifecycleOwner(), Observer {
-//
-//                })
-//
-//
-//
-//                var intent = Intent(context, OnePost::class.java)
-//                var position = getPos(this)
-////                var item = viewModel.redditPostsLiveData.value!![position]
-////                var item = viewModel.stockMetaListLiveData.value!![position]
-//                intent.putExtra("stockName", item.)
-//                intent.putExtra("stockSymbol", item.symbol.toString())
-////                intent.putExtra("thumbnail", item.thumbnailURL)
-////                intent.putExtra("link", item.imageURL)
-//                context.startActivity(intent)
-
-//            stockRowBinding.root.setOnClickListener {
-//                viewModel.stockDetailsLiveData.observe(holder.itemView.context as LifecycleOwner) {
-//                    stockDetails = it
-//
-//
-//                    var intent = Intent(context, OnePost::class.java)
-////                var item = viewModel.redditPostsLiveData.value!![position]
-////                var item = viewModel.stockMetaListLiveData.value!![position]
-//                    intent.putExtra("stockName", stockDetails.name)
-//                    intent.putExtra("stockSymbol", stockDetails.symbol)
-////                intent.putExtra("thumbnail", item.thumbnailURL)
-////                intent.putExtra("link", item.imageURL)
-//                    context.startActivity(intent)
-
-
-                }
-//            }
-
-
-
-//            }
         }
-//    }
+
+        }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val stockRowBinding = StockRowBinding.inflate(
@@ -96,7 +61,6 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
         stockRowBinding.stockRowExchange.text = item.exchange
 
         stockRowBinding.stockRoot.setOnClickListener {
-//            viewModel.netStockDetails(item.symbol)
 
             intent.putExtra("stockSymbol", item.symbol)
             context.startActivity(intent)
@@ -107,24 +71,32 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
             val item = getItem(position)
 
+//            val item = getPos(holder)
+//            val local = viewModel.getFavoriteItem(item)
+
 //            val position = getPos(this)
 //            val item = viewModel.redditPostsLiveData.value!![position]
 
             item.let {
+                Log.d("isFav", "before click: ${viewModel.isFavorite(it)}")
                 if (viewModel.isFavorite(it)) {
-                    viewModel.removeFavorite(item)
-                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
+                    viewModel.removeFavorite(it)
+//                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
+                    Log.d("isFav", "removeItem")
                 } else {
                     viewModel.addFavorite(it)
-                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
+//                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
+                    Log.d("isFav", "addItem")
                 }
                 notifyItemChanged(position)
+                Log.d("isFav", "after click: ${viewModel.isFavorite(it)}")
             }
-
-
-
         }
-
+        if (viewModel.isFavorite(item)) {
+            stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
+        } else {
+            stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
+        }
     }
 
 
@@ -140,12 +112,6 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
             return oldItem.symbol == newItem.symbol
                     && oldItem.name == newItem.name
                     && oldItem.exchange == newItem.exchange
-
-
-//            return StockMeta.spannableStringsEqual(oldItem.name, newItem.name) &&
-//                    StockMeta.spannableStringsEqual(oldItem.exchange, newItem.exchange) &&
-//                    StockMeta.spannableStringsEqual(oldItem.symbol, newItem.symbol)
-
         }
     }
 }
