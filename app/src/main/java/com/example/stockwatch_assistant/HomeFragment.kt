@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 
 
 import com.example.stockwatch_assistant.databinding.RecyclerMainBinding
@@ -20,6 +21,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var adapter: StockRowAdapter
 
 
 //    private var _bindingHome: FragmentHomeBinding? = null
@@ -61,10 +64,33 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
         }
 
+        adapter = StockRowAdapter(viewModel, requireContext())
+        binding.recyclerViewFavorite.layoutManager = LinearLayoutManager(binding.recyclerViewFavorite.context)
+        binding.recyclerViewFavorite.adapter = adapter
+
+
+
+
+        viewModel.favoritesListLiveData.observe(requireActivity()) {
+
+                list -> adapter.submitList(list)
+            Log.d("XXX", "list size: " + list.size)
+            Log.d("XXX", "list: " + list)
+            adapter.notifyDataSetChanged()
+        }
+
+//        rowSubredditBinding.rowFav.setOnClickListener {
+//            val position = getPos(this)
+//            val item = viewModel.getFavoriteItem(position)
+//            viewModel.removeFavorite(item)
+//            rowSubredditBinding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+//            notifyItemRemoved(position)
+//        }
+
 
 
 
     }
 
 
-    }
+}

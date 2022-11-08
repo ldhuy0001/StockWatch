@@ -36,6 +36,12 @@ class MainViewModel : ViewModel(){
     val stockDetailsLiveData : LiveData<StockDetails>
         get() = stockDetails
 
+
+    private var fList: MutableList<StockMeta> = mutableListOf()
+    private var favoritesListMutableLiveData = MutableLiveData<List<StockMeta>>()
+    val favoritesListLiveData: LiveData<List<StockMeta>>
+        get() = favoritesListMutableLiveData
+
     fun observeUserName(): LiveData<String>{
         return username
     }
@@ -82,4 +88,23 @@ class MainViewModel : ViewModel(){
         Log.d("ck","here is stock details =========== \n $stockDetails")
         Log.d("ck", "here is stock details value =========== \n ${stockDetails.value}")
     }
+
+
+
+    //favorites stuff
+    fun isFavorite(item: StockMeta): Boolean {
+        return fList.contains(item)
+    }
+
+    fun addFavorite(item: StockMeta) {
+        fList.add(item)
+        favoritesListMutableLiveData.postValue(fList)
+    }
+
+    fun removeFavorite(item: StockMeta) {
+        fList.remove(item)
+        favoritesListMutableLiveData.postValue(fList)
+    }
+
+
 }

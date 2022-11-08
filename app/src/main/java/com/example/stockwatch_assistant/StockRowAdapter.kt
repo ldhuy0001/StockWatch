@@ -102,6 +102,29 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
             context.startActivity(intent)
 
         }
+
+        stockRowBinding.rowFav.setOnClickListener {
+
+            val item = getItem(position)
+
+//            val position = getPos(this)
+//            val item = viewModel.redditPostsLiveData.value!![position]
+
+            item.let {
+                if (viewModel.isFavorite(it)) {
+                    viewModel.removeFavorite(item)
+                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
+                } else {
+                    viewModel.addFavorite(it)
+                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
+                }
+                notifyItemChanged(position)
+            }
+
+
+
+        }
+
     }
 
 

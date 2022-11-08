@@ -20,7 +20,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rowFav"
         app:layout_constraintBottom_toTopOf="@+id/stockRow_name"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/stockRow_symbol"
         app:layout_constraintBottom_toTopOf="@+id/stockRow_exchange"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/rowFav" />
 
     <TextView
         android:id="@+id/stockRow_exchange"
@@ -46,8 +46,21 @@
         android:textStyle="italic"
         android:gravity="start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rowFav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stockRow_name" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_weight="1"
+        android:id="@+id/rowFav"
+        android:src="@drawable/ic_baseline_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/stockRow_name"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
