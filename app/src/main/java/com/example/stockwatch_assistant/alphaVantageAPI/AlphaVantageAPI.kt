@@ -40,20 +40,13 @@ interface AlphaVantageAPI {
         }
     ) : StockDetails
 
-//    GET("/query?function=OVERVIEW")
-//    suspend fun getStockDetailsFromAPI(
-//        @Query("symbol") symbol : String,
-//        @Query("apikey") apikey: String = when(System.currentTimeMillis()){
-//
-//        }
-//    ) : StockDetails
-
 //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY
-    // &symbol=TSLA&datatype=csv&&interval=5min&apikey=CUZFO32ID30TEUX6
+    // &symbol=TSLA&datatype=csv&interval=5min&apikey=CUZFO32ID30TEUX6
     @GET("query?function=TIME_SERIES_INTRADAY")
-    suspend fun getStockGraph(
+    suspend fun getStockGraphInfo(
         @Query("symbol") symbol: String,
         @Query("datatype") datatype : String = "csv",
+        @Query("interval") interval : String = "5min",
         @Query("apikey") apikey: String
         = when((System.currentTimeMillis()/1000%60/15).toString()){
             "0" -> API_KEY_FORGRAPH_0

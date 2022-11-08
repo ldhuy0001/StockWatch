@@ -19,6 +19,8 @@ class MainViewModel : ViewModel(){
     private val alphaVantageApiForCSV = AlphaVantageAPI.createURLForCSV()
     private val stockMetaRepository = StockMetaRepository(alphaVantageApiForCSV)
 
+    private val stockPriceRepository = StockPriceRepository(alphaVantageApiForCSV)
+
 //    private lateinit var stockDetailFetchedFromAPI: LiveData<StockDetails>
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
@@ -35,6 +37,11 @@ class MainViewModel : ViewModel(){
     private var stockDetails = MutableLiveData<StockDetails>()
     val stockDetailsLiveData : LiveData<StockDetails>
         get() = stockDetails
+
+//Create LiveData for stockRow
+    private var stockPriceList = MediatorLiveData<List<StockPrice>>()
+    val stockPriceListLiveData: LiveData<List<StockPrice>>
+        get() = stockPriceList
 
 //favorites
     private var fList: MutableList<StockMeta> = mutableListOf()
@@ -77,16 +84,7 @@ class MainViewModel : ViewModel(){
         return searchListResult.isEmpty()
     }
 
-//Fetch stock details from API
-//    fun netStockDetails()  = viewModelScope.launch (
-//        context = viewModelScope.coroutineContext
-//                + Dispatchers.IO ) : StockDetails {
-//        stockDetails.postValue(stockDetailsRepository.getStockDetails())
-//        Log.d("ck","here is stock details =========== \n $stockDetails")
-//        Log.d("ck", "here is stock details value =========== \n ${stockDetails.value}")
-//    return stockDetails.value
-//    }
-
+//Fetch Stock Details for OnePost
     fun netStockDetails(symbol : String) = viewModelScope.launch (
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO ) {
@@ -95,6 +93,16 @@ class MainViewModel : ViewModel(){
         Log.d("ck","here is stock details =========== \n $stockDetails")
         Log.d("ck", "here is stock details value =========== \n ${stockDetails.value}")
     }
+
+//Fetch Stock Price for graph
+    fun netStockPrice(symbol: String) = viewModelScope.launch (
+        context = viewModelScope.coroutineContext
+            + Dispatchers.IO){
+        stockPriceList.postValue(stockPriceRepository.getStockPrice(symbol))
+    Log.d("stockPrice","here is stock details =========== \n $stockPriceList")
+    Log.d("stockPrice", "here is stock details value =========== \n ${stockPriceList.value}")
+    }
+
 
 
     //favorites stuff

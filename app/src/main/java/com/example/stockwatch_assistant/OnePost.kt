@@ -40,6 +40,7 @@ class OnePost : AppCompatActivity() {
 
 
         viewModel.netStockDetails(stockSymbol)
+        viewModel.netStockPrice(stockSymbol)
 
 //        supportActionBar!!.title = "One Post"
         supportActionBar!!.title = stockSymbol

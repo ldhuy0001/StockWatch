@@ -19,6 +19,8 @@ class StockDetailsRepository(private val alphaVantageAPI: AlphaVantageAPI) {
 //        delay(5000L)
         return response
     }
+
+
 }
 
 //https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=CUZFO32ID30TEUX6

@@ -1,12 +1,5 @@
 package com.example.stockwatch_assistant.alphaVantageAPI
 
-import android.graphics.Color
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import androidx.core.text.clearSpans
-//import com.google.gson.annotations.SerializedName
-
 data class StockMeta(
 //    symbol,name,exchange,assetType,ipoDate,delistingDate,status
     val symbol: String,
