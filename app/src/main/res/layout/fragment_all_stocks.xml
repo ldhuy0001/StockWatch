@@ -18,17 +18,18 @@
         >
 
 
-            <EditText
+            <androidx.appcompat.widget.SearchView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/search_bar"
-                android:hint="Type a stock name or symbol"
-                android:layout_marginTop="0dp"
+                android:queryHint="Search for a menu item"
+                app:iconifiedByDefault="false"
+                android:layout_marginTop="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
-                android:layout_weight="1"/>
+                android:background="@drawable/searchview_background"
+                app:queryBackground="@null"
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
-                android:layout_weight="8.3"/>
+                android:layout_weight="9.3"/>
 
 
 

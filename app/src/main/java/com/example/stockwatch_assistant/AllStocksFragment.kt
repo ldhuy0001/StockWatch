@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -74,15 +75,38 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             adapter.notifyDataSetChanged()
         }
 
-        binding.searchBar.addTextChangedListener(){
+//        binding.searchBar.addTextChangedListener(){
+//
+////            if (it.toString().isEmpty())
+////            {
+////                hideKeyboard()
+////            }
+//
+//            viewModel.searchStock(it.toString())
+//        }
 
-//            if (it.toString().isEmpty())
-//            {
-//                hideKeyboard()
-//            }
+        binding.searchBar.queryHint = "Search"
 
-            viewModel.searchStock(it.toString())
-        }
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchBar.clearFocus()
+//                if (viewModel.searchStock(query.toString())) {
+//
+//                }
+
+                viewModel.searchStock(query.toString())
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchStock(newText.toString())
+                return false
+            }
+
+        })
+
+
 
 
 
