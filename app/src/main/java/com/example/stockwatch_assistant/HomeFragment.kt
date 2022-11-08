@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
-import com.example.stockwatch_assistant.databinding.RecyclerMainBinding
 import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
+import com.example.stockwatch_assistant.model.Stock
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -69,13 +70,18 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
 
-        db.collection("users")
+        db.collection("Favorites")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d("read", "${document.id} => ${document.data}")
+                    Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
 
-//                   viewModel.addFavorite()
+
+
+                    var test:StockMeta = StockMeta(symbol = document.data["stockSymbol"].toString(),
+                        name = document.data["stockName"].toString(), exchange = document.data["stockExchange"].toString())
+
+                    viewModel.addFavorite(test)
 
 
                 }

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 
-import com.example.stockwatch_assistant.model.StockMeta
+import com.example.stockwatch_assistant.model.Stock
 
 class ViewModelDBHelper() {
 
@@ -12,11 +12,11 @@ class ViewModelDBHelper() {
     private val collectionRoot = "allNotes"
 
 
-    fun fetchInitialStocks(notesList: MutableLiveData<List<StockMeta>>) {
+    fun fetchInitialStocks(notesList: MutableLiveData<List<Stock>>) {
         dbFetchStocks(notesList)
     }
 
-    private fun dbFetchStocks(stocksList: MutableLiveData<List<StockMeta>>) {
+    private fun dbFetchStocks(stocksList: MutableLiveData<List<Stock>>) {
         db.collection(collectionRoot)
             .orderBy("timeStamp")//, Query.Direction.DESCENDING)
             .limit(100)
@@ -25,7 +25,7 @@ class ViewModelDBHelper() {
                 Log.d(javaClass.simpleName, "allNotes fetch ${result!!.documents.size}")
                 // NB: This is done on a background thread
                 stocksList.postValue(result.documents.mapNotNull {
-                    it.toObject(StockMeta::class.java)
+                    it.toObject(Stock::class.java)
                 })
             }
             .addOnFailureListener {

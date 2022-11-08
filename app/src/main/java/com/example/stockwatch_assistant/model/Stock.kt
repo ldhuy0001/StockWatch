@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 
-data class StockMeta(
+data class Stock(
     // Auth information
     var name: String = "",
     var ownerUid: String = "",
