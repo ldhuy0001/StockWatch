@@ -2,6 +2,7 @@ package com.example.stockwatch_assistant
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import androidx.activity.viewModels
 
@@ -14,11 +15,6 @@ class OnePost : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_one_post)
 
-        //naming title
-        val actionBar = supportActionBar
-
-
-
         val onePostBinding = ActivityOnePostBinding.inflate(layoutInflater)
         setContentView(onePostBinding.root)
 
@@ -26,7 +22,7 @@ class OnePost : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-        supportActionBar!!.title = "One Post"
+
 
 //        if (actionBar!=null){
 //            actionBar.title = "One Post"
@@ -36,18 +32,26 @@ class OnePost : AppCompatActivity() {
         Log.d("ck","symbol $stockSymbol")
         viewModel.netStockDetails(stockSymbol)
 
+//        supportActionBar!!.title = "One Post"
+
+        supportActionBar!!.title = stockSymbol
+
+
+
         viewModel.stockDetailsLiveData.observe(this){
             onePostBinding.stockName.text = it.name
-            onePostBinding.stockSymbol.text = "stockSymbol: " + it.symbol
-            onePostBinding.stockDescription.text = it.description
+
+//            onePostBinding.stockSymbol.text = "Symbol: " + it.symbol
+            onePostBinding.stockSymbol.text = Html.fromHtml("<b>" +"Symbol: "+"</b>"+it.symbol)
+
+//            onePostBinding.stockDescription.text = "Description: " + it.description
+            onePostBinding.stockDescription.text = Html.fromHtml("<b>" +"Description: "+"</b>"+it.description)
         }
 //        onePostBinding.stockName.text = stockName
 //        onePostBinding.stockSymbol.text = "stockSymbol: " + stockSymbol
 
-
-
-
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

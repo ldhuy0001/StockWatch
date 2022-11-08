@@ -11,26 +11,28 @@
 
 
     <TextView
-        android:id="@+id/stockRow_name"
+        android:id="@+id/stockRow_symbol"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="20sp"
         android:gravity="start"
-        android:text="StockName"
+        android:text="StockSymbol"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/stockRow_symbol"
+        app:layout_constraintBottom_toTopOf="@+id/stockRow_name"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:id="@+id/stockRow_symbol"
+        android:id="@+id/stockRow_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Stock Symbol"
+        android:text="StockName"
         android:gravity="start"
-        app:layout_constraintTop_toBottomOf="@+id/stockRow_name"
+        app:layout_constraintTop_toBottomOf="@+id/stockRow_symbol"
         app:layout_constraintBottom_toTopOf="@+id/stockRow_exchange"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -40,11 +42,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Stock Exchange"
+        android:text="StockExchange"
+        android:textStyle="italic"
         android:gravity="start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stockRow_symbol" />
+        app:layout_constraintTop_toBottomOf="@+id/stockRow_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
