@@ -17,6 +17,7 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
 import com.example.stockwatch_assistant.databinding.StockRowBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 
 class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context) :
@@ -24,6 +25,9 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
+
+
+    var db = FirebaseFirestore.getInstance()
 
     private fun getPos(holder: ViewHolder): Int {
         val position = holder.adapterPosition
@@ -88,6 +92,25 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
                     viewModel.addFavorite(it)
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
                     Log.d("isFav", "addItem")
+
+
+                    val user: MutableMap<String, Any> = HashMap()
+                    user["stockName"] = item.name
+                    user["stockSymbol"] = item.symbol
+                    user["stockExchange"] = item.exchange
+
+                    db.collection("Favorites")
+                        .add(user)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d("add", "DocumentSnapshot added with ID: " + documentReference.id)
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w("add", "Error adding document", e)
+                        }
+
+
+
+
                 }
                 notifyItemChanged(position)
                 Log.d("isFav", "after click: ${viewModel.isFavorite(it)}")
