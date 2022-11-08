@@ -34,7 +34,9 @@ interface AlphaVantageAPI {
     ) : StockDetails
 
     companion object {
-        const val API_KEY = "CUZFO32ID30TEUX6"
+//        const val API_KEY = "CUZFO32ID30TEUX6"
+        const val API_KEY = "K5EMMM6BVQCN3JU5"
+        
         const val BASE_URL = "https://alphavantage.co"
 
         var httpUrl = HttpUrl.Builder()
