@@ -23,19 +23,62 @@ interface AlphaVantageAPI {
 
     @GET("/query?function=LISTING_STATUS")
     suspend fun getAllActiveListingStocks (
-        @Query("apikey") apikey: String = API_KEY
+        @Query("apikey") apikey: String = API_KEY_FOR_ALL_STOCKS
     ) : ResponseBody
 
-    //https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo
+//https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo
     @GET("/query?function=OVERVIEW")
     suspend fun getStockDetailsFromAPI(
         @Query("symbol") symbol : String,
-        @Query("apikey") apikey: String = API_KEY
+        @Query("apikey") apikey: String
+        = when((System.currentTimeMillis()/1000%60/15).toString()){
+            "0" -> API_KEY_FORINFO_0
+            "1" -> API_KEY_FORINFO_1
+            "2" -> API_KEY_FORINFO_2
+            "3" -> API_KEY_FORINFO_3
+            else -> ({}).toString()
+        }
     ) : StockDetails
 
+//    GET("/query?function=OVERVIEW")
+//    suspend fun getStockDetailsFromAPI(
+//        @Query("symbol") symbol : String,
+//        @Query("apikey") apikey: String = when(System.currentTimeMillis()){
+//
+//        }
+//    ) : StockDetails
+
+//https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY
+    // &symbol=TSLA&datatype=csv&&interval=5min&apikey=CUZFO32ID30TEUX6
+    @GET("query?function=TIME_SERIES_INTRADAY")
+    suspend fun getStockGraph(
+        @Query("symbol") symbol: String,
+        @Query("datatype") datatype : String = "csv",
+        @Query("apikey") apikey: String
+        = when((System.currentTimeMillis()/1000%60/15).toString()){
+            "0" -> API_KEY_FORGRAPH_0
+            "1" -> API_KEY_FORGRAPH_1
+            "2" -> API_KEY_FORGRAPH_2
+            "3" -> API_KEY_FORGRAPH_3
+            else -> ({}).toString()
+        }
+    ) : ResponseBody
+
     companion object {
-//        const val API_KEY = "CUZFO32ID30TEUX6"
-        const val API_KEY = "K5EMMM6BVQCN3JU5"
+        const val API_KEY_FORINFO_0 = "GPO2P34U9Y7A7HZX"
+        const val API_KEY_FORGRAPH_0 = "4MZVP7YPQKC4UCXM"
+
+        const val API_KEY_FORINFO_1 = "CUZFO32ID30TEUX6"
+        const val API_KEY_FORGRAPH_1 = "K5EMMM6BVQCN3JU5"
+
+        const val API_KEY_FORINFO_2 = "QWWI53Q0A5XH00RC"
+        const val API_KEY_FORGRAPH_2 = "5FG1ZTL7HT3NSBN9"
+
+        const val API_KEY_FORINFO_3 = "IMAOA9LVMDPN229X"
+        const val API_KEY_FORGRAPH_3 = "8R2XN1FJNE462AU4"
+
+        const val API_KEY_FOR_ALL_STOCKS = "9UF22PMWEV9BPYJ9"
+
 
         const val BASE_URL = "https://alphavantage.co"
 

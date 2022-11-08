@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
+import com.google.android.material.snackbar.Snackbar
 
 class OnePost : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -45,42 +46,52 @@ class OnePost : AppCompatActivity() {
 
 
 
-        viewModel.stockDetailsLiveData.observe(this){
-            onePostBinding.stockName.text = stockName
-            onePostBinding.stockSector.text = Html.fromHtml("<b>" +"Sector: "+"</b>"+it.sector)
-            onePostBinding.stockIndustry.text = Html.fromHtml("<b>" +"Industry: "+"</b>"+it.industry)
+        viewModel.stockDetailsLiveData.observe(this) {
+            if (it.isNotEmpty()) {
+                onePostBinding.stockName.text = stockName
+                Log.d("okhttp.OkHttpClient","time ${System.currentTimeMillis()}\n" +
+                        "time in second ${System.currentTimeMillis()/1000%60/15}")
 
-            if (onePostBinding.stockName.text == stockName) {
-                onePostBinding.indeterminateBar.visibility = View.INVISIBLE
-                onePostBinding.indeterminateBarBackground.visibility = View.INVISIBLE
+                onePostBinding.stockSector.text =
+                    Html.fromHtml("<b>" + "Sector: " + "</b>" + it.sector)
+                onePostBinding.stockIndustry.text =
+                    Html.fromHtml("<b>" + "Industry: " + "</b>" + it.industry)
+
+                if (onePostBinding.stockName.text == stockName) {
+                    onePostBinding.indeterminateBar.visibility = View.INVISIBLE
+                    onePostBinding.indeterminateBarBackground.visibility = View.INVISIBLE
+                }
+
+                if (it.description == "None" || it.description.isEmpty()) {
+                    onePostBinding.stockDescription.text = "N/A"
+                } else onePostBinding.stockDescription.text =
+                    Html.fromHtml("<b>" + "Description: " + "</b>" + it.description)
+
+                Log.d(
+                    "onePost",
+                    "${it.dividendYield} ${it.peRatio} ${it.weekHigh52} ${it.weekLow52}"
+                )
+
+                if (it.dividendYield == "None" || it.dividendYield == "0") {
+                    onePostBinding.divYieldValue.text = "N/A"
+                } else onePostBinding.divYieldValue.text = it.dividendYield
+
+                if (it.peRatio == "None" || it.peRatio == "0") {
+                    onePostBinding.peValue.text = "N/A"
+                } else onePostBinding.peValue.text = it.peRatio
+
+                if (it.weekHigh52 == "None" || it.weekHigh52 == "0") {
+                    onePostBinding.wkHigh52Value.text = "N/A"
+                } else onePostBinding.wkHigh52Value.text = it.weekHigh52
+
+                if (it.weekLow52 == "None" || it.weekLow52 == "0") {
+                    onePostBinding.wkLow52Value.text = "N/A"
+                } else onePostBinding.wkLow52Value.text = it.weekLow52
+            } else {
+                Snackbar.make(onePostBinding.root
+                    ,"API call reachs limitation. \nPlease try again in next minute!!"
+                    ,Snackbar.LENGTH_SHORT).show()
             }
-
-            if (it.description == "None" || it.description.isEmpty()) {
-                onePostBinding.stockDescription.text = "N/A"
-            }
-            else onePostBinding.stockDescription.text = Html.fromHtml("<b>" +"Description: "+"</b>"+it.description)
-
-            Log.d("onePost", "${it.dividendYield} ${it.peRatio} ${it.weekHigh52} ${it.weekLow52}")
-
-            if (it.dividendYield == "None" || it.dividendYield == "0") {
-                onePostBinding.divYieldValue.text = "N/A"
-            }
-            else onePostBinding.divYieldValue.text = it.dividendYield
-
-            if (it.peRatio == "None" || it.peRatio== "0") {
-                onePostBinding.peValue.text = "N/A"
-            }
-            else onePostBinding.peValue.text = it.peRatio
-
-            if (it.weekHigh52 == "None" || it.weekHigh52== "0") {
-                onePostBinding.wkHigh52Value.text = "N/A"
-            }
-            else onePostBinding.wkHigh52Value.text = it.weekHigh52
-
-            if (it.weekLow52 == "None" || it.weekLow52 == "0") {
-                onePostBinding.wkLow52Value.text = "N/A"
-            }
-            else onePostBinding.wkLow52Value.text = it.weekLow52
         }
     }
 

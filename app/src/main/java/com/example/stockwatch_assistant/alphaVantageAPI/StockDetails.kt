@@ -24,4 +24,9 @@ data class StockDetails(
     val weekHigh52: String,
     @SerializedName("52WeekLow")
     val weekLow52: String,
-)
+) {
+    fun isNotEmpty(): Boolean{
+        return symbol!=null
+    }
+
+}
