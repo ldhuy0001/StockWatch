@@ -137,8 +137,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                             exchange = document.data["stockExchange"].toString()
                         )
                         if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
-                            viewModel.addFavorite(stock)
-                            Log.d("XXX", "add from initial fetch")
+                            if(!viewModel.isFavorite(stock)){
+                                viewModel.addFavorite(stock)
+                                Log.d("XXX", "add from initial fetch")
+                            }
                         }
                     }
                 }
@@ -177,9 +179,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
             true
         })
-
         popup.show()
-
 
     }
 

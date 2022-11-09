@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -57,22 +58,23 @@ class ChangeNameFragment: Fragment(R.layout.fragment_change_name) {
             val newName = binding.editTextTextPersonName.getText().toString()
             Log.d("XXX", "newName: $newName")
 
-            val user = FirebaseAuth.getInstance().currentUser
+            if (newName.isEmpty()){
+                Toast.makeText(requireContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val user = FirebaseAuth.getInstance().currentUser
 
-            val update = UserProfileChangeRequest.Builder()
-                .setDisplayName(newName)
-                .build()
+                val update = UserProfileChangeRequest.Builder()
+                    .setDisplayName(newName)
+                    .build()
 
-            user!!.updateProfile(update)
+                user!!.updateProfile(update)
 
-            viewModel.updateUserName(newName)
-            (activity as MainActivity).replaceFragment(HomeFragment())
+                viewModel.updateUserName(newName)
+                (activity as MainActivity).replaceFragment(HomeFragment())
+
+            }
         }
-
-
-
-
-
         }
     }
 
