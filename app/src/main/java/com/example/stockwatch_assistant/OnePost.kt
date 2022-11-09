@@ -14,6 +14,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.snackbar.Snackbar
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import kotlin.math.roundToLong
 
 class OnePost : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -90,8 +93,36 @@ class OnePost : AppCompatActivity() {
             Log.d("testchart","ck9")
 //            val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
 //            onePostBinding.lineChart.marker = markerView
+
+//            val df = DecimalFormat("%.2f")
+//            df.roundingMode = RoundingMode.DOWN
+
+            val number = 0.0449999
+            val rounded = number.toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+
+
+            fun roundOffDecimal(number: String): String{
+               return number.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+            }
+
+            Log.d("XXX", "$rounded")
+//            roundOffDecimal(number= it[0].open)
+
+//            it[0].open.toDouble().roundToLong()
+
+            onePostBinding.openValue.text = roundOffDecimal(number= it[0].open)
+            onePostBinding.highValue.text = roundOffDecimal(number= it[0].high)
+            onePostBinding.lowValue.text = roundOffDecimal(number= it[0].low)
+            onePostBinding.volumeValue.text = roundOffDecimal(number= it[0].volume)
+
         }
         Log.d("testchart","ck10")
+
+
+
+
+
+
 
         viewModel.stockDetailsLiveData.observe(this) {
             if (it.isNotEmpty()) {
@@ -119,6 +150,8 @@ class OnePost : AppCompatActivity() {
                     "onePost",
                     "${it.dividendYield} ${it.peRatio} ${it.weekHigh52} ${it.weekLow52}"
                 )
+
+
 
                 if (it.dividendYield == "None" || it.dividendYield == "0") {
                     onePostBinding.divYieldValue.text = "N/A"

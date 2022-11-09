@@ -25,8 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,6 +41,7 @@
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="24sp"
+                android:textStyle="bold"
                 />
 
             <TextView
@@ -81,7 +80,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Graph"
+                android:text="Chart"
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:layout_marginTop="16dp"
@@ -89,14 +88,18 @@
                 android:layout_marginEnd="16dp"
                 />
 
-            <!--    Put graph here        -->
+            <!--    Put graph here
+
+
+            -->
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
                 android:padding="9dp"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="16dp"
                 />
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -140,39 +143,6 @@
                         android:layout_weight="1"
                         />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="VOLUME"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        />
-
-                    <TextView
-                        android:id="@+id/volume_value"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Volume"
-                        android:textSize="14sp"
-                        android:gravity="right"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        />
-
-                </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="4">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -198,10 +168,20 @@
                     android:layout_weight="1"
                     />
 
+
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="AVG VOL"
+                    android:text="VOLUME"
                     android:textStyle="bold"
                     android:textSize="14sp"
                     android:layout_marginTop="16dp"
@@ -211,25 +191,17 @@
                     />
 
                 <TextView
-                    android:id="@+id/avgVol_value"
+                    android:id="@+id/volume_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Avg Vol"
-                    android:gravity="right"
+                    android:text="Volume"
                     android:textSize="14sp"
+                    android:gravity="right"
                     android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="4">
 
                 <TextView
                     android:layout_width="0dp"
@@ -256,38 +228,42 @@
                     android:layout_weight="1"
                     />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="MKT CAP"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:id="@+id/mktCap_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Mkt Cap"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    />
 
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="10">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="P/E RATIO"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="3"
+                    />
+
+                <TextView
+                    android:id="@+id/pe_value"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="p/e ratio"
+                    android:gravity="right"
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="2"
+                    />
 
                 <TextView
                     android:layout_width="0dp"
@@ -314,6 +290,47 @@
                     android:layout_weight="2"
                     />
 
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="DIV/YIELD"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="3"
+                    />
+
+                <TextView
+                    android:id="@+id/divYield_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="div/yield"
+                    android:gravity="right"
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="2"
+                    />
+
+
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -337,65 +354,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="2"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="4">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="P/E RATIO"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:id="@+id/pe_value"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="p/e ratio"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="DIV/YIELD"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:id="@+id/divYield_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="div/yield"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="30dp"
-                    android:layout_weight="1"
                     />
 
             </LinearLayout>

@@ -33,10 +33,14 @@ class MainViewModel : ViewModel(){
     val stockMetaListLiveData: LiveData<List<StockMeta>>
         get() = stockMetaList
 
+
+
 //Create LiveData for stockDetail
     private var stockDetails = MutableLiveData<StockDetails>()
     val stockDetailsLiveData : LiveData<StockDetails>
         get() = stockDetails
+
+
 
 //Create LiveData for stockRow
     private var stockPriceList = MediatorLiveData<List<StockPrice>>()
