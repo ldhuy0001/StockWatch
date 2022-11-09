@@ -15,8 +15,6 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.snackbar.Snackbar
 import java.math.RoundingMode
-import java.text.DecimalFormat
-import kotlin.math.roundToLong
 
 class OnePost : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -58,39 +56,45 @@ class OnePost : AppCompatActivity() {
             Log.d("testchart","ck1")
             for (i in it){
                 count++
-                entries.add(Entry(count*5f,i.low.toFloat()))
+                entries.add(Entry(count.toFloat(),i.low.toFloat()))
 //                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
             }
-            val vl = LineDataSet(entries,"$stockName ( $stockSymbol )")
 
-            Log.d("testchart","ck3a")
-            vl.setDrawValues(false)
-            Log.d("testchart","ck3b")
-            vl.setDrawFilled(true)
-            Log.d("testchart","ck3c")
-            vl.lineWidth = 3f
-            Log.d("testchart","ck3d")
-            vl.fillColor = Color.parseColor("#808080")
-            Log.d("testchart","ck3e")
-            vl.fillAlpha = Color.parseColor("#FF0000")
+//            TODO
+            val lineDataSet = LineDataSet(entries,"$stockName ( $stockSymbol )")
 
-            Log.d("testchart","ck4")
+
+            lineDataSet.setDrawValues(true)
+            lineDataSet.setDrawFilled(false)
+
+            lineDataSet.lineWidth = 2f
+            if (it[0].low < it[it.size-1].low ) {
+//                lineDataSet.fillColor = Color.GREEN
+                lineDataSet.color = Color.GREEN
+                lineDataSet.setCircleColor(Color.GREEN)
+            } else {
+//                lineDataSet.fillColor = Color.RED
+                lineDataSet.color = Color.RED
+                lineDataSet.setCircleColor(Color.RED)
+            }
+
+
+
             onePostBinding.lineChart.xAxis.labelRotationAngle = 0f
-            onePostBinding.lineChart.data = LineData(vl)
-            Log.d("testchart","ck5")
+            onePostBinding.lineChart.data = LineData(lineDataSet)
+
             onePostBinding.lineChart.axisRight.isEnabled = false
 //            onePostBinding.lineChart.xAxis.axisMaximum = j+0.1f
 //            onePostBinding.lineChart.xAxis.axisMaximum = 0.1f
-            Log.d("testchart","ck6")
+
             onePostBinding.lineChart.setTouchEnabled(true)
             onePostBinding.lineChart.setPinchZoom(true)
-            Log.d("testchart","ck7")
+
             onePostBinding.lineChart.description.text = "Minute"
-            onePostBinding.lineChart.setNoDataText("No forex yet!")
-            Log.d("testchart","ck8")
+
             onePostBinding.lineChart.animateX(1800, Easing.EaseInExpo)
-            Log.d("testchart","ck9")
-//            val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
+
+//            val markerView = CustomMarker(this@OnePost, R.layout.marker_view)
 //            onePostBinding.lineChart.marker = markerView
 
 //            val df = DecimalFormat("%.2f")
@@ -101,7 +105,7 @@ class OnePost : AppCompatActivity() {
 
 
             fun roundOffDecimal(number: String): String{
-               return number.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+                return number.toBigDecimal().setScale(2, RoundingMode.UP).toString()
             }
 
             Log.d("XXX", "$rounded")
@@ -133,7 +137,7 @@ class OnePost : AppCompatActivity() {
 
                 if (it.description == "None" || it.description.isEmpty()) {
                     onePostBinding.stockDescription.text =
-                    Html.fromHtml("<b>" + "Description: " + "</b>" + "N/A")
+                        Html.fromHtml("<b>" + "Description: " + "</b>" + "N/A")
                 } else onePostBinding.stockDescription.text =
                     Html.fromHtml("<b>" + "Description: " + "</b>" + it.description)
 
