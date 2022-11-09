@@ -100,7 +100,7 @@ class MainViewModel : ViewModel(){
             + Dispatchers.IO){
         stockPriceList.postValue(stockPriceRepository.getStockPrice(symbol))
     Log.d("stockPrice","here is stock details =========== \n $stockPriceList")
-    Log.d("stockPrice", "here is stock details value =========== \n ${stockPriceList.value}")
+    Log.d("testchart", "here is stock details value =========== \n ${stockPriceList.value}")
     }
 
 

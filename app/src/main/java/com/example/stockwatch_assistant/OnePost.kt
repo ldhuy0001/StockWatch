@@ -1,5 +1,6 @@
 package com.example.stockwatch_assistant
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
@@ -8,6 +9,10 @@ import android.view.View
 import androidx.activity.viewModels
 
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.snackbar.Snackbar
 
 class OnePost : AppCompatActivity() {
@@ -38,14 +43,55 @@ class OnePost : AppCompatActivity() {
 ////....
 //        dialog.dismiss()
 
-
         viewModel.netStockDetails(stockSymbol)
         viewModel.netStockPrice(stockSymbol)
-
+        Log.d("testchart","ck0")
 //        supportActionBar!!.title = "One Post"
         supportActionBar!!.title = stockSymbol
 
+        var count = 0
+        viewModel.stockPriceListLiveData.observe(this){
+            val entries = ArrayList<Entry>()
+            Log.d("testchart","ck1")
+            for (i in it){
+                count++
+                entries.add(Entry(count*5f,i.low.toFloat()))
+//                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
 
+            }
+            val vl = LineDataSet(entries,"$stockName ( $stockSymbol )")
+
+            Log.d("testchart","ck3a")
+            vl.setDrawValues(false)
+            Log.d("testchart","ck3b")
+            vl.setDrawFilled(true)
+            Log.d("testchart","ck3c")
+            vl.lineWidth = 3f
+            Log.d("testchart","ck3d")
+            vl.fillColor = Color.parseColor("#808080")
+            Log.d("testchart","ck3e")
+            vl.fillAlpha = Color.parseColor("#FF0000")
+
+            Log.d("testchart","ck4")
+            onePostBinding.lineChart.xAxis.labelRotationAngle = 0f
+            onePostBinding.lineChart.data = LineData(vl)
+            Log.d("testchart","ck5")
+            onePostBinding.lineChart.axisRight.isEnabled = false
+//            onePostBinding.lineChart.xAxis.axisMaximum = j+0.1f
+//            onePostBinding.lineChart.xAxis.axisMaximum = 0.1f
+            Log.d("testchart","ck6")
+            onePostBinding.lineChart.setTouchEnabled(true)
+            onePostBinding.lineChart.setPinchZoom(true)
+            Log.d("testchart","ck7")
+            onePostBinding.lineChart.description.text = "Minute"
+            onePostBinding.lineChart.setNoDataText("No forex yet!")
+            Log.d("testchart","ck8")
+            onePostBinding.lineChart.animateX(1800, Easing.EaseInExpo)
+            Log.d("testchart","ck9")
+//            val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
+//            onePostBinding.lineChart.marker = markerView
+        }
+        Log.d("testchart","ck10")
 
         viewModel.stockDetailsLiveData.observe(this) {
             if (it.isNotEmpty()) {
