@@ -110,7 +110,8 @@ class OnePost : AppCompatActivity() {
                 }
 
                 if (it.description == "None" || it.description.isEmpty()) {
-                    onePostBinding.stockDescription.text = "N/A"
+                    onePostBinding.stockDescription.text =
+                    Html.fromHtml("<b>" + "Description: " + "</b>" + "N/A")
                 } else onePostBinding.stockDescription.text =
                     Html.fromHtml("<b>" + "Description: " + "</b>" + it.description)
 

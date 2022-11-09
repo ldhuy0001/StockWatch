@@ -29,6 +29,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     val db = Firebase.firestore
 
+    private var initialFetch = true
+
 //    private var _bindingHome: FragmentHomeBinding? = null
 //    private val bindingHome get() = _bindingHome!!
 
@@ -70,25 +72,30 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
 
-        db.collection("Favorites")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+        Log.d("XXX", "$initialFetch")
 
-                    var test:StockMeta = StockMeta(symbol = document.data["stockSymbol"].toString(),
-                        name = document.data["stockName"].toString(), exchange = document.data["stockExchange"].toString())
-
-                    viewModel.addFavorite(test)
-
-
+        if (initialFetch) {
+            db.collection("Favorites")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d(
+                            "read",
+                            "${document.id} => ${document.data}, ${document.data["stockName"]}"
+                        )
+                        val stock: StockMeta = StockMeta(
+                            symbol = document.data["stockSymbol"].toString(),
+                            name = document.data["stockName"].toString(),
+                            exchange = document.data["stockExchange"].toString()
+                        )
+                        viewModel.addFavorite(stock)
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("read", "Error getting documents.", exception)
-            }
-
-
+                .addOnFailureListener { exception ->
+                    Log.w("read", "Error getting documents.", exception)
+                }
+        }
+        initialFetch = false
 
         return root
     }
@@ -106,12 +113,5 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 //            notifyItemRemoved(position)
 //        }
 
-
-
-
-
-
     }
-
-
 }

@@ -18,13 +18,24 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 import com.example.stockwatch_assistant.databinding.StockRowBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.tasks.await
 
 class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context) :
     ListAdapter<StockMeta, StockRowAdapter.ViewHolder>(StockDiff()) {
 
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
+
+    private val FavoriteCollectionRef = Firebase.firestore.collection("Favorites")
+
+//    private val reference = FirebaseFirestore.getInstance().getReference()
+
+//    private lateinit var database: DatabaseReference
+//
+//    val database = Firebase.database.reference
 
 
     var db = FirebaseFirestore.getInstance()
@@ -90,6 +101,47 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
                     Log.d("isFav", "removeItem")
 
 
+//                    val favoriteQuery = FavoriteCollectionRef
+
+                    db.collection("Favorites")
+                        .whereEqualTo("stockExchange", item.exchange)
+                        .whereEqualTo("stockName", item.name)
+                        .whereEqualTo("stockSymbol", item.symbol)
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                Log.d("query data", "${document.id} => ${document.data}")
+
+                                db.collection("Favorites")
+                                    .document(document.id)
+                                    .delete()
+                                    .addOnSuccessListener {
+                                        Log.d("delete", "fav delete success")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.d("delete", "fav deleting FAILED ")
+                                    }
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.w("query data", "Error query data.", exception)
+                        }
+
+
+
+
+
+
+
+//                        .where("stockExchange", item.exchange)
+//                        .where("stockName", item.name)
+//                        .where("stockSymbol", item.symbol)
+//                        .get()
+//                        .await()
+
+
+
+
 
 //                    db.collection("Favorites")
 //                        .document(photoMeta.firestoreID)
@@ -110,7 +162,6 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
                     Log.d("isFav", "addItem")
 
-
                     val user: MutableMap<String, Any> = HashMap()
                     user["stockName"] = item.name
                     user["stockSymbol"] = item.symbol
@@ -124,10 +175,6 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
                         .addOnFailureListener { e ->
                             Log.w("add", "Error adding document", e)
                         }
-
-
-
-
                 }
                 notifyItemChanged(position)
                 Log.d("isFav", "after click: ${viewModel.isFavorite(it)}")
