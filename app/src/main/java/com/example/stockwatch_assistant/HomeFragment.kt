@@ -4,8 +4,11 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -145,9 +148,50 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         initialFetch = false
 
         binding.logoutBut.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            AuthInit(viewModel, signInLauncher)
-            viewModel.emptyFavorite()
+
+
+
+            showPopup(binding.logoutBut)
+
+
         }
+
+
+
+
+
+
+
     }
+
+    private fun showPopup(view: View) {
+        val popup = PopupMenu(requireContext(), view)
+        popup.inflate(R.menu.header_menu)
+
+        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+            when (item!!.itemId) {
+                R.id.header1 -> {
+                    Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+                }
+                R.id.header2 -> {
+                    Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+                }
+                R.id.header3 -> {
+                    Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+                    FirebaseAuth.getInstance().signOut()
+                    AuthInit(viewModel, signInLauncher)
+                    viewModel.emptyFavorite()
+                }
+            }
+
+            true
+        })
+
+        popup.show()
+
+
+    }
+
+
 }
