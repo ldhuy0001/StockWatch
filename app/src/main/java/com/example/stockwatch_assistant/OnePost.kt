@@ -60,7 +60,6 @@ class OnePost : AppCompatActivity() {
                 count++
                 entries.add(Entry(count*5f,i.low.toFloat()))
 //                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
-
             }
             val vl = LineDataSet(entries,"$stockName ( $stockSymbol )")
 
@@ -106,9 +105,6 @@ class OnePost : AppCompatActivity() {
             }
 
             Log.d("XXX", "$rounded")
-//            roundOffDecimal(number= it[0].open)
-
-//            it[0].open.toDouble().roundToLong()
 
             onePostBinding.openValue.text = roundOffDecimal(number= it[0].open)
             onePostBinding.highValue.text = roundOffDecimal(number= it[0].high)
@@ -117,11 +113,6 @@ class OnePost : AppCompatActivity() {
 
         }
         Log.d("testchart","ck10")
-
-
-
-
-
 
 
         viewModel.stockDetailsLiveData.observe(this) {
@@ -150,8 +141,6 @@ class OnePost : AppCompatActivity() {
                     "onePost",
                     "${it.dividendYield} ${it.peRatio} ${it.weekHigh52} ${it.weekLow52}"
                 )
-
-
 
                 if (it.dividendYield == "None" || it.dividendYield == "0") {
                     onePostBinding.divYieldValue.text = "N/A"

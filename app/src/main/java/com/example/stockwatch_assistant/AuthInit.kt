@@ -18,8 +18,10 @@ class AuthInit(viewModel: MainViewModel, signInLauncher: ActivityResultLauncher<
                 .setIsSmartLockEnabled(false)
                 .build()
             signInLauncher.launch(signInIntent)
+
         } else{
             Log.d("ck", "XXX user ${user.displayName} email ${user.email}")
+            viewModel.updateUser()
         }
     }
 }

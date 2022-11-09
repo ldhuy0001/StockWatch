@@ -1,10 +1,12 @@
 package com.example.stockwatch_assistant
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,8 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
 import com.example.stockwatch_assistant.model.Stock
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -28,21 +32,57 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private lateinit var adapter: StockRowAdapter
 
     val db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
 
     private var initialFetch = true
 
-//    private var _bindingHome: FragmentHomeBinding? = null
-//    private val bindingHome get() = _bindingHome!!
+//    private val signInLauncher =
+//        registerForActivityResult(FirebaseAuthUIActivityResultContract()){
+//        }
 
 
+    private val signInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.updateUser()
 
+            val user = FirebaseAuth.getInstance().currentUser!!.displayName
+            viewModel.updateUserName(user!!)
+
+            db.collection("Favorites")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+                        val stock: StockMeta = StockMeta(
+                            symbol = document.data["stockSymbol"].toString(),
+                            name = document.data["stockName"].toString(),
+                            exchange = document.data["stockExchange"].toString()
+                        )
+                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+                            viewModel.addFavorite(stock)
+                        }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("read", "Error getting documents.", exception)
+                }
+
+
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            // ...
+            Log.d("MainActivity", "sign in failed ${result}")
+        }
+    }
 
     companion object {
         fun newInstance(): HomeFragment {
             return HomeFragment()
         }
     }
-
 
 
     override fun onCreateView(
@@ -54,8 +94,17 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         val root: View = binding.root
 
 
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel.observeUserName().observe(viewLifecycleOwner){
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
+
+            Log.d("XXX", "userName: $it")
+
         }
 
         adapter = StockRowAdapter(viewModel, requireContext())
@@ -71,7 +120,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             adapter.notifyDataSetChanged()
         }
 
-
         Log.d("XXX", "$initialFetch")
 
         if (initialFetch) {
@@ -79,16 +127,15 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        Log.d(
-                            "read",
-                            "${document.id} => ${document.data}, ${document.data["stockName"]}"
-                        )
+                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
                         val stock: StockMeta = StockMeta(
                             symbol = document.data["stockSymbol"].toString(),
                             name = document.data["stockName"].toString(),
                             exchange = document.data["stockExchange"].toString()
                         )
-                        viewModel.addFavorite(stock)
+                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+                            viewModel.addFavorite(stock)
+                        }
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -97,21 +144,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
         initialFetch = false
 
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-
-//        rowSubredditBinding.rowFav.setOnClickListener {
-//            val position = getPos(this)
-//            val item = viewModel.getFavoriteItem(position)
-//            viewModel.removeFavorite(item)
-//            rowSubredditBinding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-//            notifyItemRemoved(position)
-//        }
-
+        binding.logoutBut.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            AuthInit(viewModel, signInLauncher)
+            viewModel.emptyFavorite()
+        }
     }
 }

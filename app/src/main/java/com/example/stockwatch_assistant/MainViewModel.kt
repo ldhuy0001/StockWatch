@@ -56,9 +56,16 @@ class MainViewModel : ViewModel(){
     //firebase
     private val dbHelp = ViewModelDBHelper()
 
+    private var firebaseAuthLiveData = FirestoreAuthLiveData()
+
     fun fetchStockMeta() {
 //        dbHelp.fetchInitialStocks(favoritesListMutableLiveData)
     }
+
+    fun updateUserName(string:String){
+        username.value = string
+    }
+
 
     fun observeUserName(): LiveData<String>{
         return username
@@ -126,6 +133,20 @@ class MainViewModel : ViewModel(){
 
     fun getFavoriteItem(position: Int): StockMeta {
         return fList[position]
+    }
+
+
+
+    fun emptyFavorite() {
+        fList.clear()
+        favoritesListMutableLiveData.postValue(fList)
+
+
+    }
+
+
+    fun updateUser() {
+        firebaseAuthLiveData.updateUser()
     }
 
 

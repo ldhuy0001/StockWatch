@@ -36,12 +36,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
 //Set up signInLauncher
     private val signInLauncher =
         registerForActivityResult(FirebaseAuthUIActivityResultContract()){
-
         }
 
 //add simple divider
@@ -94,7 +91,6 @@ class MainActivity : AppCompatActivity() {
 
 
     viewModel.netPosts()
-
     replaceFragment(homeFragment)
 
     //youtube method
@@ -106,24 +102,6 @@ class MainActivity : AppCompatActivity() {
         }
         true
     }
-
-    //professor method
-//    val navView: BottomNavigationView = binding.bottomNavigation
-//
-//    val navController = findNavController(R.id.fragment_container)
-//    // Passing each menu ID as a set of Ids because each
-//    // menu should be considered as top level destinations.
-//
-//    //need fix
-//    val appBarConfiguration = AppBarConfiguration(
-//        setOf(
-//            R.id., R.id.navigation_select, R.id.navigation_favorites
-//        )
-//    )
-//    setupActionBarWithNavController(navController, appBarConfiguration)
-//    navView.setupWithNavController(navController)
-//    // Navigation sets the title to "Simple"
-//    supportActionBar?.title = "Simple Album List"
 
 
     }

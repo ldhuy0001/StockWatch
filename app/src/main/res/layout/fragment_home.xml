@@ -27,6 +27,14 @@
             android:textSize="20sp"
             android:layout_weight="1"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logoutBut"
+            android:layout_margin="16dp"
+            android:text="Logout"/>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

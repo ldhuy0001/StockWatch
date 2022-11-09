@@ -17,6 +17,7 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
 import com.example.stockwatch_assistant.databinding.StockRowBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -162,7 +163,17 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
                     Log.d("isFav", "addItem")
 
+
+                    val uid = FirebaseAuth.getInstance().currentUser!!.uid
+                    Log.d("isFav", "uid: $uid")
+
+                    val docid = db.collection("Favorites").document().id
+                    Log.d("isFav", "docid: $docid")
+
                     val user: MutableMap<String, Any> = HashMap()
+                    user["userName"] = viewModel.observeUserName().value!!
+                    user["userId"] = uid
+                    user["docId"] = docid
                     user["stockName"] = item.name
                     user["stockSymbol"] = item.symbol
                     user["stockExchange"] = item.exchange
