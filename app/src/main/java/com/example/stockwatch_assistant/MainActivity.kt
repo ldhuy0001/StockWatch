@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val allStocksFragment = AllStocksFragment()
     private val newsFragment = NewsFragment()
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, fragment)
             transaction.commit()

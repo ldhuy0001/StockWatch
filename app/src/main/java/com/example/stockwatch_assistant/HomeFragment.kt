@@ -38,6 +38,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private lateinit var auth: FirebaseAuth
 
     private var initialFetch = true
+    private val changeNameFragment = ChangeNameFragment()
 
 //    private val signInLauncher =
 //        registerForActivityResult(FirebaseAuthUIActivityResultContract()){
@@ -64,6 +65,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         )
                         if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
                             viewModel.addFavorite(stock)
+
+                            Log.d("XXX", "add from siginInLauncher")
                         }
                     }
                 }
@@ -95,8 +98,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
         return root
     }
 
@@ -105,7 +106,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         viewModel.observeUserName().observe(viewLifecycleOwner){
             binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
-
             Log.d("XXX", "userName: $it")
 
         }
@@ -138,6 +138,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         )
                         if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
                             viewModel.addFavorite(stock)
+                            Log.d("XXX", "add from initial fetch")
                         }
                     }
                 }
@@ -148,20 +149,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         initialFetch = false
 
         binding.logoutBut.setOnClickListener {
-
-
-
             showPopup(binding.logoutBut)
-
-
         }
-
-
-
-
-
-
-
     }
 
     private fun showPopup(view: View) {
@@ -173,6 +162,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             when (item!!.itemId) {
                 R.id.header1 -> {
                     Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+                    (activity as MainActivity).replaceFragment(changeNameFragment)
+
                 }
                 R.id.header2 -> {
                     Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
@@ -184,7 +175,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     viewModel.emptyFavorite()
                 }
             }
-
             true
         })
 
