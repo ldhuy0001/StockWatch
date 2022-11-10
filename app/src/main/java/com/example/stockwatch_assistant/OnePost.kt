@@ -170,15 +170,6 @@ class OnePost : AppCompatActivity() {
                 Snackbar.make(onePostBinding.root
                     ,"API call reachs limitation. \nPlease try again in next minute!!"
                     ,Snackbar.LENGTH_SHORT).show()
-
-
-
-
-
-
-
-
-
             }
         }
 
@@ -197,14 +188,11 @@ class OnePost : AppCompatActivity() {
 //        }
 
         viewModel.stockNewsLiveData.observe(this){
+
                 list -> adapter.submitList(list)
             Log.d("stockNews","Here is list in stockNews \n $list")
             adapter.notifyDataSetChanged()
         }
-
-
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
