@@ -1,11 +1,11 @@
 package com.example.stockwatch_assistant
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
@@ -25,6 +25,8 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
     inner class ViewHolder(val newsBinding: NewsRowBinding) :
         RecyclerView.ViewHolder(newsBinding.root) {
         init {
+
+
         }
 
     }
@@ -77,6 +79,20 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
             param.setMargins(32, 8, 8, 0)
             newsBinding.title.layoutParams = param
         }
+
+        newsBinding.root.setOnClickListener {
+            var intent = Intent(context, OneNews::class.java)
+
+            intent.putExtra("stockURL", item.url)
+
+            context.startActivity(intent)
+        }
+
+
+
+
+
+
     }
 
 
