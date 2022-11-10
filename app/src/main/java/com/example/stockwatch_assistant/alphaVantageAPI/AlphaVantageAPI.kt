@@ -138,7 +138,7 @@ interface AlphaVantageAPI {
                 16-> return "2GM3WMNE96JNFKK6"
                 17-> return "XTV5KHDB5AL1MAQV"
                 18-> return "ZLWW2UUXX1M2LSHE"
-                
+
                 else -> return ""
             }
 

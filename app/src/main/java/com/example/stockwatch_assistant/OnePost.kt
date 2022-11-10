@@ -136,10 +136,10 @@ class OnePost : AppCompatActivity() {
                 onePostBinding.stockIndustry.text =
                     Html.fromHtml("<b>" + "Industry: " + "</b>" + it.industry)
 
-                if (onePostBinding.stockName.text == stockName) {
-                    onePostBinding.indeterminateBar.visibility = View.INVISIBLE
-                    onePostBinding.indeterminateBarBackground.visibility = View.INVISIBLE
-                }
+//                if (onePostBinding.stockName.text == stockName) {
+//                    onePostBinding.indeterminateBar.visibility = View.INVISIBLE
+//                    onePostBinding.indeterminateBarBackground.visibility = View.INVISIBLE
+//                }
 
                 if (it.description == "None" || it.description.isEmpty()) {
                     onePostBinding.stockDescription.text =
