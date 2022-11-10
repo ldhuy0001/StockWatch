@@ -48,6 +48,11 @@ class MainViewModel : ViewModel(){
     val generalNewsLiveData : LiveData<List<News>>
         get() = generalNews
 
+//Create LiveData for GeneralNews
+    private var stockNews = MutableLiveData<List<News>>()
+    val stockNewsLiveData : LiveData<List<News>>
+        get() = stockNews
+
 //favorites
     private var fList: MutableList<StockMeta> = mutableListOf()
     private var favoritesListMutableLiveData = MutableLiveData<List<StockMeta>>()
@@ -120,6 +125,13 @@ class MainViewModel : ViewModel(){
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
         generalNews.postValue(stockNewsRepository.getGeneralNews())
+    }
+
+//Fetch Stock News
+    fun netStockNews(symbol: String) = viewModelScope.launch (
+        context = viewModelScope.coroutineContext
+                + Dispatchers.IO) {
+        stockNews.postValue(stockNewsRepository.getStockNews(symbol))
 
     }
 
