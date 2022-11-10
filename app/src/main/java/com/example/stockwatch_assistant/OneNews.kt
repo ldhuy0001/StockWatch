@@ -2,6 +2,8 @@ package com.example.stockwatch_assistant
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.webkit.WebChromeClient
+import android.webkit.WebViewClient
 
 import com.example.stockwatch_assistant.databinding.ActivityOneNewsBinding
 
@@ -19,10 +21,13 @@ class OneNews : AppCompatActivity() {
 
 
 
-        val newsURL: String = intent.getStringExtra("stockURL").toString()
+        val newsURL: String = intent.getStringExtra("stockNewsURL").toString()
+        val newsTitle: String = intent.getStringExtra("stockNewsTitle").toString()
 
-        supportActionBar!!.title = "yow"
+        supportActionBar!!.title = newsTitle
 
+//        oneNewsBinding.webview.webChromeClient = WebChromeClient()
+        oneNewsBinding.webview.webViewClient = WebViewClient()
         oneNewsBinding.webview.loadUrl(newsURL)
 
 

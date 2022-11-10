@@ -83,7 +83,8 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
         newsBinding.root.setOnClickListener {
             var intent = Intent(context, OneNews::class.java)
 
-            intent.putExtra("stockURL", item.url)
+            intent.putExtra("stockNewsURL", item.url)
+            intent.putExtra("stockNewsTitle", item.title)
 
             context.startActivity(intent)
         }
