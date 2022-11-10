@@ -73,16 +73,22 @@ class OnePost : AppCompatActivity() {
             lineDataSet.setDrawFilled(false)
 
             lineDataSet.lineWidth = 2f
-            if (it[0].low < it[it.size-1].low ) {
-//                lineDataSet.fillColor = Color.GREEN
-                lineDataSet.color = Color.GREEN
-                lineDataSet.setCircleColor(Color.GREEN)
-            } else {
-//                lineDataSet.fillColor = Color.RED
-                lineDataSet.color = Color.RED
-                lineDataSet.setCircleColor(Color.RED)
-            }
+            if (it.isNotEmpty()){
+                if (it[0].low < it[it.size-1].low ) {
+    //                lineDataSet.fillColor = Color.GREEN
+                    lineDataSet.color = Color.GREEN
+                    lineDataSet.setCircleColor(Color.GREEN)
+                } else {
+    //                lineDataSet.fillColor = Color.RED
+                    lineDataSet.color = Color.RED
+                    lineDataSet.setCircleColor(Color.RED)
+                }
 
+                onePostBinding.openValue.text = roundOffDecimal(number= it[0].open)
+                onePostBinding.highValue.text = roundOffDecimal(number= it[0].high)
+                onePostBinding.lowValue.text = roundOffDecimal(number= it[0].low)
+                onePostBinding.volumeValue.text = roundOffDecimal(number= it[0].volume)
+            }
 
 
             onePostBinding.lineChart.xAxis.labelRotationAngle = 0f
@@ -109,16 +115,11 @@ class OnePost : AppCompatActivity() {
             val rounded = number.toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
 
 
-            fun roundOffDecimal(number: String): String{
-                return number.toBigDecimal().setScale(2, RoundingMode.UP).toString()
-            }
+
 
             Log.d("XXX", "$rounded")
 
-            onePostBinding.openValue.text = roundOffDecimal(number= it[0].open)
-            onePostBinding.highValue.text = roundOffDecimal(number= it[0].high)
-            onePostBinding.lowValue.text = roundOffDecimal(number= it[0].low)
-            onePostBinding.volumeValue.text = roundOffDecimal(number= it[0].volume)
+
 
         }
         Log.d("testchart","ck10")
@@ -201,5 +202,9 @@ class OnePost : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    fun roundOffDecimal(number: String): String{
+        return number.toBigDecimal().setScale(2, RoundingMode.UP).toString()
     }
 }

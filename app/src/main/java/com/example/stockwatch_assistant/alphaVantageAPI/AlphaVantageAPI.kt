@@ -1,6 +1,7 @@
 package com.example.stockwatch_assistant.alphaVantageAPI
 
 import android.text.SpannableString
+import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
@@ -21,21 +22,14 @@ interface AlphaVantageAPI {
 
     @GET("/query?function=LISTING_STATUS")
     suspend fun getAllActiveListingStocks (
-        @Query("apikey") apikey: String = API_KEY_FOR_ALL_STOCKS
+        @Query("apikey") apikey: String = findAPIKeyAt(count++%15)
     ) : ResponseBody
 
 //https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo
     @GET("/query?function=OVERVIEW")
     suspend fun getStockDetailsFromAPI(
         @Query("symbol") symbol : String,
-        @Query("apikey") apikey: String
-        = when((System.currentTimeMillis()/1000%60/15).toString()){
-            "0" -> API_KEY_FORINFO_0
-            "1" -> API_KEY_FORINFO_1
-            "2" -> API_KEY_FORINFO_2
-            "3" -> API_KEY_FORINFO_3
-            else -> ({}).toString()
-        }
+        @Query("apikey") apikey: String = findAPIKeyAt(count++%15)
     ) : StockDetails
 
 //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY
@@ -46,20 +40,13 @@ interface AlphaVantageAPI {
         @Query("symbol") symbol: String,
         @Query("datatype") datatype : String = "csv",
         @Query("interval") interval : String = "5min",
-        @Query("apikey") apikey: String
-        = when((System.currentTimeMillis()/1000%60/15).toString()){
-            "0" -> API_KEY_FORGRAPH_0
-            "1" -> API_KEY_FORGRAPH_1
-            "2" -> API_KEY_FORGRAPH_2
-            "3" -> API_KEY_FORGRAPH_3
-            else -> ({}).toString()
-        }
+        @Query("apikey") apikey: String = findAPIKeyAt(count++%15)
     ) : ResponseBody
 
 //https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=MY7UOXNLMVAJOBL6
     @GET("query?function=NEWS_SENTIMENT")
     suspend fun getGeneralNews (
-        @Query("apikey") apikey: String = API_KEY_FOR_ALL_STOCKS
+        @Query("apikey") apikey: String = findAPIKeyAt(count++%15)
     ) : ListingFeed
 
 //https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&limit=10&apikey=MY7UOXNLMVAJOBL6
@@ -67,21 +54,15 @@ interface AlphaVantageAPI {
     suspend fun getNewsForStock (
         @Query("tickers") tickers : String,
         @Query("limit") limit : String = "10",
-        @Query("apikey") apikey: String
-        = when((System.currentTimeMillis()/1000%60/15).toString()){
-            "0" -> API_KEY_FORNEWS_0
-            "1" -> API_KEY_FORNEWS_1
-            "2" -> API_KEY_FORNEWS_2
-            "3" -> API_KEY_FORNEWS_3
-            else -> ({}).toString()
-        }
+        @Query("apikey") apikey: String = findAPIKeyAt(count++%15)
     ) : ListingFeed
 
 //https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&limit=10&apikey=MY7UOXNLMVAJOBL6
     @GET("query?function=NEWS_SENTIMENT")
     suspend fun getNewsWithCategory (
         @Query("topics") topics : String,
-        @Query("apikey") apikey: String = API_KEY_FOR_CATEGORY_NEWS
+        @Query("apikey") apikey: String = findAPIKeyAt(count++%15)
+//            API_KEY_FOR_CATEGORY_NEWS
     ) : ListingFeed
 
     class ListingFeed(
@@ -89,24 +70,26 @@ interface AlphaVantageAPI {
     )
 
     companion object {
-        const val API_KEY_FORINFO_0 = "GPO2P34U9Y7A7HZX"
-        const val API_KEY_FORGRAPH_0 = "4MZVP7YPQKC4UCXM"
-        const val API_KEY_FORNEWS_0 = "MY7UOXNLMVAJOBL6"
+//        const val API_KEY_FORINFO_0 = "GPO2P34U9Y7A7HZX"
+//        const val API_KEY_FORGRAPH_0 = "4MZVP7YPQKC4UCXM"
+//        const val API_KEY_FORNEWS_0 = "MY7UOXNLMVAJOBL6"
+//
+//        const val API_KEY_FORINFO_1 = "CUZFO32ID30TEUX6"
+//        const val API_KEY_FORGRAPH_1 = "K5EMMM6BVQCN3JU5"
+//        const val API_KEY_FORNEWS_1 = "E55T5S14GV1NN2I3"
+//
+//        const val API_KEY_FORINFO_2 = "QWWI53Q0A5XH00RC"
+//        const val API_KEY_FORGRAPH_2 = "5FG1ZTL7HT3NSBN9"
+//        const val API_KEY_FORNEWS_2 = "I6MIN9Q7N3UD1L8K"
+//
+//        const val API_KEY_FORINFO_3 = "IMAOA9LVMDPN229X"
+//        const val API_KEY_FORGRAPH_3 = "8R2XN1FJNE462AU4"
+//        const val API_KEY_FORNEWS_3 = "C4VZ3V3IA7D3WXVI"
+//
+//        const val API_KEY_FOR_ALL_STOCKS = "9UF22PMWEV9BPYJ9"
+//        const val API_KEY_FOR_CATEGORY_NEWS = "Z7B9H271PNLIOWHP"
 
-        const val API_KEY_FORINFO_1 = "CUZFO32ID30TEUX6"
-        const val API_KEY_FORGRAPH_1 = "K5EMMM6BVQCN3JU5"
-        const val API_KEY_FORNEWS_1 = "E55T5S14GV1NN2I3"
-
-        const val API_KEY_FORINFO_2 = "QWWI53Q0A5XH00RC"
-        const val API_KEY_FORGRAPH_2 = "5FG1ZTL7HT3NSBN9"
-        const val API_KEY_FORNEWS_2 = "I6MIN9Q7N3UD1L8K"
-
-        const val API_KEY_FORINFO_3 = "IMAOA9LVMDPN229X"
-        const val API_KEY_FORGRAPH_3 = "8R2XN1FJNE462AU4"
-        const val API_KEY_FORNEWS_3 = "C4VZ3V3IA7D3WXVI"
-
-        const val API_KEY_FOR_ALL_STOCKS = "9UF22PMWEV9BPYJ9"
-        const val API_KEY_FOR_CATEGORY_NEWS = "Z7B9H271PNLIOWHP"
+        var count = 0
 
         const val BASE_URL = "https://alphavantage.co"
 
@@ -114,6 +97,30 @@ interface AlphaVantageAPI {
             .scheme("https")
             .host("www.alphavantage.co")
             .build()
+
+        fun findAPIKeyAt(count: Int) :String{
+            Log.d("count","count ================ $count")
+            when (count) {
+                0 -> return "GPO2P34U9Y7A7HZX"
+                1 -> return "4MZVP7YPQKC4UCXM"
+                2 -> return "MY7UOXNLMVAJOBL6"
+                3 -> return "CUZFO32ID30TEUX6"
+                4 -> return "K5EMMM6BVQCN3JU5"
+                5 -> return "E55T5S14GV1NN2I3"
+                6 -> return "QWWI53Q0A5XH00RC"
+                7 -> return "5FG1ZTL7HT3NSBN9"
+                8 -> return "I6MIN9Q7N3UD1L8K"
+                9 -> return "IMAOA9LVMDPN229X"
+                10-> return "8R2XN1FJNE462AU4"
+                11-> return "C4VZ3V3IA7D3WXVI"
+                12-> return "9UF22PMWEV9BPYJ9"
+                13-> return "Z7B9H271PNLIOWHP"
+                14-> return "YO8GWZOX68E9XL6V"
+                else -> return ""
+            }
+
+        }
+
 
 
         //create unique url for csv file
