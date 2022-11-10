@@ -2,7 +2,9 @@ package com.example.stockwatch_assistant
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.webkit.WebViewClient
 
 import com.example.stockwatch_assistant.databinding.ActivityOneNewsBinding
@@ -27,9 +29,17 @@ class OneNews : AppCompatActivity() {
         supportActionBar!!.title = newsTitle
 
 //        oneNewsBinding.webview.webChromeClient = WebChromeClient()
-        oneNewsBinding.webview.webViewClient = WebViewClient()
-        oneNewsBinding.webview.loadUrl(newsURL)
 
+
+
+        val client = object : WebViewClient() {
+            override fun onPageFinished(view:WebView?, url:String?) {
+                oneNewsBinding.progressBar.visibility = View.INVISIBLE
+            }
+        }
+
+        oneNewsBinding.webview.webViewClient = client
+        oneNewsBinding.webview.loadUrl(newsURL)
 
     }
 
