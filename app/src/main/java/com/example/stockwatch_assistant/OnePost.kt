@@ -7,6 +7,7 @@ import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
 import com.github.mikephil.charting.animation.Easing
@@ -18,6 +19,8 @@ import java.math.RoundingMode
 
 class OnePost : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
+
+    private lateinit var adapter: NewsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,8 +170,41 @@ class OnePost : AppCompatActivity() {
                 Snackbar.make(onePostBinding.root
                     ,"API call reachs limitation. \nPlease try again in next minute!!"
                     ,Snackbar.LENGTH_SHORT).show()
+
+
+
+
+
+
+
+
+
             }
         }
+
+
+        adapter = NewsAdapter(viewModel = viewModel, context = this)
+        onePostBinding.recyclerView.layoutManager = LinearLayoutManager(onePostBinding.recyclerView.context)
+        onePostBinding.recyclerView.adapter = adapter
+
+
+
+//        initRecyclerViewDividers(binding.recyclerView)
+
+//        viewModel.observe(viewLifecycleOwner){
+//                list -> adapter.submitList(list)
+//            adapter.notifyDataSetChanged()
+//        }
+
+        viewModel.stockNewsLiveData.observe(this){
+                list -> adapter.submitList(list)
+            Log.d("stockNews","Here is list in stockNews \n $list")
+            adapter.notifyDataSetChanged()
+        }
+
+
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

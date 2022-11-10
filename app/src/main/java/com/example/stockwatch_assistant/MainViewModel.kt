@@ -48,7 +48,7 @@ class MainViewModel : ViewModel(){
     val generalNewsLiveData : LiveData<List<News>>
         get() = generalNews
 
-//Create LiveData for GeneralNews
+//Create LiveData for StockNews
     private var stockNews = MutableLiveData<List<News>>()
     val stockNewsLiveData : LiveData<List<News>>
         get() = stockNews

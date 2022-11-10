@@ -62,8 +62,6 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
         binding.recyclerView.layoutManager = LinearLayoutManager(binding.recyclerView.context)
         binding.recyclerView.adapter = adapter
 
-//        binding.recyclerView.setEmptyView()
-
         initRecyclerViewDividers(binding.recyclerView)
 
 
