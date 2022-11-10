@@ -45,44 +45,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 //        }
 
 
-    private val signInLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.updateUser()
 
-            val user = FirebaseAuth.getInstance().currentUser!!.displayName
-            viewModel.updateUserName(user!!)
-
-            db.collection("Favorites")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
-                        val stock: StockMeta = StockMeta(
-                            symbol = document.data["stockSymbol"].toString(),
-                            name = document.data["stockName"].toString(),
-                            exchange = document.data["stockExchange"].toString()
-                        )
-                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
-                            viewModel.addFavorite(stock)
-
-                            Log.d("XXX", "add from siginInLauncher")
-                        }
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("read", "Error getting documents.", exception)
-                }
-
-
-        } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
-            Log.d("MainActivity", "sign in failed ${result}")
-        }
-    }
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -98,6 +61,77 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
+        val signInLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.updateUser()
+
+                val user = FirebaseAuth.getInstance().currentUser!!.displayName
+                viewModel.updateUserName(user!!)
+
+                db.collection("Favorites")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        for (document in result) {
+                            Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+                            val stock: StockMeta = StockMeta(
+                                symbol = document.data["stockSymbol"].toString(),
+                                name = document.data["stockName"].toString(),
+                                exchange = document.data["stockExchange"].toString()
+                            )
+                            if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+                                viewModel.addFavorite(stock)
+
+                                Log.d("XXX", "add from siginInLauncher")
+                            }
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.w("read", "Error getting documents.", exception)
+                    }
+
+
+            } else {
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+                Log.d("MainActivity", "sign in failed ${result}")
+            }
+        }
+
+
+        fun showPopup(view: View) {
+            val popup = PopupMenu(requireContext(), view)
+            popup.inflate(R.menu.header_menu)
+
+            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+                when (item!!.itemId) {
+                    R.id.header1 -> {
+                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+                        (activity as MainActivity).replaceFragment(changeNameFragment)
+
+                    }
+                    R.id.header2 -> {
+                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.header3 -> {
+                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+                        FirebaseAuth.getInstance().signOut()
+                        AuthInit(viewModel, signInLauncher)
+                        viewModel.emptyFavorite()
+                    }
+                }
+                true
+            })
+            popup.show()
+
+        }
+
+
 
 
         binding.logoutBut.setOnClickListener {
@@ -159,33 +193,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     }
 
-    private fun showPopup(view: View) {
-        val popup = PopupMenu(requireContext(), view)
-        popup.inflate(R.menu.header_menu)
 
-        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
-
-            when (item!!.itemId) {
-                R.id.header1 -> {
-                    Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
-                    (activity as MainActivity).replaceFragment(changeNameFragment)
-
-                }
-                R.id.header2 -> {
-                    Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
-                }
-                R.id.header3 -> {
-                    Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
-                    FirebaseAuth.getInstance().signOut()
-                    AuthInit(viewModel, signInLauncher)
-                    viewModel.emptyFavorite()
-                }
-            }
-            true
-        })
-        popup.show()
-
-    }
 
 
 }
