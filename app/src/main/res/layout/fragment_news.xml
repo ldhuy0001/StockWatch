@@ -6,10 +6,11 @@
     tools:context=".NewsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="news fragment"
-        android:textSize="36sp"/>
+        android:textSize="36sp"
+        android:id="@+id/rvNews"/>
 
 </FrameLayout>

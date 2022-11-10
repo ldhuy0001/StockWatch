@@ -1,25 +1,15 @@
 package com.example.stockwatch_assistant
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -95,7 +85,8 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
-    viewModel.netPosts()
+    viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
+    viewModel.netGeneralNews() //Fetch General News
     replaceFragment(homeFragment)
 
     //youtube method

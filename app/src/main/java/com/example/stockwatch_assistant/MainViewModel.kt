@@ -6,24 +6,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import com.example.stockwatch_assistant.alphaVantageAPI.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 
 class MainViewModel : ViewModel(){
 
     private lateinit var stockListFetchedFromAPI: List<StockMeta>
+
+//All CSV list here
     private val alphaVantageApiForCSV = AlphaVantageAPI.createURLForCSV()
     private val stockMetaRepository = StockMetaRepository(alphaVantageApiForCSV)
-
     private val stockPriceRepository = StockPriceRepository(alphaVantageApiForCSV)
 
 //    private lateinit var stockDetailFetchedFromAPI: LiveData<StockDetails>
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
+    private val stockNewsRepository = NewsRepository(alphaVantageAPIForJSON)
 
 
     private var username = MutableLiveData("Empty!")
@@ -33,19 +33,20 @@ class MainViewModel : ViewModel(){
     val stockMetaListLiveData: LiveData<List<StockMeta>>
         get() = stockMetaList
 
-
-
 //Create LiveData for stockDetail
     private var stockDetails = MutableLiveData<StockDetails>()
     val stockDetailsLiveData : LiveData<StockDetails>
         get() = stockDetails
 
-
-
 //Create LiveData for stockRow
     private var stockPriceList = MediatorLiveData<List<StockPrice>>()
     val stockPriceListLiveData: LiveData<List<StockPrice>>
         get() = stockPriceList
+
+//Create LiveData for GeneralNews
+    private var generalNews = MutableLiveData<List<News>>()
+    val generalNewsLiveData : LiveData<List<News>>
+        get() = generalNews
 
 //favorites
     private var fList: MutableList<StockMeta> = mutableListOf()
@@ -114,7 +115,13 @@ class MainViewModel : ViewModel(){
     Log.d("testchart", "here is stock details value =========== \n ${stockPriceList.value}")
     }
 
+//Fetch General News
+    fun netGeneralNews() = viewModelScope.launch (
+        context = viewModelScope.coroutineContext
+                + Dispatchers.IO) {
+        generalNews.postValue(stockNewsRepository.getGeneralNews())
 
+    }
 
     //favorites stuff
     fun isFavorite(item: StockMeta): Boolean {

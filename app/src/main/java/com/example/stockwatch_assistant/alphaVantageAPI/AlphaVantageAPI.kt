@@ -9,11 +9,9 @@ import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import java.lang.reflect.Type
 
@@ -57,6 +55,22 @@ interface AlphaVantageAPI {
         }
     ) : ResponseBody
 
+//https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=MY7UOXNLMVAJOBL6
+    @GET("query?function=NEWS_SENTIMENT")
+    suspend fun getGeneralNews (
+        @Query("apikey") apikey: String = API_KEY_FOR_ALL_STOCKS
+    ) : ListingFeed
+
+//https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL,TSLA&topics=technology&apikey=MY7UOXNLMVAJOBL6
+//    @GET("query?function=NEWS_SENTIMENT")
+//    suspend fun getNewsForFavStock (
+//
+//    )
+
+    class ListingFeed(
+        val feed: List<News>
+    )
+
     companion object {
         const val API_KEY_FORINFO_0 = "GPO2P34U9Y7A7HZX"
         const val API_KEY_FORGRAPH_0 = "4MZVP7YPQKC4UCXM"
@@ -72,6 +86,11 @@ interface AlphaVantageAPI {
 
         const val API_KEY_FOR_ALL_STOCKS = "9UF22PMWEV9BPYJ9"
 
+//Spare API_KEY
+//        MY7UOXNLMVAJOBL6
+//        E55T5S14GV1NN2I3
+//        I6MIN9Q7N3UD1L8K
+//        C4VZ3V3IA7D3WXVI
 
         const val BASE_URL = "https://alphavantage.co"
 
