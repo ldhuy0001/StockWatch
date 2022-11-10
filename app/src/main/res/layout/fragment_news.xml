@@ -21,8 +21,74 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout"
             />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@id/news">
+
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_technology"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_margin="6dp"
+                    android:text="technology">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_life_sciences"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_margin="6dp"
+                    android:text="life_sciences">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_finance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_margin="6dp"
+                    android:text="finance">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_manufacturing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_margin="6dp"
+                    android:text="manufacturing">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_economy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_margin="6dp"
+                    android:text="economy_macro">
+                </Button>
+        </LinearLayout>
+
+        </HorizontalScrollView>
 
 
 
@@ -34,7 +100,7 @@
             android:layout_margin="16sp"
             android:textSize="36sp"
             android:id="@+id/rvNews"
-            app:layout_constraintTop_toBottomOf="@+id/news"/>
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
