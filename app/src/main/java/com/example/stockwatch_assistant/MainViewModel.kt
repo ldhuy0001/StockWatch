@@ -13,7 +13,8 @@ import kotlinx.coroutines.Dispatchers
 
 class MainViewModel : ViewModel(){
 
-    private lateinit var stockListFetchedFromAPI: List<StockMeta>
+    private lateinit var stockListFetchedFromAPI: MutableList<StockMeta>
+    private var stockListOnlyNASDAQandNYSE: MutableList<StockMeta> = mutableListOf()
 
     //for search
     private lateinit var stockNewsList: List<News>
@@ -88,16 +89,24 @@ class MainViewModel : ViewModel(){
     fun netPosts() = viewModelScope.launch(
         context = viewModelScope.coroutineContext
             + Dispatchers.IO)  {
-            stockListFetchedFromAPI = stockMetaRepository.getStocks()
-        stockMetaList.postValue(stockListFetchedFromAPI)
-        Log.d("ck","here is stock list \n $stockListFetchedFromAPI")
+            stockListFetchedFromAPI = stockMetaRepository.getStocks().toMutableList()
+
+            for (i in stockListFetchedFromAPI){
+                if (i.exchange == "NASDAQ" || i.exchange == "NYSE")
+//                    stockListFetchedFromAPI.remove(i)
+//                Log.d("netPosts","here is stock detail \n $i")
+                  stockListOnlyNASDAQandNYSE.add(i)
+            }
+
+        stockMetaList.postValue(stockListOnlyNASDAQandNYSE)
+        Log.d("ck","here is stock list \n $stockListOnlyNASDAQandNYSE")
     }
 
 //Need to store list of all stocks in local storage
 
 //searchStock
     fun searchStock(searchTerm : String):Boolean {
-        var searchListResult: List<StockMeta> = stockListFetchedFromAPI.filter{
+        var searchListResult: List<StockMeta> = stockListOnlyNASDAQandNYSE.filter{
             it.searchFor(searchTerm)
         }
         stockMetaList.postValue(searchListResult)
