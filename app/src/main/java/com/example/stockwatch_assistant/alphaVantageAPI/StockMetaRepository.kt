@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 
 class StockMetaRepository(private val alphaVantageAPI: AlphaVantageAPI) {
 
-   suspend fun getStocks(): List<StockMeta> {
+    suspend fun getStocks(): List<StockMeta> {
        val response = alphaVantageAPI.getAllActiveListingStocks()
        Log.d("ck","here is response $response")
        Log.d("ck","here is response in byteStream \n" +
@@ -32,11 +32,12 @@ class StockMetaRepository(private val alphaVantageAPI: AlphaVantageAPI) {
                         symbol = symbol ?: return@mapNotNull null,
                         exchange = exchange ?: return@mapNotNull null
                     )
-                }
-                .also {
-                    csvReader.close()
+    //
                 }
         }
+        .also {
+            csvReader.close()
+        }
     }
-
 }
+
