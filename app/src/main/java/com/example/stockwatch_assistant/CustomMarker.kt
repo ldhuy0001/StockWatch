@@ -1,5 +1,8 @@
 package com.example.stockwatch_assistant
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
 //import android.content.Context
 //import com.github.mikephil.charting.components.MarkerView
 //import com.github.mikephil.charting.data.Entry

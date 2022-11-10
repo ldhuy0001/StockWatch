@@ -14,7 +14,7 @@ import com.example.stockwatch_assistant.databinding.FragmentNewsBinding
 
 class NewsFragment: Fragment(R.layout.fragment_news) {
     private val viewModel: MainViewModel by activityViewModels()
-    private lateinit var adapter: NewsAdpater
+    private lateinit var adapter: NewsAdapter
 
     private var _binding: FragmentNewsBinding? = null
     // This property is only valid between onCreateView and
@@ -40,7 +40,7 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = NewsAdpater(viewModel = viewModel, context = requireContext())
+        adapter = NewsAdapter(viewModel = viewModel, context = requireContext())
         binding.rvNews.layoutManager = LinearLayoutManager(binding.rvNews.context)
         binding.rvNews.adapter = adapter
 

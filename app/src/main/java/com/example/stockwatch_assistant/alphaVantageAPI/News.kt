@@ -15,6 +15,6 @@ data class News(
     val summary: String,
     @SerializedName("banner_image")
     val banner_image: String,
-    @SerializedName("sources")
+    @SerializedName("source")
     val source: String
 )

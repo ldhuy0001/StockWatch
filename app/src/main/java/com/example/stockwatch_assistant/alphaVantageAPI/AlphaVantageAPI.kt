@@ -41,6 +41,7 @@ interface AlphaVantageAPI {
 //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY
     // &symbol=TSLA&datatype=csv&interval=5min&apikey=CUZFO32ID30TEUX6
     @GET("query?function=TIME_SERIES_INTRADAY")
+//    @GET("query?function=TIME_SERIES_DAILY_ADJUSTED")
     suspend fun getStockGraphInfo(
         @Query("symbol") symbol: String,
         @Query("datatype") datatype : String = "csv",
