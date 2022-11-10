@@ -12,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="fill_horizontal"
         android:background="?attr/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/webview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>

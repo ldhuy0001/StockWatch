@@ -17,6 +17,8 @@ class OneNews : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
+
+
         val newsURL: String = intent.getStringExtra("stockURL").toString()
 
         supportActionBar!!.title = "yow"
@@ -25,4 +27,16 @@ class OneNews : AppCompatActivity() {
 
 
     }
+
+//    override fun onBackPressed() {
+//        if (binding.)
+//    }
+//
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+
+
 }
