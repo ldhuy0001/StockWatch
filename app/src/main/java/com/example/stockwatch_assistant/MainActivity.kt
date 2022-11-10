@@ -86,10 +86,10 @@ class MainActivity : AppCompatActivity() {
 
 
     viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
-//    viewModel.netGeneralNews() //Fetch General News
+    viewModel.netGeneralNews() //Fetch General News
 
 //Test
-    viewModel.netNewsWithCategory("technology")
+//    viewModel.netNewsWithCategory("technology")
 
     replaceFragment(homeFragment)
 

@@ -52,5 +52,22 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
             adapter.notifyDataSetChanged()
         }
 
+        binding.btnTechnology.setOnClickListener {
+            viewModel.netNewsWithCategory("technology")
+        }
+        binding.btnLifeSciences.setOnClickListener {
+            viewModel.netNewsWithCategory("life_sciences")
+        }
+        binding.btnFinance.setOnClickListener {
+            viewModel.netNewsWithCategory("finance")
+        }
+        binding.btnManufacturing.setOnClickListener {
+            viewModel.netNewsWithCategory("manufacturing")
+        }
+        binding.btnEconomy.setOnClickListener {
+            viewModel.netNewsWithCategory("economy_macro")
+        }
+
+
     }
 }
