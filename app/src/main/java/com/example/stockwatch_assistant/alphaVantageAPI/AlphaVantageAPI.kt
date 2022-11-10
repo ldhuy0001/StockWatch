@@ -77,6 +77,13 @@ interface AlphaVantageAPI {
         }
     ) : ListingFeed
 
+//https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&limit=10&apikey=MY7UOXNLMVAJOBL6
+    @GET("query?function=NEWS_SENTIMENT")
+    suspend fun getNewsWithCategory (
+        @Query("topics") topics : String,
+        @Query("apikey") apikey: String = API_KEY_FOR_CATEGORY_NEWS
+    ) : ListingFeed
+
     class ListingFeed(
         val feed: List<News>
     )
@@ -99,6 +106,7 @@ interface AlphaVantageAPI {
         const val API_KEY_FORNEWS_3 = "C4VZ3V3IA7D3WXVI"
 
         const val API_KEY_FOR_ALL_STOCKS = "9UF22PMWEV9BPYJ9"
+        const val API_KEY_FOR_CATEGORY_NEWS = "Z7B9H271PNLIOWHP"
 
         const val BASE_URL = "https://alphavantage.co"
 

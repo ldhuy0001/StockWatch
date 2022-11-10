@@ -127,6 +127,13 @@ class MainViewModel : ViewModel(){
         generalNews.postValue(stockNewsRepository.getGeneralNews())
     }
 
+//Fetch News With Category
+    fun netNewsWithCategory(category: String) = viewModelScope.launch (
+        context = viewModelScope.coroutineContext
+                + Dispatchers.IO) {
+        generalNews.postValue(stockNewsRepository.getNewsWithCategory(category))
+    }
+
 //Fetch Stock News
     fun netStockNews(symbol: String) = viewModelScope.launch (
         context = viewModelScope.coroutineContext

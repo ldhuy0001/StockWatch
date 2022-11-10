@@ -22,5 +22,13 @@ class NewsRepository(private val alphaVantageAPI: AlphaVantageAPI) {
         return response.feed
     }
 
+    suspend fun getNewsWithCategory(category: String): List<News>{
+        val response = alphaVantageAPI.getNewsWithCategory(category)
+
+        Log.d("getNewsWithCategory","here is response on getNewsWithCategory \n $response")
+        Log.d("getNewsWithCategory","here is response on getNewsWithCategory \n ${response.feed}")
+
+        return response.feed
+    }
 
 }
