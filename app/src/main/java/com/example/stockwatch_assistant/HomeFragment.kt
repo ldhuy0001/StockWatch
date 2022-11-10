@@ -98,6 +98,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
+        binding.logoutBut.setOnClickListener {
+            showPopup(binding.logoutBut)
+        }
+
         return root
     }
 
@@ -150,9 +156,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
         initialFetch = false
 
-        binding.logoutBut.setOnClickListener {
-            showPopup(binding.logoutBut)
-        }
+
     }
 
     private fun showPopup(view: View) {
