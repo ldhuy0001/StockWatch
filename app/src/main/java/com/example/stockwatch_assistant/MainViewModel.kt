@@ -15,6 +15,9 @@ class MainViewModel : ViewModel(){
 
     private lateinit var stockListFetchedFromAPI: List<StockMeta>
 
+    //for search
+    private lateinit var stockNewsList: List<News>
+
 //All CSV list here
     private val alphaVantageApiForCSV = AlphaVantageAPI.createURLForCSV()
     private val stockMetaRepository = StockMetaRepository(alphaVantageApiForCSV)
@@ -101,6 +104,15 @@ class MainViewModel : ViewModel(){
         return searchListResult.isEmpty()
     }
 
+//searchNews
+    fun searchNews(searchTerm : String):Boolean {
+        var searchListResult: List<News> = stockNewsList.filter{
+            it.searchFor(searchTerm)
+        }
+        generalNews.postValue(searchListResult)
+        return searchListResult.isEmpty()
+    }
+
 //Fetch Stock Details for OnePost
     fun netStockDetails(symbol : String) = viewModelScope.launch (
         context = viewModelScope.coroutineContext
@@ -124,7 +136,8 @@ class MainViewModel : ViewModel(){
     fun netGeneralNews() = viewModelScope.launch (
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
-        generalNews.postValue(stockNewsRepository.getGeneralNews())
+    stockNewsList = stockNewsRepository.getGeneralNews()
+        generalNews.postValue(stockNewsList)
     }
 
 //Fetch News With Category

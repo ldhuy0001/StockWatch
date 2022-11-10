@@ -77,7 +77,9 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             }
         }
 
-        binding.searchBar.queryHint = "Search"
+        binding.searchBar.queryHint = "Search Stocks"
+
+
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -92,6 +94,8 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             {
                 (activity as MainActivity).hideKeyboard()
             }
+
+
                 viewModel.searchStock(newText.toString())
                 return false
             }

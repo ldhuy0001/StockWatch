@@ -192,6 +192,9 @@ class OnePost : AppCompatActivity() {
                 list -> adapter.submitList(list)
             Log.d("stockNews","Here is list in stockNews \n $list")
             adapter.notifyDataSetChanged()
+
+            if (!list.isNullOrEmpty()) onePostBinding.noNews.visibility = View.INVISIBLE
+
         }
     }
 

@@ -1,10 +1,12 @@
 package com.example.stockwatch_assistant
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,6 +22,9 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+
+//    private var actionBarBinding: ActionBarBinding? = null
 
     private fun initRecyclerViewDividers(rv: RecyclerView) {
         // Let's have dividers between list items
@@ -67,6 +72,39 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
         binding.btnEconomy.setOnClickListener {
             viewModel.netNewsWithCategory("economy_macro")
         }
+
+
+
+        binding.searchBar.queryHint = "Search News"
+
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchBar.clearFocus()
+                viewModel.searchNews(query.toString())
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.toString().isEmpty())
+                {
+                    (activity as MainActivity).hideKeyboard()
+//                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+//                    actionBar?.hide()
+//                    val actionBar: ActionBar = getSupportActionBar() //Get action bar reference
+//                    actionBar.hide()
+
+//                    (activity as MainActivity?)?.actionBar?.hide()
+
+
+                }
+                viewModel.searchNews(newText.toString())
+                return false
+            }
+
+        })
+
+
 
 
     }
