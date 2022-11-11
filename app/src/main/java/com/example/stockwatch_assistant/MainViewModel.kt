@@ -153,7 +153,6 @@ class MainViewModel : ViewModel(){
     fun netGeneralNews() = viewModelScope.launch (
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
-
         stockNewsList = stockNewsRepository.getGeneralNews()
         generalNews.postValue(stockNewsRepository.getGeneralNews())
     }

@@ -56,10 +56,11 @@ class MainActivity : AppCompatActivity() {
 //onCreate function
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val splashScreen = installSplashScreen()
-        splashScreen.setKeepOnScreenCondition{
-        viewModel.isLoading.value
-        }
+    //splashscreen
+//        val splashScreen = installSplashScreen()
+//        splashScreen.setKeepOnScreenCondition{
+//        viewModel.isLoading.value
+//        }
 
 
         super.onCreate(savedInstanceState)
