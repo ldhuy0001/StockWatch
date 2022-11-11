@@ -85,7 +85,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="News Favorite Stocks"
+            android:text="Hot Stocks"
             android:textSize="20dp"
             android:textStyle="bold" />
 
