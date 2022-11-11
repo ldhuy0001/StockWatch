@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
@@ -24,6 +25,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
 
@@ -49,6 +52,15 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+
+
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +68,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
 
 
         val signInLauncher = registerForActivityResult(
@@ -160,18 +174,30 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         }
 
+
         adapter = StockRowAdapter(viewModel, requireContext())
         binding.recyclerViewFavorite.layoutManager = LinearLayoutManager(binding.recyclerViewFavorite.context)
         binding.recyclerViewFavorite.adapter = adapter
 
         (activity as MainActivity).initRecyclerViewDividers(binding.recyclerViewFavorite)
 
-        viewModel.favoritesListLiveData.observe(requireActivity()) {
-                list -> adapter.submitList(list)
-            Log.d("XXX", "list size: " + list.size)
-            Log.d("XXX", "list: " + list)
-            adapter.notifyDataSetChanged()
+//        viewModel.favoritesListLiveData.observe(viewLifecycleOwner) {
+//                list -> adapter.submitList(list)
+//
+//            adapter.notifyDataSetChanged()
+//        }
+
+        viewModel.favoritesListLiveData.observe(viewLifecycleOwner){
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main){
+                adapter.submitList(it)
+                Log.d("XXX", "list size: " + it.size)
+                Log.d("XXX", "list: " +it)
+                adapter.notifyDataSetChanged()
+            }
         }
+
+
+
 
         Log.d("XXX", "$initialFetch")
 

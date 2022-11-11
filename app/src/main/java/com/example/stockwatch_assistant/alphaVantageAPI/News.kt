@@ -4,19 +4,19 @@ import com.google.gson.annotations.SerializedName
 
 data class News(
 //    @SerializedName("title")
-    val title: String,
+    val title: String?,
 //    @SerializedName("url")
-    val url: String,
+    val url: String?,
 //    @SerializedName("time_published")
-    val time_published: String,
+    val time_published: String?,
 //    @SerializedName("authors")
-    val authors: List<String>,
+    val authors: List<String>?,
 //    @SerializedName("summary")
-    val summary: String,
+    val summary: String?,
 //    @SerializedName("banner_image")
-    val banner_image: String,
+    val banner_image: String?,
 //    @SerializedName("source")
-    val source: String,
+    val source: String?,
 )
 {
     companion object {
@@ -26,8 +26,8 @@ data class News(
     }
 
     fun searchFor(searchTerm: String):Boolean {
-        val searchTitle = searchNewsInfo(searchTerm,title)
-        val searchSummary = searchNewsInfo(searchTerm,summary)
+        val searchTitle = searchNewsInfo(searchTerm,title!!)
+        val searchSummary = searchNewsInfo(searchTerm,summary!!)
         return searchTitle != -1 || searchSummary != -1
     }
 }

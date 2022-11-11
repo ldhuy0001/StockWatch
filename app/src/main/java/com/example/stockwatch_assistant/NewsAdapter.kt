@@ -45,7 +45,7 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
 
         var originalTime = item.time_published
 
-        originalTime.substring(0, 8)
+        originalTime!!.substring(0, 8)
 
         val year = originalTime.substring(0, 4)
         val month =
@@ -87,13 +87,14 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
 
         // Item contents are the same, but the object might have changed
         override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
-            return oldItem.title == newItem.title
-                    && oldItem.url == newItem.url
-                    && oldItem.time_published == newItem.time_published
-                    && oldItem.authors == newItem.authors
-                    && oldItem.summary == newItem.summary
-                    && oldItem.banner_image == newItem.banner_image
-                    && oldItem.source == newItem.source
+            return oldItem == newItem
+//            return oldItem.title == newItem.title
+//                    && oldItem.url == newItem.url
+//                    && oldItem.time_published == newItem.time_published
+//                    && oldItem.authors == newItem.authors
+//                    && oldItem.summary == newItem.summary
+//                    && oldItem.banner_image == newItem.banner_image
+//                    && oldItem.source == newItem.source
         }
     }
 }
