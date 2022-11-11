@@ -51,14 +51,17 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
 
         initRecyclerViewDividers(binding.rvNews)
 
-        viewModel.generalNewsLiveData.observe(requireActivity()){
+        viewModel.generalNewsLiveData.observe(viewLifecycleOwner){
                 list -> adapter.submitList(list)
-            Log.d("generalNews","Here is list in generalNews \n $list")
-            adapter.notifyDataSetChanged()
+            Log.d("generalNews","observe called, Here is list in generalNews \n $list")
+            Log.d("generalNews","news list size: ${list.size}")
+//            adapter.notifyDataSetChanged()
+
+
         }
 
         binding.btnTechnology.setOnClickListener {
-            viewModel.netNewsWithCategory("technology")
+            viewModel.netNewsWithCategory("earnings")
         }
         binding.btnLifeSciences.setOnClickListener {
             viewModel.netNewsWithCategory("life_sciences")
@@ -70,10 +73,8 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
             viewModel.netNewsWithCategory("manufacturing")
         }
         binding.btnEconomy.setOnClickListener {
-            viewModel.netNewsWithCategory("economy_macro")
+            viewModel.netNewsWithCategory("economy_fiscal")
         }
-
-
 
         binding.searchBar.queryHint = "Search News"
 

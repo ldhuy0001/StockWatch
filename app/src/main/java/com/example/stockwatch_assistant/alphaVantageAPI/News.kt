@@ -3,20 +3,20 @@ package com.example.stockwatch_assistant.alphaVantageAPI
 import com.google.gson.annotations.SerializedName
 
 data class News(
-    @SerializedName("title")
+//    @SerializedName("title")
     val title: String,
-    @SerializedName("url")
+//    @SerializedName("url")
     val url: String,
-    @SerializedName("time_published")
+//    @SerializedName("time_published")
     val time_published: String,
-    @SerializedName("authors")
+//    @SerializedName("authors")
     val authors: List<String>,
-    @SerializedName("summary")
+//    @SerializedName("summary")
     val summary: String,
-    @SerializedName("banner_image")
+//    @SerializedName("banner_image")
     val banner_image: String,
-    @SerializedName("source")
-    val source: String
+//    @SerializedName("source")
+    val source: String,
 )
 {
     companion object {

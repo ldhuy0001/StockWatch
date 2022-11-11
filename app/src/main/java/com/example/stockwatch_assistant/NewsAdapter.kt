@@ -17,7 +17,7 @@ import com.example.stockwatch_assistant.databinding.NewsRowBinding
 import java.time.Month
 
 class NewsAdapter(private val viewModel: MainViewModel, private val context: Context) :
-    ListAdapter<News, NewsAdapter.ViewHolder>(StockDiff()) {
+    ListAdapter<News, NewsAdapter.ViewHolder>(NewsDiff()) {
 
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val newsRepository = NewsRepository(alphaVantageAPIForJSON)
@@ -44,7 +44,6 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
         val newsBinding = holder.newsBinding
 
         newsBinding.title.text = item.title
-//        newsBinding.author.text = item.authors[0]
         newsBinding.source.text = item.source
 
         var originalTime = item.time_published
@@ -56,17 +55,10 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
             Month.of(originalTime.substring(4, 6).toInt()).toString().lowercase().capitalize()
         val date = originalTime.substring(6, 8)
 
-        val test = Month.of(12).toString().lowercase().capitalize()
-
-        Log.d("date", "$year $month $date $test")
-
         newsBinding.timePublished.text = "$month $date, $year"
-//        newsBinding.bannerImage
         newsBinding.summary.text = item.summary
 
-        var url = "https://picsum.photos/200/300"
-
-        url = item.banner_image
+        val url = item.banner_image
 
         if (!url.isNullOrEmpty()) {
             Glide.with(context)
@@ -81,7 +73,7 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
         }
 
         newsBinding.root.setOnClickListener {
-            var intent = Intent(context, OneNews::class.java)
+            val intent = Intent(context, OneNews::class.java)
 
             intent.putExtra("stockNewsURL", item.url)
             intent.putExtra("stockNewsTitle", item.title)
@@ -98,7 +90,7 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
     }
 
 
-    class StockDiff : DiffUtil.ItemCallback<News>() {
+    class NewsDiff : DiffUtil.ItemCallback<News>() {
         //item identity
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
             return oldItem.hashCode() == newItem.hashCode()

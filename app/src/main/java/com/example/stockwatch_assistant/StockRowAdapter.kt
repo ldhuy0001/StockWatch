@@ -29,15 +29,11 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
-
     private val FavoriteCollectionRef = Firebase.firestore.collection("Favorites")
 
 //    private val reference = FirebaseFirestore.getInstance().getReference()
-
 //    private lateinit var database: DatabaseReference
-//
 //    val database = Firebase.database.reference
-
 
     var db = FirebaseFirestore.getInstance()
 
@@ -64,6 +60,7 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
         val stockRowBinding = StockRowBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
+
         return ViewHolder(stockRowBinding)
     }
 
@@ -88,12 +85,6 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
             val item = getItem(position)
 
-//            val item = getPos(holder)
-//            val local = viewModel.getFavoriteItem(item)
-
-//            val position = getPos(this)
-//            val item = viewModel.redditPostsLiveData.value!![position]
-
             item.let {
                 Log.d("isFav", "before click: ${viewModel.isFavorite(it)}")
                 if (viewModel.isFavorite(it)) {
@@ -101,8 +92,6 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
                     Log.d("isFav", "removeItem")
 
-
-//                    val favoriteQuery = FavoriteCollectionRef
 
                     db.collection("Favorites")
                         .whereEqualTo("stockExchange", item.exchange)
@@ -127,37 +116,6 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
                         .addOnFailureListener { exception ->
                             Log.w("query data", "Error query data.", exception)
                         }
-
-
-
-
-
-
-
-//                        .where("stockExchange", item.exchange)
-//                        .where("stockName", item.name)
-//                        .where("stockSymbol", item.symbol)
-//                        .get()
-//                        .await()
-
-
-
-
-
-//                    db.collection("Favorites")
-//                        .document(photoMeta.firestoreID)
-//                        .delete()
-//                        .addOnSuccessListener {
-//                            Log.d(javaClass.simpleName,"Note delete ${photoMeta.byteSize} ${photoMeta.firestoreID}")
-//                            dbFetchPhotoMeta(sortInfo,photoMetaList)
-//                        }
-//                        .addOnFailureListener { e->
-//                            Log.d(javaClass.simpleName,"Note deleting FAILED")
-//                        }
-
-
-
-
                 } else {
                     viewModel.addFavorite(it)
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)

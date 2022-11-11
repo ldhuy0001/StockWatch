@@ -40,6 +40,8 @@ class OnePost : AppCompatActivity() {
         val stockSymbol: String = intent.getStringExtra("stockSymbol").toString()
         val stockName: String = intent.getStringExtra("stockName").toString()
         Log.d("ck","symbol $stockSymbol")
+        
+        onePostBinding.stockRelatedNews.text = "$stockName Related News"
 
 
 //        val dialog = progressDialog(message = "Please wait a bit…", title = "Fetching data")

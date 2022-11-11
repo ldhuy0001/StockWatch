@@ -37,7 +37,7 @@
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_baseline_add"
+            app:srcCompat="@drawable/ic_baseline_check"
             android:layout_weight="1"/>
 
     </LinearLayout>
