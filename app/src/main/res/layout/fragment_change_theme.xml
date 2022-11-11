@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="16dp"
+        android:weightSum="10"
+        >
+
+        <ImageView
+            android:id="@+id/homeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_baseline_home_24"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Change Theme"
+            android:textSize="24dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="bottom"
+            android:layout_weight="8"/>
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/themetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Theme"
+        android:textSize="24dp"
+        android:layout_margin="16dp"
+        android:gravity="bottom"
+        />
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radio_group"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+        <RadioButton android:id="@+id/light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Light"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dark"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+</LinearLayout>

@@ -49,7 +49,7 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
         binding.rvNews.layoutManager = LinearLayoutManager(binding.rvNews.context)
         binding.rvNews.adapter = adapter
 
-        initRecyclerViewDividers(binding.rvNews)
+//        initRecyclerViewDividers(binding.rvNews)
 
         viewModel.generalNewsLiveData.observe(viewLifecycleOwner){
                 list -> adapter.submitList(list)

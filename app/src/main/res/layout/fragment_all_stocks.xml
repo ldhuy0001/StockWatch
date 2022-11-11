@@ -43,7 +43,7 @@
                 android:id="@+id/search_bar"
                 android:queryHint="Search for a menu item"
                 app:iconifiedByDefault="false"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/searchview_background"

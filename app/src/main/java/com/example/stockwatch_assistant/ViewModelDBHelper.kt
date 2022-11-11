@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 import com.example.stockwatch_assistant.model.Stock
 
+//unused
 class ViewModelDBHelper() {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()

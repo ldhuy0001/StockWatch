@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
 import com.example.stockwatch_assistant.model.Stock
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -39,6 +41,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     private var initialFetch = true
     private val changeNameFragment = ChangeNameFragment()
+    private val changeThemeFragment = ChangeThemeFragment()
 
 //    private val signInLauncher =
 //        registerForActivityResult(FirebaseAuthUIActivityResultContract()){
@@ -117,6 +120,56 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     }
                     R.id.header2 -> {
                         Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+
+                        //enable darkmode - still has error
+//                        item.title = "Dark"
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+//                        (activity as MainActivity).replaceFragment(changeThemeFragment)
+
+
+                        var selectedItemIndex = 0
+
+                        fun showConfirmationDialog(){
+                            val choice = arrayOf("Light","Dark")
+                            var selectedChoice = choice[selectedItemIndex]
+
+
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle("Choose Theme")
+                                .setSingleChoiceItems(choice,selectedItemIndex) {dialog, which ->
+                                    selectedItemIndex = which
+                                    selectedChoice = choice[which]
+
+
+                                }
+
+                                .setPositiveButton("OK"){dialog, which ->
+                                    Toast.makeText(requireContext(), selectedChoice, Toast.LENGTH_SHORT).show()
+                                    if(selectedChoice=="Light")AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                                    else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+                                }
+                                .setNeutralButton("Cancel"){dialog, which ->
+
+                                }
+                                .show()
+                        }
+
+
+
+                        showConfirmationDialog()
+
+
+
+
+
+
+
+
+
+
+
                     }
                     R.id.header3 -> {
                         Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()

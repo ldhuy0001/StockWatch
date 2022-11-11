@@ -40,7 +40,7 @@ class OnePost : AppCompatActivity() {
         val stockSymbol: String = intent.getStringExtra("stockSymbol").toString()
         val stockName: String = intent.getStringExtra("stockName").toString()
         Log.d("ck","symbol $stockSymbol")
-        
+
         onePostBinding.stockRelatedNews.text = "$stockName Related News"
 
 
@@ -106,6 +106,8 @@ class OnePost : AppCompatActivity() {
             onePostBinding.lineChart.description.text = "Minute"
 
             onePostBinding.lineChart.animateX(1800, Easing.EaseInExpo)
+
+//            onePostBinding.lineChart.axisRight.axisLineColor =
 
 //            val markerView = CustomMarker(this@OnePost, R.layout.marker_view)
 //            onePostBinding.lineChart.marker = markerView

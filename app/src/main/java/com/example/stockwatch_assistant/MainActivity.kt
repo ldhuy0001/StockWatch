@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
