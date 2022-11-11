@@ -10,11 +10,17 @@ import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import com.example.stockwatch_assistant.alphaVantageAPI.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class MainViewModel : ViewModel(){
 
     private lateinit var stockListFetchedFromAPI: MutableList<StockMeta>
     private var stockListOnlyNASDAQandNYSE: MutableList<StockMeta> = mutableListOf()
+
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
 
     //for search
     private  var stockNewsList: List<News> = listOf()
@@ -99,6 +105,9 @@ class MainViewModel : ViewModel(){
 
         stockMetaList.postValue(stockListOnlyNASDAQandNYSE)
         Log.d("ck","here is stock list \n $stockListOnlyNASDAQandNYSE")
+
+
+        _isLoading.value=false
     }
 
 //Need to store list of all stocks in local storage
@@ -145,8 +154,8 @@ class MainViewModel : ViewModel(){
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
 
-    stockNewsList = stockNewsRepository.getGeneralNews()
-        generalNews.postValue(stockNewsList)
+        stockNewsList = stockNewsRepository.getGeneralNews()
+        generalNews.postValue(stockNewsRepository.getGeneralNews())
     }
 
 //Fetch News With Category

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
@@ -54,45 +55,25 @@ class MainActivity : AppCompatActivity() {
 
 //onCreate function
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition{
+        viewModel.isLoading.value
+        }
+
+
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //enable darkmode - still has error
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         AuthInit(viewModel, signInLauncher)
         viewModel.updateTest()
-//        viewModel.observeUserName().observe(this){
-//            binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
-//        }
-//
-////        var adapter = StockRowAdapter(viewModel, requireContext())
-//        adapter = StockRowAdapter(viewModel = viewModel, context = this)
-//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-//        binding.recyclerView.adapter = adapter
-//
-//        initRecyclerViewDividers(binding.recyclerView)
-//
-//        viewModel.stockMetaListLiveData.observe(this){
-//            list -> adapter.submitList(list)
-//            adapter.notifyDataSetChanged()
-//        }
-//
-//        binding.searchBar.addTextChangedListener(){
-//
-//            if (it.toString().isEmpty())
-//            {
-//                hideKeyboard()
-//            }
-//
-//            viewModel.searchStock(it.toString())
-//        }
-
-
-    viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
-    viewModel.netGeneralNews() //Fetch General News
+        viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
+        viewModel.netGeneralNews() //Fetch General News
 
 //Test
 //    viewModel.netNewsWithCategory("technology")
@@ -109,12 +90,10 @@ class MainActivity : AppCompatActivity() {
         true
     }
 
-
     }
 }
 
 //Example API call for symbol=TSLA and interval=5min
 //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=CUZFO32ID30TEUX6
-
 //Example API call for all active stock listing. Unfortunately, api return CSV file instead of JSON
 //https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo
