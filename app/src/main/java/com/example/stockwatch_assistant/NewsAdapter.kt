@@ -25,10 +25,7 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
     inner class ViewHolder(val newsBinding: NewsRowBinding) :
         RecyclerView.ViewHolder(newsBinding.root) {
         init {
-
-
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -80,15 +77,7 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
 
             context.startActivity(intent)
         }
-
-
-
-
-
-
-
     }
-
 
     class NewsDiff : DiffUtil.ItemCallback<News>() {
         //item identity

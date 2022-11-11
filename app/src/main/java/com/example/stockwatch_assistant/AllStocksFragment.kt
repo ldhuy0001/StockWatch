@@ -29,14 +29,12 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
     private fun initRecyclerViewDividers(rv: RecyclerView) {
         // Let's have dividers between list items
         val dividerItemDecoration = DividerItemDecoration(
             rv.context, LinearLayoutManager.VERTICAL )
         rv.addItemDecoration(dividerItemDecoration)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,26 +43,17 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
     ): View {
         _binding = FragmentAllStocksBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-//        Log.d(TAG, "onCreateView ${viewModel.selected}")
-//        binding.hello.text = "test"
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        viewModel.observeUserName().observe(viewLifecycleOwner){
-//            binding.hello.text = it
-//        }
-
         adapter = StockRowAdapter(viewModel = viewModel, context = requireContext())
         binding.recyclerView.layoutManager = LinearLayoutManager(binding.recyclerView.context)
         binding.recyclerView.adapter = adapter
 
         initRecyclerViewDividers(binding.recyclerView)
-
-
 
         viewModel.stockMetaListLiveData.observe(viewLifecycleOwner){
                 list -> adapter.submitList(list)
@@ -79,8 +68,6 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
 
         binding.searchBar.queryHint = "Search Stocks"
 
-
-
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchBar.clearFocus()
@@ -94,12 +81,9 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             {
                 (activity as MainActivity).hideKeyboard()
             }
-
-
                 viewModel.searchStock(newText.toString())
                 return false
             }
-
         })
     }
 }

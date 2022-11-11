@@ -16,6 +16,7 @@ import com.example.stockwatch_assistant.alphaVantageAPI.NewsRepository
 import com.example.stockwatch_assistant.databinding.NewsRowBinding
 import java.time.Month
 
+//unused
 class NewsOneStockAdapter(private val viewModel: MainViewModel, private val context: Context) :
     ListAdapter<News, NewsOneStockAdapter.ViewHolder>(StockDiff()) {
 
@@ -25,8 +26,6 @@ class NewsOneStockAdapter(private val viewModel: MainViewModel, private val cont
     inner class ViewHolder(val newsBinding: NewsRowBinding) :
         RecyclerView.ViewHolder(newsBinding.root) {
         init {
-
-
         }
 
     }
@@ -42,7 +41,6 @@ class NewsOneStockAdapter(private val viewModel: MainViewModel, private val cont
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         val newsBinding = holder.newsBinding
-
 
     }
 

@@ -7,6 +7,7 @@ import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
@@ -43,7 +44,6 @@ class OnePost : AppCompatActivity() {
 
         onePostBinding.stockRelatedNews.text = "$stockName Related News"
 
-
 //        val dialog = progressDialog(message = "Please wait a bit…", title = "Fetching data")
 //        dialog.show()
 ////....
@@ -70,20 +70,25 @@ class OnePost : AppCompatActivity() {
 //            TODO
             val lineDataSet = LineDataSet(entries,"$stockName ( $stockSymbol )")
 
+            lineDataSet.setDrawValues(false)
+            lineDataSet.setDrawFilled(true)
 
-            lineDataSet.setDrawValues(true)
-            lineDataSet.setDrawFilled(false)
+            val fillGradient = ContextCompat.getDrawable(this, R.drawable.red_gradient)
+            val fillGradient2 = ContextCompat.getDrawable(this, R.drawable.green_gradient)
 
             lineDataSet.lineWidth = 2f
             if (it.isNotEmpty()){
                 if (it[0].low < it[it.size-1].low ) {
-    //                lineDataSet.fillColor = Color.GREEN
+//                    lineDataSet.fillColor = Color.GREEN
                     lineDataSet.color = Color.GREEN
                     lineDataSet.setCircleColor(Color.GREEN)
+                    lineDataSet.fillDrawable = fillGradient2
+
                 } else {
-    //                lineDataSet.fillColor = Color.RED
+//                    lineDataSet.fillColor = Color.RED
                     lineDataSet.color = Color.RED
                     lineDataSet.setCircleColor(Color.RED)
+                    lineDataSet.fillDrawable = fillGradient
                 }
 
                 onePostBinding.openValue.text = roundOffDecimal(number= it[0].open)
@@ -107,6 +112,28 @@ class OnePost : AppCompatActivity() {
 
             onePostBinding.lineChart.animateX(1800, Easing.EaseInExpo)
 
+            //test
+            onePostBinding.lineChart.description.textColor = Color.GRAY
+            onePostBinding.lineChart.description.textSize = 14f
+            onePostBinding.lineChart.setBorderColor(Color.GRAY)
+            onePostBinding.lineChart.setBorderWidth(3f)
+
+            onePostBinding.lineChart.legend.textColor = Color.GRAY
+            onePostBinding.lineChart.legend.textSize = 14f
+
+            onePostBinding.lineChart.xAxis.textColor = Color.GRAY
+            onePostBinding.lineChart.xAxis.textSize = 10f
+
+            onePostBinding.lineChart.axisRight.textColor = Color.GRAY
+            onePostBinding.lineChart.axisRight.axisLineColor = Color.GRAY
+            onePostBinding.lineChart.axisRight.textSize = 10f
+
+            onePostBinding.lineChart.axisLeft.textColor = Color.GRAY
+            onePostBinding.lineChart.axisLeft.axisLineColor = Color.GRAY
+            onePostBinding.lineChart.axisLeft.textSize = 10f
+
+
+
 //            onePostBinding.lineChart.axisRight.axisLineColor =
 
 //            val markerView = CustomMarker(this@OnePost, R.layout.marker_view)
@@ -117,14 +144,7 @@ class OnePost : AppCompatActivity() {
 
             val number = 0.0449999
             val rounded = number.toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
-
-
-
-
             Log.d("XXX", "$rounded")
-
-
-
         }
         Log.d("testchart","ck10")
 
@@ -183,23 +203,11 @@ class OnePost : AppCompatActivity() {
         onePostBinding.recyclerView.layoutManager = LinearLayoutManager(onePostBinding.recyclerView.context)
         onePostBinding.recyclerView.adapter = adapter
 
-
-
-//        initRecyclerViewDividers(binding.recyclerView)
-
-//        viewModel.observe(viewLifecycleOwner){
-//                list -> adapter.submitList(list)
-//            adapter.notifyDataSetChanged()
-//        }
-
         viewModel.stockNewsLiveData.observe(this){
-
                 list -> adapter.submitList(list)
             Log.d("stockNews","Here is list in stockNews \n $list")
             adapter.notifyDataSetChanged()
-
             if (!list.isNullOrEmpty()) onePostBinding.noNews.visibility = View.INVISIBLE
-
         }
     }
 

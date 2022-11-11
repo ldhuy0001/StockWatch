@@ -56,8 +56,6 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
             Log.d("generalNews","observe called, Here is list in generalNews \n $list")
             Log.d("generalNews","news list size: ${list.size}")
 //            adapter.notifyDataSetChanged()
-
-
         }
 
         binding.btnTechnology.setOnClickListener {
@@ -82,7 +80,6 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchBar.clearFocus()
                 viewModel.searchNews(query.toString())
-
                 return false
             }
 
@@ -97,16 +94,10 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
 
 //                    (activity as MainActivity?)?.actionBar?.hide()
 
-
                 }
                 viewModel.searchNews(newText.toString())
                 return false
             }
-
         })
-
-
-
-
     }
 }

@@ -43,19 +43,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private val changeNameFragment = ChangeNameFragment()
     private val changeThemeFragment = ChangeThemeFragment()
 
-//    private val signInLauncher =
-//        registerForActivityResult(FirebaseAuthUIActivityResultContract()){
-//        }
-
-
-
-
     companion object {
         fun newInstance(): HomeFragment {
             return HomeFragment()
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,74 +97,45 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
         }
 
-
         fun showPopup(view: View) {
             val popup = PopupMenu(requireContext(), view)
             popup.inflate(R.menu.header_menu)
-
             popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
 
                 when (item!!.itemId) {
                     R.id.header1 -> {
-                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
                         (activity as MainActivity).replaceFragment(changeNameFragment)
-
                     }
                     R.id.header2 -> {
-                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
-
-                        //enable darkmode - still has error
-//                        item.title = "Dark"
-//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
-//                        (activity as MainActivity).replaceFragment(changeThemeFragment)
-
-
+//                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
                         var selectedItemIndex = 0
 
                         fun showConfirmationDialog(){
                             val choice = arrayOf("Light","Dark")
                             var selectedChoice = choice[selectedItemIndex]
 
-
                             MaterialAlertDialogBuilder(requireContext())
                                 .setTitle("Choose Theme")
                                 .setSingleChoiceItems(choice,selectedItemIndex) {dialog, which ->
                                     selectedItemIndex = which
                                     selectedChoice = choice[which]
-
-
                                 }
 
                                 .setPositiveButton("OK"){dialog, which ->
                                     Toast.makeText(requireContext(), selectedChoice, Toast.LENGTH_SHORT).show()
                                     if(selectedChoice=="Light")AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                                     else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
                                 }
                                 .setNeutralButton("Cancel"){dialog, which ->
 
                                 }
                                 .show()
                         }
-
-
-
                         showConfirmationDialog()
-
-
-
-
-
-
-
-
-
-
-
                     }
                     R.id.header3 -> {
-                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
                         FirebaseAuth.getInstance().signOut()
                         AuthInit(viewModel, signInLauncher)
                         viewModel.emptyFavorite()
@@ -181,16 +144,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 true
             })
             popup.show()
-
         }
-
-
-
-
         binding.logoutBut.setOnClickListener {
             showPopup(binding.logoutBut)
         }
-
         return root
     }
 
@@ -242,11 +199,5 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 }
         }
         initialFetch = false
-
-
     }
-
-
-
-
 }

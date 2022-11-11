@@ -21,37 +21,22 @@ class OneNews : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-
-
         val newsURL: String = intent.getStringExtra("stockNewsURL").toString()
         val newsTitle: String = intent.getStringExtra("stockNewsTitle").toString()
 
         supportActionBar!!.title = newsTitle
-
-//        oneNewsBinding.webview.webChromeClient = WebChromeClient()
-
-
 
         val client = object : WebViewClient() {
             override fun onPageFinished(view:WebView?, url:String?) {
                 oneNewsBinding.progressBar.visibility = View.INVISIBLE
             }
         }
-
         oneNewsBinding.webview.webViewClient = client
         oneNewsBinding.webview.loadUrl(newsURL)
-
     }
 
-//    override fun onBackPressed() {
-//        if (binding.)
-//    }
-//
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
-
-
-
 }

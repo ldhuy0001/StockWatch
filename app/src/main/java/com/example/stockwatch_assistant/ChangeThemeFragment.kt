@@ -23,12 +23,6 @@ class ChangeThemeFragment : Fragment(R.layout.fragment_change_theme) {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +33,6 @@ class ChangeThemeFragment : Fragment(R.layout.fragment_change_theme) {
 
         return root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

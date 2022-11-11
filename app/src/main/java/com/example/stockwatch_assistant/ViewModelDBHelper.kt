@@ -33,8 +33,4 @@ class ViewModelDBHelper() {
                 Log.d(javaClass.simpleName, "allNotes fetch FAILED ", it)
             }
     }
-
-
-
-
 }

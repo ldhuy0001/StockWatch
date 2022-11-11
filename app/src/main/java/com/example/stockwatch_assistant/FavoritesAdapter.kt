@@ -33,7 +33,6 @@ class FavoritesAdapter(private val viewModel: MainViewModel, private val context
     inner class ViewHolder(val stockRowBinding : StockRowBinding)
         : RecyclerView.ViewHolder(stockRowBinding.root) {
         init {
-
             stockRowBinding.rowFav.setOnClickListener {
                 val position = getPos(this)
                 val item = viewModel.getFavoriteItem(position)
@@ -41,8 +40,6 @@ class FavoritesAdapter(private val viewModel: MainViewModel, private val context
                 stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
                 notifyItemRemoved(position)
             }
-
-
         }
     }
 
@@ -66,16 +63,10 @@ class FavoritesAdapter(private val viewModel: MainViewModel, private val context
         stockRowBinding.stockRowExchange.text = item.exchange
 
         stockRowBinding.stockRoot.setOnClickListener {
-//            viewModel.netStockDetails(item.symbol)
-
             intent.putExtra("stockSymbol", item.symbol)
             context.startActivity(intent)
-
         }
-
-
         stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
-
     }
 
 

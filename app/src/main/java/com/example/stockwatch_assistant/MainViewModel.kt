@@ -17,7 +17,7 @@ class MainViewModel : ViewModel(){
     private var stockListOnlyNASDAQandNYSE: MutableList<StockMeta> = mutableListOf()
 
     //for search
-    private lateinit var stockNewsList: List<News>
+    private  var stockNewsList: List<News> = listOf()
 
 //All CSV list here
     private val alphaVantageApiForCSV = AlphaVantageAPI.createURLForCSV()
@@ -75,7 +75,6 @@ class MainViewModel : ViewModel(){
     fun updateUserName(string:String){
         username.value = string
     }
-
 
     fun observeUserName(): LiveData<String>{
         return username
@@ -184,15 +183,10 @@ class MainViewModel : ViewModel(){
         return fList[position]
     }
 
-
-
     fun emptyFavorite() {
         fList.clear()
         favoritesListMutableLiveData.postValue(fList)
-
-
     }
-
 
     fun updateUser() {
         firebaseAuthLiveData.updateUser()

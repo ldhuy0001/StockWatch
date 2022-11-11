@@ -25,9 +25,7 @@ class ChangeNameFragment: Fragment(R.layout.fragment_change_name) {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
 //    private val homeFragment = HomeFragment()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,12 +41,7 @@ class ChangeNameFragment: Fragment(R.layout.fragment_change_name) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val string = viewModel.observeUserName().value
-//        binding.editTextTextPersonName.setText(string)
-
         binding.CurrentName.text = "Current Name: " + viewModel.observeUserName().value!!
-
-
 
         binding.cancelButton.setOnClickListener{
             (activity as MainActivity).replaceFragment(HomeFragment())
@@ -67,7 +60,6 @@ class ChangeNameFragment: Fragment(R.layout.fragment_change_name) {
                 val update = UserProfileChangeRequest.Builder()
                     .setDisplayName(newName)
                     .build()
-
                 user!!.updateProfile(update)
 
                 viewModel.updateUserName(newName)
