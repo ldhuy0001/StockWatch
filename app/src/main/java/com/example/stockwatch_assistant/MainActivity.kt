@@ -1,18 +1,19 @@
 package com.example.stockwatch_assistant
 
-import androidx.appcompat.app.AppCompatActivity
+import android.R.color
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.example.stockwatch_assistant.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stockwatch_assistant.databinding.ActivityMainBinding
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -90,6 +91,19 @@ class MainActivity : AppCompatActivity() {
         }
         true
     }
+
+//    val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
+//    val color1 = R.color.purple_200
+//    val color2 = R.color.black
+//
+//    val colors = intArrayOf(
+//        color1,
+//        color2
+//    )
+//    val myColorList = ColorStateList(states, colors)
+//    binding.bottomNavigation.itemIconTintList = myColorList
+//    binding.bottomNavigation.itemIconTintList
+
 
     }
 }

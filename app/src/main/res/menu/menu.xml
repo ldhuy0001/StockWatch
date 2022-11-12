@@ -15,4 +15,5 @@
         android:icon="@drawable/ic_news"
         android:title="News" />
 
+
 </menu>
