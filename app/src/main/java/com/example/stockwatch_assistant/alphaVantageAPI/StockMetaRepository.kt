@@ -11,7 +11,7 @@ class StockMetaRepository(private val alphaVantageAPI: AlphaVantageAPI) {
 
     suspend fun getStocks(): List<StockMeta> {
        val response = alphaVantageAPI.getAllActiveListingStocks()
-       Log.d("ck","here is response $response")
+       Log.d("ck","here is response for all stocks $response")
        Log.d("ck","here is response in byteStream \n" +
                " ${response.byteStream()}")
        return unpackPosts(response)

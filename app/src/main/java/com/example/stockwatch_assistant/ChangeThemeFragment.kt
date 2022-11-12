@@ -53,18 +53,13 @@ class ChangeThemeFragment : Fragment(R.layout.fragment_change_theme) {
                 when (view.getId()) {
                     R.id.light ->
                         if (checked) {
-                            // Pirates are the best
                             Toast.makeText(requireContext(), "light", Toast.LENGTH_SHORT).show()
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         }
                     R.id.dark ->
                         if (checked) {
-                            // Ninjas rule
-
                             Toast.makeText(requireContext(), "dark", Toast.LENGTH_SHORT).show()
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
-
                         }
                 }
             }
@@ -81,17 +76,5 @@ class ChangeThemeFragment : Fragment(R.layout.fragment_change_theme) {
         binding.homeButton.setOnClickListener {
             (activity as MainActivity).replaceFragment(HomeFragment())
         }
-
-
-
-
-
-
-
-
     }
-
-
-
-
 }

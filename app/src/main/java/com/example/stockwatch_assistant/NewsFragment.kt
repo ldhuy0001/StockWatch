@@ -55,8 +55,12 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
 //        initRecyclerViewDividers(binding.rvNews)
 
         viewModel.generalNewsLiveData.observe(viewLifecycleOwner){
-                list -> adapter.submitList(list)
-            Log.d("generalNews","observe called, Here is list in generalNews \n $list")
+            if (!it.isNullOrEmpty()) {
+                adapter.submitList(it)
+                binding.indeterminateBar.visibility = View.GONE
+            }
+//                list -> adapter.submitList(list)
+            Log.d("generalNews","observe called, Here is list in generalNews \n $it")
 //            Log.d("generalNews","news list size: ${list.size}")
 //            adapter.notifyDataSetChanged()
         }

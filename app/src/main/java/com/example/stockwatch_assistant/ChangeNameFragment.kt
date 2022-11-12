@@ -64,7 +64,6 @@ class ChangeNameFragment: Fragment(R.layout.fragment_change_name) {
 
                 viewModel.updateUserName(newName)
                 (activity as MainActivity).replaceFragment(HomeFragment())
-
             }
         }
         }

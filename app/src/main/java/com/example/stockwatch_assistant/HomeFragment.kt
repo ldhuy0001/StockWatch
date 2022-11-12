@@ -74,6 +74,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.placeholder.visibility = View.INVISIBLE
+        binding.noNews.visibility = View.INVISIBLE
 
 
 
@@ -196,19 +198,20 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         viewModel.favoritesListLiveData.observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                adapter.submitList(it)
+
+                binding.indeterminateBar2.visibility = View.GONE
+
+                if (!it.isNullOrEmpty()) {
+                    adapter.submitList(it)
+                }
+                else binding.noNews.visibility = View.VISIBLE
+
                 Log.d("XXX", "fav list size: " + it.size)
                 Log.d("XXX", "fav list: " + it)
                 adapter.notifyDataSetChanged()
 
-                if (!it.isNullOrEmpty())  binding.noNews.visibility = View.INVISIBLE
-//                    onePostBinding.noNews.visibility = View.INVISIBLE
-
             }
         }
-
-
-
 
         Log.d("XXX", "$initialFetch")
 
@@ -245,6 +248,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             Log.d("XXX", "porto list: " + it)
 
             if (!it.isNullOrEmpty()) {
+
+                binding.indeterminateBar.visibility = View.GONE
+                binding.placeholder.visibility = View.VISIBLE
+
                 binding.rank1?.text = "Rank 1: \n" + createStrForPortfolio(it[0])
                 binding.rank1Gain?.text = String.format("Gain: %.2f", it[0].percent_gain) + "%"
 
@@ -315,14 +322,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         "2022-02" -> viewModel.netPortfolio("2022-02")
                         "2022-01" ->  viewModel.netPortfolio("2022-01")
                     }
-//                    if (selectedChoice == "2022-10") {
-//                        viewModel.netPortfolio("2022-10")
-//                    }
-//                    else if (selectedChoice =="2022-09") viewModel.netPortfolio("2022-09")
-//                    else {
-//                        viewModel.netPortfolio("2022-08")
-//                    }
-
                 }
                 .setNeutralButton("Cancel") { dialog, which ->
                 }
@@ -333,21 +332,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             showConfirmationDialog()
         }
     }
-
-//        val spinner = binding.monthPickerBtn
-//
-//        val month = arrayOf("2010","2011")
-//        //ArrayAdapter.createFromResource(requireContext(), R.array.month ,android.R.layout.simple_spinner_item)
-//        val arrayAdapter = ArrayAdapter(requireContext() ,android.R.layout.simple_spinner_item, month)
-//        spinner.adapter = arrayAdapter
-//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
-//            ) {
-//                Toast.makeText(requireContext(),"selected text is = "+month[position], Toast.LENGTH_LONG).show()
-//            }
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//            }
-//        }
 
     private fun createStrForPortfolio(list: Portfolio): String {
         var str = ""

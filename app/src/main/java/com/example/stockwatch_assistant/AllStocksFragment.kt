@@ -56,10 +56,13 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
         initRecyclerViewDividers(binding.recyclerView)
 
         viewModel.stockMetaListLiveData.observe(viewLifecycleOwner){
-                list -> adapter.submitList(list)
+
+            if (!it.isNullOrEmpty()) adapter.submitList(it)
+
+//                list -> adapter.submitList(list)
             adapter.notifyDataSetChanged()
             Log.d("XXX", "data changed")
-            if (list.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 binding.indeterminateBar.visibility = View.GONE
             }
         }
