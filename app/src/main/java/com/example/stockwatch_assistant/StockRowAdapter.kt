@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
 import com.example.stockwatch_assistant.databinding.StockRowBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -81,78 +83,93 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
         }
 
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            stockRowBinding.rowFav.visibility = View.INVISIBLE
+        }
+
         stockRowBinding.rowFav.setOnClickListener {
 
 //            val item = getItem(position)
-
-            item.let {
-                Log.d("isFav", "before click: ${viewModel.isFavorite(it)}")
-                if (viewModel.isFavorite(it)) {
-                    viewModel.removeFavorite(it)
+//            FirebaseAuth.AuthStateListener {
+//                Log.d("FirebaseAuth","it ==========\n $it")
+//                Log.d("FirebaseAuth","it.curUser ==========\n ${it.currentUser}")
+//            }
+            Log.d("FirebaseAuth","cur User ==========\n ${FirebaseAuth.getInstance().currentUser}")
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                item.let {
+                    Log.d("isFav", "before click: ${viewModel.isFavorite(it)}")
+                    if (viewModel.isFavorite(it)) {
+                        viewModel.removeFavorite(it)
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
-                    Log.d("isFav", "removeItem")
+                        Log.d("isFav", "removeItem")
 
 
-                    db.collection("Favorites")
-                        .whereEqualTo("stockExchange", item.exchange)
-                        .whereEqualTo("stockName", item.name)
-                        .whereEqualTo("stockSymbol", item.symbol)
-                        .get()
-                        .addOnSuccessListener { result ->
-                            for (document in result) {
-                                Log.d("query data", "${document.id} => ${document.data}")
+                        db.collection("Favorites")
+                            .whereEqualTo("stockExchange", item.exchange)
+                            .whereEqualTo("stockName", item.name)
+                            .whereEqualTo("stockSymbol", item.symbol)
+                            .get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    Log.d("query data", "${document.id} => ${document.data}")
 
-                                db.collection("Favorites")
-                                    .document(document.id)
-                                    .delete()
-                                    .addOnSuccessListener {
-                                        Log.d("delete", "fav delete success")
-                                    }
-                                    .addOnFailureListener { e ->
-                                        Log.d("delete", "fav deleting FAILED ")
-                                    }
+                                    db.collection("Favorites")
+                                        .document(document.id)
+                                        .delete()
+                                        .addOnSuccessListener {
+                                            Log.d("delete", "fav delete success")
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Log.d("delete", "fav deleting FAILED ")
+                                        }
+                                }
                             }
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.w("query data", "Error query data.", exception)
-                        }
-                } else {
+                            .addOnFailureListener { exception ->
+                                Log.w("query data", "Error query data.", exception)
+                            }
+                    } else {
 
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
-                    Log.d("isFav", "addItem")
+                        Log.d("isFav", "addItem")
 
-                    if (!viewModel.isFavorite(item)) {
-                        stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
-                    } else {
-                        stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
+                        if (!viewModel.isFavorite(item)) {
+                            stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
+                        } else {
+                            stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
+                        }
+                        viewModel.addFavorite(it)
+
+                        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+                        Log.d("isFav", "uid: $uid")
+
+                        val docid = db.collection("Favorites").document().id
+                        Log.d("isFav", "docid: $docid")
+
+                        val user: MutableMap<String, Any> = HashMap()
+                        user["userName"] = viewModel.observeUserName().value!!
+                        user["userId"] = uid
+                        user["docId"] = docid
+                        user["stockName"] = item.name
+                        user["stockSymbol"] = item.symbol
+                        user["stockExchange"] = item.exchange
+
+                        db.collection("Favorites")
+                            .add(user)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d(
+                                    "add",
+                                    "DocumentSnapshot added with ID: " + documentReference.id
+                                )
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("add", "Error adding document", e)
+                            }
                     }
-                    viewModel.addFavorite(it)
-
-                    val uid = FirebaseAuth.getInstance().currentUser!!.uid
-                    Log.d("isFav", "uid: $uid")
-
-                    val docid = db.collection("Favorites").document().id
-                    Log.d("isFav", "docid: $docid")
-
-                    val user: MutableMap<String, Any> = HashMap()
-                    user["userName"] = viewModel.observeUserName().value!!
-                    user["userId"] = uid
-                    user["docId"] = docid
-                    user["stockName"] = item.name
-                    user["stockSymbol"] = item.symbol
-                    user["stockExchange"] = item.exchange
-
-                    db.collection("Favorites")
-                        .add(user)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d("add", "DocumentSnapshot added with ID: " + documentReference.id)
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w("add", "Error adding document", e)
-                        }
+                    notifyItemChanged(position)
+                    Log.d("isFav", "after click: ${viewModel.isFavorite(it)}")
                 }
-                notifyItemChanged(position)
-                Log.d("isFav", "after click: ${viewModel.isFavorite(it)}")
+            } else {
+                Snackbar.make(stockRowBinding.stockRoot,"Please Log in to add Favorite Stock", 1000).show()
             }
         }
         if (viewModel.isFavorite(item)) {
