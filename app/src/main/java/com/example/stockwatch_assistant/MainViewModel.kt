@@ -34,6 +34,7 @@ class MainViewModel : ViewModel(){
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
     private val stockNewsRepository = NewsRepository(alphaVantageAPIForJSON)
+    private val portfolioRepository = PortfolioRepository(alphaVantageAPIForJSON)
 
 
     private var username = MutableLiveData("Empty!")
@@ -62,6 +63,11 @@ class MainViewModel : ViewModel(){
     private var stockNews = MutableLiveData<List<News>>()
     val stockNewsLiveData : LiveData<List<News>>
         get() = stockNews
+
+//Create LiveData for Portfolio
+    private var portfolio = MutableLiveData<List<Portfolio>>()
+    val portfolioLiveData : LiveData<List<Portfolio>>
+        get() = portfolio
 
 //favorites
     private var fList: MutableList<StockMeta> = mutableListOf()
@@ -170,6 +176,13 @@ class MainViewModel : ViewModel(){
                 + Dispatchers.IO) {
         stockNews.postValue(stockNewsRepository.getStockNews(symbol))
 
+    }
+
+//Fetch Portfolio
+    fun netPortfolio(season: String) = viewModelScope.launch (
+    context = viewModelScope.coroutineContext
+            + Dispatchers.IO) {
+        portfolio.postValue(portfolioRepository.getPorfolio(season))
     }
 
     //favorites stuff

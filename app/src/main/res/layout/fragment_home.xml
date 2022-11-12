@@ -14,34 +14,34 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:weightSum="10">
-
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Home"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_weight="9"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:weightSum="10">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/logoutBut"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_baseline_settings"
-            android:onClick="showPopup"
-            android:layout_weight="1"/>
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_weight="9"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/logoutBut"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_baseline_settings"
+                android:onClick="showPopup"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,11 +51,6 @@
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
             android:textSize="20sp" />
-
-
-
-
-
 
         <TextView
             android:layout_width="match_parent"
@@ -76,29 +71,102 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            android:layout_weight="7.5"/>
+            android:layout_weight="9"/>
 
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="Hot Stocks"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Hot Portfolio: "
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id ="@+id/recycler_view_news"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:id="@+id/monthPickerBtn"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="Oct 2022"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            app:layoutManager="LinearLayoutManager"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percent Gain: "
+                    android:id="@+id/rank1Gain"
+                    android:textColor="#00F000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rank 1"
+                    android:id="@+id/rank1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percent Gain: "
+                    android:id="@+id/rank2Gain"
+                    android:textColor="#00F000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rank 2"
+                    android:id="@+id/rank2"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percent Gain: "
+                    android:id="@+id/rank3Gain"
+                    android:textColor="#00F000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rank 3"
+                    android:id="@+id/rank3"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

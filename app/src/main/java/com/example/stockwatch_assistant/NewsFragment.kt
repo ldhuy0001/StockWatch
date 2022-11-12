@@ -57,7 +57,7 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
         viewModel.generalNewsLiveData.observe(viewLifecycleOwner){
                 list -> adapter.submitList(list)
             Log.d("generalNews","observe called, Here is list in generalNews \n $list")
-            Log.d("generalNews","news list size: ${list.size}")
+//            Log.d("generalNews","news list size: ${list.size}")
 //            adapter.notifyDataSetChanged()
         }
 

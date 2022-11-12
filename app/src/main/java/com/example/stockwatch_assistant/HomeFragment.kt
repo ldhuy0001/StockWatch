@@ -7,14 +7,18 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.stockwatch_assistant.alphaVantageAPI.Portfolio
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
@@ -26,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlinx.coroutines.launch
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
@@ -55,10 +60,23 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.portfolioLiveData.observe(this){
+            if (it.isNotEmpty()) {
+                binding.rank1?.text = "Rank 1: \n" + createStrForPortfolio(it[0])
+                binding.rank1Gain?.text = String.format("Gain: %.2f", it[0].percent_gain) + "%"
+
+                binding.rank2?.text = "Rank 2: \n" + createStrForPortfolio(it[1])
+                binding.rank2Gain?.text = String.format("Gain: %.2f", it[1].percent_gain) + "%"
+
+                binding.rank3?.text = "Rank 3: \n" + createStrForPortfolio(it[2])
+                binding.rank3Gain?.text = String.format("Gain: %.2f", it[2].percent_gain) + "%"
+            }
+        }
 
 
 
     }
+
 
 
     override fun onCreateView(
@@ -225,5 +243,41 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 }
         }
         initialFetch = false
+
+        binding.monthPickerBtn.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.month ,android.R.layout.simple_spinner_item)
+        binding.monthPickerBtn?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                var str = when(position){
+                    0 -> "2022-10"
+                    1 -> "2022-09"
+                    2 -> "2022-08"
+                    3 -> "2022-07"
+                    4 -> "2022-06"
+                    5 -> "2022-05"
+                    6 -> "2022-04"
+                    7 -> "2022-03"
+                    8 -> "2022-02"
+                    9 -> "2022-01"
+                    else -> "2022-10"
+                }
+                viewModel.netPortfolio(str)
+            }
+        }
+
+        viewModel.netPortfolio("2022-10")
+
+
+    }
+
+    private fun createStrForPortfolio(list: Portfolio): String {
+        var str = ""
+        for (i in list.portfolio) {
+            str += " + " + i.symbol + "\n"
+        }
+        return str.dropLast(2)
     }
 }
+

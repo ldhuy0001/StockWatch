@@ -28,7 +28,7 @@ interface AlphaVantageAPI {
 //https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo
     @GET("/query?function=OVERVIEW")
     suspend fun getStockDetailsFromAPI(
-        @Query("symbol") symbol : String,
+        @Query("symbol") symbol: String,
         @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
     ) : StockDetails
 
@@ -65,8 +65,19 @@ interface AlphaVantageAPI {
 //            API_KEY_FOR_CATEGORY_NEWS
     ) : ListingFeed
 
+//https://www.alphavantage.co/query?function=TOURNAMENT_PORTFOLIO&season=2022-10&apikey=XTV5KHDB5AL1MAQV
+    @GET("query?function=TOURNAMENT_PORTFOLIO")
+    suspend fun getTournamentPortfolio (
+        @Query("season") season: String,
+        @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
+    ) : ListingPortfolio
+
     class ListingFeed(
         val feed: List<News>
+    )
+
+    class ListingPortfolio (
+        val ranking: List<Portfolio>
     )
 
     companion object {

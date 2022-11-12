@@ -17,6 +17,20 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string-array name="month">
+        <item>Oct 2022</item>
+        <item>Sep 2022</item>
+        <item>Aug 2022</item>
+        <item>Jul 2022</item>
+        <item>Jun 2022</item>
+        <item>May 2022</item>
+        <item>Apr 2022</item>
+        <item>Mar 2022</item>
+        <item>Feb 2022</item>
+        <item>Jan 2022</item>
+<!--        <item>Nov 2022</item>-->
+<!--        <item>Dec 2022</item>-->
+    </string-array>
 
 
 

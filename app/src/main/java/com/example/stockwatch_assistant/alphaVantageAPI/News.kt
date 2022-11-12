@@ -2,7 +2,7 @@ package com.example.stockwatch_assistant.alphaVantageAPI
 
 import com.google.gson.annotations.SerializedName
 
-data class News(
+data class  News(
 //    @SerializedName("title")
     val title: String?,
 //    @SerializedName("url")
