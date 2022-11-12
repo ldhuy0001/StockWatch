@@ -42,7 +42,7 @@ class OnePost : AppCompatActivity() {
         val stockName: String = intent.getStringExtra("stockName").toString()
         Log.d("ck","symbol $stockSymbol")
 
-        onePostBinding.stockRelatedNews.text = "$stockName Related News"
+        onePostBinding.stockRelatedNews.text = "Related News"
 
 //        val dialog = progressDialog(message = "Please wait a bit…", title = "Fetching data")
 //        dialog.show()
@@ -122,15 +122,15 @@ class OnePost : AppCompatActivity() {
             onePostBinding.lineChart.legend.textSize = 14f
 
             onePostBinding.lineChart.xAxis.textColor = Color.GRAY
-            onePostBinding.lineChart.xAxis.textSize = 10f
+            onePostBinding.lineChart.xAxis.textSize = 11.5f
 
             onePostBinding.lineChart.axisRight.textColor = Color.GRAY
             onePostBinding.lineChart.axisRight.axisLineColor = Color.GRAY
-            onePostBinding.lineChart.axisRight.textSize = 10f
+            onePostBinding.lineChart.axisRight.textSize = 11.5f
 
             onePostBinding.lineChart.axisLeft.textColor = Color.GRAY
             onePostBinding.lineChart.axisLeft.axisLineColor = Color.GRAY
-            onePostBinding.lineChart.axisLeft.textSize = 10f
+            onePostBinding.lineChart.axisLeft.textSize = 11.5f
 
 
 
@@ -158,7 +158,7 @@ class OnePost : AppCompatActivity() {
                 onePostBinding.stockSector.text =
                     Html.fromHtml("<b>" + "Sector: " + "</b>" + it.sector)
                 onePostBinding.stockIndustry.text =
-                    Html.fromHtml("<b>" + "Industry: " + "</b>" + it.industry)
+                    Html.fromHtml("<b> <font size =\"18\">" + "Industry: " + "</font></b>" + it.industry)
 
 //                if (onePostBinding.stockName.text == stockName) {
 //                    onePostBinding.indeterminateBar.visibility = View.INVISIBLE

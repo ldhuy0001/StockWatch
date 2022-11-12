@@ -34,11 +34,13 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="Title"
-            android:layout_marginHorizontal="8dp"
+            android:background="?attr/colorPrimary"
+            android:textColor="#EBE8D8"
+            android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/banner_image"
-            android:layout_marginTop="16dp" />
+            />
 
         <TextView
             android:id="@+id/summary"

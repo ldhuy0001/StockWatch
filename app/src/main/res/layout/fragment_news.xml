@@ -17,8 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="News"
+            android:textColor="?android:textColorPrimary"
             android:textStyle="bold"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -46,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:textColor="#EBE8D8"
                     android:layout_margin="6dp"
                     android:text="earnings">
 
@@ -56,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:textColor="#EBE8D8"
                     android:layout_margin="6dp"
                     android:text="life sciences">
 
@@ -66,6 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:textColor="#EBE8D8"
                     android:layout_margin="6dp"
                     android:text="finance">
 
@@ -76,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:textColor="#EBE8D8"
                     android:layout_margin="6dp"
                     android:text="manufacturing">
 
@@ -86,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:textColor="#EBE8D8"
                     android:layout_margin="6dp"
                     android:text="economy">
                 </Button>
@@ -101,7 +107,7 @@
             android:id="@+id/search_bar"
             android:queryHint="Search for a menu item"
             app:iconifiedByDefault="false"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/searchview_background"

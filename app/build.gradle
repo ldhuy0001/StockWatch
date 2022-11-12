@@ -99,6 +99,9 @@ dependencies {
     //splashscreen
     implementation 'androidx.core:core-splashscreen:1.0.0'
 
+    //justify text
+    implementation 'me.biubiubiu.justifytext:library:1.1'
+
 
 
 }

@@ -28,8 +28,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Home"
+                android:textColor="?android:textColorPrimary"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 android:layout_weight="9"/>
 
             <ImageView
@@ -52,53 +53,60 @@
             android:layout_marginHorizontal="16dp"
             android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Favorite Stocks"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id ="@+id/recycler_view_favorite"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-
-            android:layout_weight="9"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Hot Portfolio: "
+                android:textColor="?android:textColorPrimary"
+                android:text="Hot Portfolio "
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <Spinner
+            <TextView
+                android:id="@+id/currentYearDate"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020-10"
+                android:textSize="16sp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:id="@+id/change"
+                android:src="@drawable/ic_baseline_date_range_24"
+                />
+
+
+            <Spinner
+                android:id="@+id/monthPickerBtn"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:id="@+id/monthPickerBtn"
+                android:text="Oct 2022"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="Oct 2022"/>
+                android:textStyle="bold" />
+
+
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D8D6D6"
+            android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="16dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,18 +122,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Percent Gain: "
                     android:id="@+id/rank1Gain"
-                    android:textColor="#00F000"/>
+                    android:textColor="#32CD32"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rank 1"
                     android:id="@+id/rank1"/>
 
+
             </LinearLayout>
 
             <LinearLayout
@@ -133,18 +143,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Percent Gain: "
                     android:id="@+id/rank2Gain"
-                    android:textColor="#00F000"/>
+                    android:textColor="#32CD32"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rank 2"
                     android:id="@+id/rank2"/>
 
+
             </LinearLayout>
 
             <LinearLayout
@@ -152,21 +165,65 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Percent Gain: "
                     android:id="@+id/rank3Gain"
-                    android:textColor="#00F000"/>
+                    android:textColor="#32CD32"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rank 3"
                     android:id="@+id/rank3"/>
 
+
             </LinearLayout>
 
+
+
         </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Favorite Stocks"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="?android:textColorPrimary"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D8D6D6"
+            android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id ="@+id/recycler_view_favorite"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_weight="9"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/recycler_view_porto">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
 
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.example.stockwatch_assistant
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -59,20 +60,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel.portfolioLiveData.observe(this){
-            if (it.isNotEmpty()) {
-                binding.rank1?.text = "Rank 1: \n" + createStrForPortfolio(it[0])
-                binding.rank1Gain?.text = String.format("Gain: %.2f", it[0].percent_gain) + "%"
-
-                binding.rank2?.text = "Rank 2: \n" + createStrForPortfolio(it[1])
-                binding.rank2Gain?.text = String.format("Gain: %.2f", it[1].percent_gain) + "%"
-
-                binding.rank3?.text = "Rank 3: \n" + createStrForPortfolio(it[2])
-                binding.rank3Gain?.text = String.format("Gain: %.2f", it[2].percent_gain) + "%"
-            }
-        }
-
 
 
     }
@@ -186,15 +173,17 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.observeUserName().observe(viewLifecycleOwner){
-            binding.hello.text = "Hello $it! Welcome to StockWatch-Assistant!"
+        viewModel.observeUserName().observe(viewLifecycleOwner) {
+            binding.hello.text = "Hello $it!"
+//            binding.hello.text =
+//                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
             Log.d("XXX", "userName: $it")
-
         }
 
 
         adapter = StockRowAdapter(viewModel, requireContext())
-        binding.recyclerViewFavorite.layoutManager = LinearLayoutManager(binding.recyclerViewFavorite.context)
+        binding.recyclerViewFavorite.layoutManager =
+            LinearLayoutManager(binding.recyclerViewFavorite.context)
         binding.recyclerViewFavorite.adapter = adapter
 
         (activity as MainActivity).initRecyclerViewDividers(binding.recyclerViewFavorite)
@@ -205,11 +194,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 //            adapter.notifyDataSetChanged()
 //        }
 
-        viewModel.favoritesListLiveData.observe(viewLifecycleOwner){
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main){
+        viewModel.favoritesListLiveData.observe(viewLifecycleOwner) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 adapter.submitList(it)
-                Log.d("XXX", "list size: " + it.size)
-                Log.d("XXX", "list: " +it)
+                Log.d("XXX", "fav list size: " + it.size)
+                Log.d("XXX", "fav list: " + it)
                 adapter.notifyDataSetChanged()
             }
         }
@@ -224,14 +213,17 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+                        Log.d(
+                            "read",
+                            "${document.id} => ${document.data}, ${document.data["stockName"]}"
+                        )
                         val stock: StockMeta = StockMeta(
                             symbol = document.data["stockSymbol"].toString(),
                             name = document.data["stockName"].toString(),
                             exchange = document.data["stockExchange"].toString()
                         )
-                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
-                            if(!viewModel.isFavorite(stock)){
+                        if (document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid) {
+                            if (!viewModel.isFavorite(stock)) {
                                 viewModel.addFavorite(stock)
                                 Log.d("XXX", "add from initial fetch")
                             }
@@ -244,33 +236,98 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
         initialFetch = false
 
-        binding.monthPickerBtn.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.month ,android.R.layout.simple_spinner_item)
-        binding.monthPickerBtn?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+        viewModel.portfolioLiveData.observe(viewLifecycleOwner){
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                var str = when(position){
-                    0 -> "2022-10"
-                    1 -> "2022-09"
-                    2 -> "2022-08"
-                    3 -> "2022-07"
-                    4 -> "2022-06"
-                    5 -> "2022-05"
-                    6 -> "2022-04"
-                    7 -> "2022-03"
-                    8 -> "2022-02"
-                    9 -> "2022-01"
-                    else -> "2022-10"
-                }
-                viewModel.netPortfolio(str)
+            Log.d("XXX", "porto list: " + it)
+
+            if (!it.isNullOrEmpty()) {
+                binding.rank1?.text = "Rank 1: \n" + createStrForPortfolio(it[0])
+                binding.rank1Gain?.text = String.format("Gain: %.2f", it[0].percent_gain) + "%"
+
+                binding.rank2?.text = "Rank 2: \n" + createStrForPortfolio(it[1])
+                binding.rank2Gain?.text = String.format("Gain: %.2f", it[1].percent_gain) + "%"
+
+                binding.rank3?.text = "Rank 3: \n" + createStrForPortfolio(it[2])
+                binding.rank3Gain?.text = String.format("Gain: %.2f", it[2].percent_gain) + "%"
+
+                Log.d("XXX", "porto list called")
             }
         }
+        //spinner stuff
+//        binding.monthPickerBtn.adapter = ArrayAdapter.createFromResource(
+//            requireContext(),
+//            R.array.month,
+//            android.R.layout.simple_spinner_item
+//        )
+//
+//        binding.monthPickerBtn?.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//                override fun onNothingSelected(parent: AdapterView<*>?) {
+//                }
+//
+//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                    var str = when (position) {
+//                        0 ->  viewModel.netPortfolio("2022-10")
+//                        1 -> viewModel.netPortfolio("2022-09")
+//                        2 -> viewModel.netPortfolio("2022-08")
+//                        3 -> viewModel.netPortfolio("2022-07")
+//                        4 -> viewModel.netPortfolio("2022-06")
+//                        5 -> viewModel.netPortfolio("2022-05")
+//                        6 -> viewModel.netPortfolio("2022-04")
+//                        7 -> viewModel.netPortfolio("2022-03")
+//                        8 -> viewModel.netPortfolio("2022-02")
+//                        9 ->  viewModel.netPortfolio("2022-01")
+//                        else -> viewModel.netPortfolio("2022-10")
+//                    }
+//                }
+//            }
 
-        viewModel.netPortfolio("2022-10")
+        var selectedItemIndex = 0
+        fun showConfirmationDialog() {
+            val choice = arrayOf("2022-10", "2022-09", "2022-08")
+            var selectedChoice = choice[selectedItemIndex]
 
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Choose Date")
+                .setSingleChoiceItems(choice, selectedItemIndex) { dialog, which ->
+                    selectedItemIndex = which
+                    selectedChoice = choice[which]
+                }
+                .setPositiveButton("OK") { dialog, which ->
+                    Toast.makeText(requireContext(), selectedChoice, Toast.LENGTH_SHORT).show()
+                    binding.currentYearDate.text = selectedChoice
+                    if (selectedChoice == "2022-10") {
+                        viewModel.netPortfolio("2022-10")
+                    }
+                    else if (selectedChoice =="2022-09") viewModel.netPortfolio("2022-09")
+                    else {
+                        viewModel.netPortfolio("2022-08")
+                    }
+                }
+                .setNeutralButton("Cancel") { dialog, which ->
+                }
+                .show()
+        }
 
+        binding.change.setOnClickListener {
+            showConfirmationDialog()
+        }
     }
+
+//        val spinner = binding.monthPickerBtn
+//
+//        val month = arrayOf("2010","2011")
+//        //ArrayAdapter.createFromResource(requireContext(), R.array.month ,android.R.layout.simple_spinner_item)
+//        val arrayAdapter = ArrayAdapter(requireContext() ,android.R.layout.simple_spinner_item, month)
+//        spinner.adapter = arrayAdapter
+//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+//            ) {
+//                Toast.makeText(requireContext(),"selected text is = "+month[position], Toast.LENGTH_LONG).show()
+//            }
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//            }
+//        }
 
     private fun createStrForPortfolio(list: Portfolio): String {
         var str = ""

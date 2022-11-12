@@ -8,22 +8,20 @@
     android:id="@+id/stockRoot">
 
 
-
-
     <TextView
         android:id="@+id/stockRow_symbol"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:gravity="start"
         android:text="StockSymbol"
         android:textColor="?android:textColorPrimary"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/rowFav"
         app:layout_constraintBottom_toTopOf="@+id/stockRow_name"
+        app:layout_constraintEnd_toStartOf="@id/rowFav"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/stockRow_name"

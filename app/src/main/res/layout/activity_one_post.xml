@@ -20,7 +20,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,65 +28,87 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/stock_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:text="Stock Name"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="?android:textColorPrimary"
+                android:text="Overview"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D8D6D6"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="16dp"/>
+
 
             <TextView
                 android:id="@+id/stock_sector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:text="Stock Sector"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="16sp"
-                />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/stock_industry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Stock Industry"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="16sp"
-                />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/stock_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Stock Description"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="16sp"
-                />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chart"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                />
+                android:text="Market Summary"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D8D6D6"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="16dp"/>
 
             <!--    Put graph here
 
@@ -95,148 +116,138 @@
             -->
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
-                android:padding="9dp"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_margin="16dp"
-                />
+                android:padding="9dp" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stats"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                />
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="OPEN"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        />
-
-                    <TextView
-                        android:id="@+id/open_value"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="Open Value"
-                        android:textSize="14sp"
-                        android:gravity="right"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="HIGH"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:id="@+id/high_value"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="High"
-                    android:textSize="14sp"
-                    android:gravity="right"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    />
-
-
-
-                </LinearLayout>
+                android:textColor="?android:textColorPrimary"
+                android:text="Stats"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D8D6D6"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="VOLUME"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    />
+                    android:text="OPEN"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/open_value"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Open Value"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:text="HIGH"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/high_value"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="High"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:text="VOLUME"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/volume_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Volume"
-                    android:textSize="14sp"
-                    android:gravity="right"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    />
+                    android:gravity="right"
+                    android:text="Volume"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="LOW"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    />
+                    android:text="LOW"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/low_value"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Low"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    />
+                    android:gravity="right"
+                    android:text="Low"
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="10">
 
@@ -244,54 +255,45 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="P/E RATIO"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="3"
-                    />
+                    android:text="P/E RATIO"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/pe_value"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="p/e ratio"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
+                    android:textColor="?android:textColorPrimary"
                     android:layout_weight="2"
-                    />
+                    android:gravity="right"
+                    android:text="p/e ratio"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="52 WK HIGH"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="3"
-                    />
+                    android:text="52 WK HIGH"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/wkHigh52_value"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="52 val"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="2"
-                    />
-
-
+                    android:gravity="right"
+                    android:text="52 val"
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
@@ -300,62 +302,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="8dp"
                 android:weightSum="10">
-
 
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="DIV/YIELD"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="3"
-                    />
+                    android:text="DIV/YIELD"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/divYield_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="div/yield"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="30dp"
                     android:layout_weight="2"
-                    />
-
+                    android:gravity="right"
+                    android:text="div/yield"
+                    android:textSize="14sp" />
 
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="52 WK LOW"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="3"
-                    />
+                    android:text="52 WK LOW"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/wkLow52_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="52 val"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="2"
-                    />
+                    android:gravity="right"
+                    android:text="52 val"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -363,76 +356,74 @@
                 android:id="@+id/stock_related_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stock Related News"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                />
+                android:text="Stock Related News"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D8D6D6"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="16dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id ="@+id/recycler_view"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"/>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="10" />
 
             <TextView
                 android:id="@+id/no_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No news found"
-                android:textSize="14sp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                />
-
-
-
-
+                android:layout_marginBottom="16dp"
+                android:text="No news found"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
 
 
-
-
-
     </ScrollView>
 
 
-<!--
- <TextView
-        android:id="@+id/indeterminateBarBackground"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        />
+    <!--
+     <TextView
+            android:id="@+id/indeterminateBarBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            />
 
 
-    <ProgressBar
-        android:id="@+id/indeterminateBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        />
-
-
-
+        <ProgressBar
+            android:id="@+id/indeterminateBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            />
 
 
 
--->
+
+
+
+    -->
 
 
 

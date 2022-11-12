@@ -58,9 +58,7 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
         viewModel.stockMetaListLiveData.observe(viewLifecycleOwner){
                 list -> adapter.submitList(list)
             adapter.notifyDataSetChanged()
-
             Log.d("XXX", "data changed")
-
             if (list.isNotEmpty()) {
                 binding.indeterminateBar.visibility = View.GONE
             }

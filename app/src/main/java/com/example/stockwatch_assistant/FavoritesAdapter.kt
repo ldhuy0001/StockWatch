@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockwatch_assistant.alphaVantageAPI.AlphaVantageAPI
+import com.example.stockwatch_assistant.alphaVantageAPI.Portfolio
 import com.example.stockwatch_assistant.alphaVantageAPI.StockDetailsRepository
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 import com.example.stockwatch_assistant.databinding.StockRowBinding
 
-class FavoritesAdapter(private val viewModel: MainViewModel, private val context: Context) :
-    ListAdapter<StockMeta, FavoritesAdapter.ViewHolder>(StockDiff()) {
+
+import com.example.stockwatch_assistant.databinding.PortoRowBinding
+
+//unused
+class PortofolioAdapter(private val viewModel: MainViewModel, private val context: Context) :
+    ListAdapter<Portfolio, PortofolioAdapter.ViewHolder>(PortoDiff()) {
 
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
@@ -30,59 +35,40 @@ class FavoritesAdapter(private val viewModel: MainViewModel, private val context
 
 
     // ViewHolder pattern holds row binding
-    inner class ViewHolder(val stockRowBinding : StockRowBinding)
-        : RecyclerView.ViewHolder(stockRowBinding.root) {
+    inner class ViewHolder(val portoRowBinding : PortoRowBinding)
+        : RecyclerView.ViewHolder(portoRowBinding.root) {
         init {
-            stockRowBinding.rowFav.setOnClickListener {
-                val position = getPos(this)
-                val item = viewModel.getFavoriteItem(position)
-                viewModel.removeFavorite(item)
-                stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
-                notifyItemRemoved(position)
-            }
+
         }
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val stockRowBinding = StockRowBinding.inflate(
+        val portoRowBinding = PortoRowBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(stockRowBinding)
+        return ViewHolder(portoRowBinding)
     }
 
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        val stockRowBinding = holder.stockRowBinding
-        var intent = Intent(context, OnePost::class.java)
+        val portoRowBinding = holder.portoRowBinding
 
-        stockRowBinding.stockRowName.text = item.name
-        stockRowBinding.stockRowSymbol.text = item.symbol
-        stockRowBinding.stockRowExchange.text = item.exchange
+//        portoRowBinding.stockRowName.text = item.portfolio
+//
 
-        stockRowBinding.stockRoot.setOnClickListener {
-            intent.putExtra("stockSymbol", item.symbol)
-            context.startActivity(intent)
-        }
-        stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
     }
 
 
-    class StockDiff : DiffUtil.ItemCallback<StockMeta>() {
-        //item identity
-        override fun areItemsTheSame(oldItem: StockMeta, newItem: StockMeta): Boolean {
+    class PortoDiff : DiffUtil.ItemCallback<Portfolio>() {
+        override fun areItemsTheSame(oldItem: Portfolio, newItem: Portfolio): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        // Item contents are the same, but the object might have changed
-        override fun areContentsTheSame(oldItem: StockMeta, newItem: StockMeta): Boolean {
-            return oldItem.symbol == newItem.symbol
-                    && oldItem.name == newItem.name
-                    && oldItem.exchange == newItem.exchange
-
-
+        override fun areContentsTheSame(oldItem: Portfolio, newItem: Portfolio): Boolean {
+            return oldItem== newItem
         }
     }
 

@@ -160,7 +160,7 @@ class MainViewModel : ViewModel(){
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
         stockNewsList = stockNewsRepository.getGeneralNews()
-        generalNews.postValue(stockNewsRepository.getGeneralNews())
+        generalNews.postValue(stockNewsList)
     }
 
 //Fetch News With Category
