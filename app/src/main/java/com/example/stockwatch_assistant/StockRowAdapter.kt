@@ -121,6 +121,7 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
                     Log.d("isFav", "addItem")
 
+                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
 
                     val uid = FirebaseAuth.getInstance().currentUser!!.uid
                     Log.d("isFav", "uid: $uid")
