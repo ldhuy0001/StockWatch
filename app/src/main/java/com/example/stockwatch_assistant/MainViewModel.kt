@@ -116,18 +116,11 @@ class MainViewModel : ViewModel(){
         var searchListResult: List<StockMeta> = stockListOnlyNASDAQandNYSE.filter{
             it.searchFor(searchTerm)
         }
+        Log.d("searchStock", "searchListResult ===== \n$searchListResult")
         stockMetaList.postValue(searchListResult)
         return searchListResult.isEmpty()
     }
 
-//searchNews
-    fun searchNews(searchTerm : String):Boolean {
-        var searchListResult: List<News> = stockNewsList.filter{
-            it.searchFor(searchTerm)
-        }
-        generalNews.postValue(searchListResult)
-        return searchListResult.isEmpty()
-    }
 
 //Fetch Stock Details for OnePost
     fun netStockDetails(symbol : String) = viewModelScope.launch (
@@ -160,7 +153,8 @@ class MainViewModel : ViewModel(){
     fun netNewsWithCategory(category: String) = viewModelScope.launch (
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
-        generalNews.postValue(stockNewsRepository.getNewsWithCategory(category))
+        stockNewsList = stockNewsRepository.getNewsWithCategory(category)
+        generalNews.postValue(stockNewsList)
     }
 
 //Fetch Stock News
@@ -168,6 +162,18 @@ class MainViewModel : ViewModel(){
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
         stockNews.postValue(stockNewsRepository.getStockNews(symbol))
+    }
+
+//searchNews
+    fun searchNews(searchTerm : String):Boolean {
+        if(!stockNewsList.isNullOrEmpty()) {
+            var searchListResult: List<News> = stockNewsList.filter {
+                it.searchFor(searchTerm)
+            }
+            generalNews.postValue(searchListResult)
+            return searchListResult.isEmpty()
+        }
+        return false
     }
 
 //Fetch Portfolio

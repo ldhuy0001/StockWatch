@@ -203,6 +203,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
                 if (!it.isNullOrEmpty()) {
                     adapter.submitList(it)
+                    binding.noNews.visibility = View.INVISIBLE
                 }
                 else binding.noNews.visibility = View.VISIBLE
 

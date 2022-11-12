@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockwatch_assistant.databinding.FragmentAllStocksBinding
 import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
+import com.google.android.material.snackbar.Snackbar
 
 //import com.example.stockwatch_assistant.MainActivity.hideKeyboard
 
@@ -57,7 +58,10 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
 
         viewModel.stockMetaListLiveData.observe(viewLifecycleOwner){
 
-            if (!it.isNullOrEmpty()) adapter.submitList(it)
+//            if (!it.isNullOrEmpty()) adapter.submitList(it)
+            adapter.submitList(it)
+            if(it.isNullOrEmpty())
+                Snackbar.make(binding.searchBar,"There is no Result!",500).show()
 
 //                list -> adapter.submitList(list)
             adapter.notifyDataSetChanged()
@@ -72,9 +76,9 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchBar.clearFocus()
-                viewModel.searchStock(query.toString())
+                return viewModel.searchStock(query.toString())
 
-                return false
+//                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -82,8 +86,8 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             {
                 (activity as MainActivity).hideKeyboard()
             }
-                viewModel.searchStock(newText.toString())
-                return false
+                return viewModel.searchStock(newText.toString())
+//                return false
             }
         })
     }

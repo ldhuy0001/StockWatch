@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockwatch_assistant.databinding.FragmentNewsBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -55,10 +56,12 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
 //        initRecyclerViewDividers(binding.rvNews)
 
         viewModel.generalNewsLiveData.observe(viewLifecycleOwner){
-            if (!it.isNullOrEmpty()) {
+//            if (!it.isNullOrEmpty()) {
                 adapter.submitList(it)
                 binding.indeterminateBar.visibility = View.GONE
-            }
+                if(it.isNullOrEmpty())
+                    Snackbar.make(binding.searchBar,"There is no Result!",500).show()
+//            }
 //                list -> adapter.submitList(list)
             Log.d("generalNews","observe called, Here is list in generalNews \n $it")
 //            Log.d("generalNews","news list size: ${list.size}")

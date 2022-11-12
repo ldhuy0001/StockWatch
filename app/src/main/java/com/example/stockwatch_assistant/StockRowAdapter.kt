@@ -117,11 +117,16 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
                             Log.w("query data", "Error query data.", exception)
                         }
                 } else {
-                    viewModel.addFavorite(it)
+
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
                     Log.d("isFav", "addItem")
 
-                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
+                    if (!viewModel.isFavorite(item)) {
+                        stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
+                    } else {
+                        stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_add)
+                    }
+                    viewModel.addFavorite(it)
 
                     val uid = FirebaseAuth.getInstance().currentUser!!.uid
                     Log.d("isFav", "uid: $uid")
@@ -168,9 +173,9 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
         // Item contents are the same, but the object might have changed
         override fun areContentsTheSame(oldItem: StockMeta, newItem: StockMeta): Boolean {
             return return oldItem == newItem
-//            return oldItem.symbol == newItem.symbol
-//                    && oldItem.name == newItem.name
-//                    && oldItem.exchange == newItem.exchange
+            return oldItem.symbol == newItem.symbol
+                    && oldItem.name == newItem.name
+                    && oldItem.exchange == newItem.exchange
         }
     }
 }
