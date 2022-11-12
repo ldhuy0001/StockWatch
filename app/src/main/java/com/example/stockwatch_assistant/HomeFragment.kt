@@ -200,6 +200,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 Log.d("XXX", "fav list size: " + it.size)
                 Log.d("XXX", "fav list: " + it)
                 adapter.notifyDataSetChanged()
+
+                if (!it.isNullOrEmpty())  binding.noNews.visibility = View.INVISIBLE
+//                    onePostBinding.noNews.visibility = View.INVISIBLE
+
             }
         }
 

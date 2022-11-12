@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/purple_500"
     tools:context=".SplashScreenActivity">
-    
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="155dp"
@@ -48,10 +48,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
