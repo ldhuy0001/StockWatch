@@ -284,7 +284,9 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         var selectedItemIndex = 0
         fun showConfirmationDialog() {
-            val choice = arrayOf("2022-10", "2022-09", "2022-08")
+            val choice =
+                arrayOf("2022-10", "2022-09", "2022-08", "2022-07", "2022-06", "2022-05","2022-04",
+                    "2022-03","2022-02","2022-01")
             var selectedChoice = choice[selectedItemIndex]
 
             MaterialAlertDialogBuilder(requireContext())
@@ -296,13 +298,27 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 .setPositiveButton("OK") { dialog, which ->
                     Toast.makeText(requireContext(), selectedChoice, Toast.LENGTH_SHORT).show()
                     binding.currentYearDate.text = selectedChoice
-                    if (selectedChoice == "2022-10") {
-                        viewModel.netPortfolio("2022-10")
+
+                    when (selectedChoice) {
+                        "2022-10" ->  viewModel.netPortfolio("2022-10")
+                        "2022-09" -> viewModel.netPortfolio("2022-09")
+                        "2022-08" -> viewModel.netPortfolio("2022-08")
+                        "2022-07"-> viewModel.netPortfolio("2022-07")
+                        "2022-06" -> viewModel.netPortfolio("2022-06")
+                        "2022-05"-> viewModel.netPortfolio("2022-05")
+                        "2022-04" -> viewModel.netPortfolio("2022-04")
+                        "2022-03"-> viewModel.netPortfolio("2022-03")
+                        "2022-02" -> viewModel.netPortfolio("2022-02")
+                        "2022-01" ->  viewModel.netPortfolio("2022-01")
                     }
-                    else if (selectedChoice =="2022-09") viewModel.netPortfolio("2022-09")
-                    else {
-                        viewModel.netPortfolio("2022-08")
-                    }
+//                    if (selectedChoice == "2022-10") {
+//                        viewModel.netPortfolio("2022-10")
+//                    }
+//                    else if (selectedChoice =="2022-09") viewModel.netPortfolio("2022-09")
+//                    else {
+//                        viewModel.netPortfolio("2022-08")
+//                    }
+
                 }
                 .setNeutralButton("Cancel") { dialog, which ->
                 }

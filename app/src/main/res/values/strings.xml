@@ -2,9 +2,6 @@
     <string name="app_name">StockWatch-Assistant</string>
 
 
-
-
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_one_news">OneNews</string>
@@ -28,10 +25,9 @@
         <item>Mar 2022</item>
         <item>Feb 2022</item>
         <item>Jan 2022</item>
-<!--        <item>Nov 2022</item>-->
-<!--        <item>Dec 2022</item>-->
+        <!--        <item>Nov 2022</item>-->
+        <!--        <item>Dec 2022</item>-->
     </string-array>
-
 
 
 </resources>

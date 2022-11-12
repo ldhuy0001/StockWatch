@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import com.example.stockwatch_assistant.alphaVantageAPI.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -17,10 +18,6 @@ class MainViewModel : ViewModel(){
 
     private lateinit var stockListFetchedFromAPI: MutableList<StockMeta>
     private var stockListOnlyNASDAQandNYSE: MutableList<StockMeta> = mutableListOf()
-
-
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading = _isLoading.asStateFlow()
 
     //for search
     private  var stockNewsList: List<News> = listOf()
@@ -35,7 +32,6 @@ class MainViewModel : ViewModel(){
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
     private val stockNewsRepository = NewsRepository(alphaVantageAPIForJSON)
     private val portfolioRepository = PortfolioRepository(alphaVantageAPIForJSON)
-
 
     private var username = MutableLiveData("Empty!")
 
@@ -77,8 +73,8 @@ class MainViewModel : ViewModel(){
 
     //firebase
     private val dbHelp = ViewModelDBHelper()
-
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
+
 
     fun fetchStockMeta() {
 //        dbHelp.fetchInitialStocks(favoritesListMutableLiveData)
@@ -111,9 +107,6 @@ class MainViewModel : ViewModel(){
 
         stockMetaList.postValue(stockListOnlyNASDAQandNYSE)
         Log.d("ck","here is stock list \n $stockListOnlyNASDAQandNYSE")
-
-
-        _isLoading.value=false
     }
 
 //Need to store list of all stocks in local storage
@@ -175,7 +168,6 @@ class MainViewModel : ViewModel(){
         context = viewModelScope.coroutineContext
                 + Dispatchers.IO) {
         stockNews.postValue(stockNewsRepository.getStockNews(symbol))
-
     }
 
 //Fetch Portfolio
@@ -185,7 +177,7 @@ class MainViewModel : ViewModel(){
         portfolio.postValue(portfolioRepository.getPorfolio(season))
     }
 
-    //favorites stuff
+//favorites stuff
     fun isFavorite(item: StockMeta): Boolean {
         return fList.contains(item)
     }
@@ -212,6 +204,4 @@ class MainViewModel : ViewModel(){
     fun updateUser() {
         firebaseAuthLiveData.updateUser()
     }
-
-
 }
