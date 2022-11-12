@@ -83,7 +83,7 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
         stockRowBinding.rowFav.setOnClickListener {
 
-            val item = getItem(position)
+//            val item = getItem(position)
 
             item.let {
                 Log.d("isFav", "before click: ${viewModel.isFavorite(it)}")
