@@ -65,6 +65,17 @@ class MainViewModel : ViewModel(){
     val portfolioLiveData : LiveData<List<Portfolio>>
         get() = portfolio
 
+//Create LiveData for isUserLoggedIn
+    private var userLoggedInLiveData = MutableLiveData<Boolean>()
+
+    fun setUserLoggedIn(s: Boolean){
+        userLoggedInLiveData.value = s
+    }
+
+    fun observeUserLoggedIn(): LiveData<Boolean>{
+        return userLoggedInLiveData
+    }
+
 //favorites
     private var fList: MutableList<StockMeta> = mutableListOf()
     private var favoritesListMutableLiveData = MutableLiveData<List<StockMeta>>()

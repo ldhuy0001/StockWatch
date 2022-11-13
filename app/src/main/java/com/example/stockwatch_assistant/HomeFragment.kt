@@ -83,7 +83,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 viewModel.updateUser()
-
+                viewModel.setUserLoggedIn(true)
                 val user = FirebaseAuth.getInstance().currentUser!!.displayName
                 viewModel.updateUserName(user!!)
 
@@ -158,6 +158,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     R.id.header3 -> {
 //                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
                         FirebaseAuth.getInstance().signOut()
+                        viewModel.setUserLoggedIn(false)
                         AuthInit(viewModel, signInLauncher)
                         viewModel.emptyFavorite()
                     }
@@ -166,21 +167,51 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             })
             popup.show()
         }
+
         binding.logoutBut.setOnClickListener {
             showPopup(binding.logoutBut)
         }
+
+        binding.logInBut.setOnClickListener {
+            AuthInit(viewModel, signInLauncher)
+        }
+
+        viewModel.observeUserLoggedIn().observe(viewLifecycleOwner){
+            if(it){
+                viewModel.observeUserName().observe(viewLifecycleOwner) {
+                    binding.hello.text = "Hello $it!"
+//            binding.hello.text =
+//                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
+                    Log.d("XXX", "userName: $it")
+                }
+                binding.logInBut.visibility = View.INVISIBLE
+                binding.logoutBut.visibility = View.VISIBLE
+            }else{
+                binding.logInBut.visibility = View.VISIBLE
+                binding.hello.text = ""
+                binding.logoutBut.visibility = View.INVISIBLE
+            }
+        }
+
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.observeUserName().observe(viewLifecycleOwner) {
-            binding.hello.text = "Hello $it!"
-//            binding.hello.text =
-//                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
-            Log.d("XXX", "userName: $it")
-        }
+//        if(viewModel.isUserLoggedIn()){
+//            binding.hello.text = ""
+//            binding.logInBut.visibility = View.VISIBLE
+//
+//        } else {
+//            viewModel.observeUserName().observe(viewLifecycleOwner) {
+//                binding.hello.text = "Hello $it!"
+////            binding.hello.text =
+////                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
+//                Log.d("XXX", "userName: $it")
+//            }
+//            binding.logInBut.visibility = View.INVISIBLE
+//        }
 
 
         adapter = StockRowAdapter(viewModel, requireContext())

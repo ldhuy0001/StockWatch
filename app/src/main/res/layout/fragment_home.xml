@@ -46,20 +46,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/hello"
-                android:text="Home Fragment"
-                android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="16dp"
+                android:text=""
                 android:textSize="20sp" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Log IN"
-                android:id="@+id/logInBut"/>
+                android:id="@+id/logInBut"
+                />
+
         </LinearLayout>
 
 
