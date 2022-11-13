@@ -197,7 +197,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     adapter.submitList(it)
                     binding.noNews.visibility = View.INVISIBLE
                 }
-                else binding.noNews.visibility = View.VISIBLE
+                else {
+                    binding.noNews.text = "No stocks found, add watchlist stocks from Stocks tab"
+                    binding.noNews.visibility = View.VISIBLE
+                }
 
                 Log.d("XXX", "fav list size: " + it.size)
                 Log.d("XXX", "fav list: " + it)
@@ -301,6 +304,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.change.setOnClickListener {
             showConfirmationDialog()
         }
+        binding.currentYearDate.setOnClickListener {
+            showConfirmationDialog()
+        }
+
     }
 
     private fun createStrForPortfolio(list: Portfolio): String {
