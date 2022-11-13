@@ -62,9 +62,9 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             adapter.submitList(it)
             if(it.isNullOrEmpty())
                 Snackbar.make(binding.searchBar,"There is no Result!",500).show()
-
 //                list -> adapter.submitList(list)
-            adapter.notifyDataSetChanged()
+            //no need
+//            adapter.notifyDataSetChanged()
             Log.d("XXX", "data changed")
             if (it.isNotEmpty()) {
                 binding.indeterminateBar.visibility = View.GONE

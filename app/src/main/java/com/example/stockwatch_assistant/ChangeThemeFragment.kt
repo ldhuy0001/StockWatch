@@ -37,34 +37,6 @@ class ChangeThemeFragment : Fragment(R.layout.fragment_change_theme) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val string = viewModel.observeUserName().value
-//        binding.editTextTextPersonName.setText(string)
-
-
-
-
-
-        fun onRadioButtonClicked(view: View) {
-            if (view is RadioButton) {
-                // Is the button now checked?
-                val checked = view.isChecked
-
-                // Check which radio button was clicked
-                when (view.getId()) {
-                    R.id.light ->
-                        if (checked) {
-                            Toast.makeText(requireContext(), "light", Toast.LENGTH_SHORT).show()
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        }
-                    R.id.dark ->
-                        if (checked) {
-                            Toast.makeText(requireContext(), "dark", Toast.LENGTH_SHORT).show()
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                        }
-                }
-            }
-        }
-
         binding.dark.setOnClickListener {
             onRadioButtonClicked(view= binding.dark)
         }
@@ -75,6 +47,27 @@ class ChangeThemeFragment : Fragment(R.layout.fragment_change_theme) {
 
         binding.homeButton.setOnClickListener {
             (activity as MainActivity).replaceFragment(HomeFragment())
+        }
+    }
+
+    private fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
+            // Is the button now checked?
+            val checked = view.isChecked
+
+            // Check which radio button was clicked
+            when (view.getId()) {
+                R.id.light ->
+                    if (checked) {
+                        Toast.makeText(requireContext(), "light", Toast.LENGTH_SHORT).show()
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                R.id.dark ->
+                    if (checked) {
+                        Toast.makeText(requireContext(), "dark", Toast.LENGTH_SHORT).show()
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+            }
         }
     }
 }

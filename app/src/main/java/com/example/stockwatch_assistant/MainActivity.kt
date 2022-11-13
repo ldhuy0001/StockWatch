@@ -41,10 +41,6 @@ class MainActivity : AppCompatActivity() {
 
 
 //Set up signInLauncher
-//    private val signInLauncher =
-//        registerForActivityResult(FirebaseAuthUIActivityResultContract()){
-//        }
-
     val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
 
@@ -54,39 +50,29 @@ class MainActivity : AppCompatActivity() {
             val user = FirebaseAuth.getInstance().currentUser!!.displayName
             viewModel.updateUserName(user!!)
 
-            db.collection("Favorites")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
-                        val stock: StockMeta = StockMeta(
-                            symbol = document.data["stockSymbol"].toString(),
-                            name = document.data["stockName"].toString(),
-                            exchange = document.data["stockExchange"].toString()
-                        )
-                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
-                            viewModel.addFavorite(stock)
-
-                            Log.d("XXX", "add from siginInLauncher")
-                        }
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("read", "Error getting documents.", exception)
-                }
-
-
-
-
-
+//            db.collection("Favorites")
+//                .get()
+//                .addOnSuccessListener { result ->
+//                    for (document in result) {
+//                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+//                        val stock: StockMeta = StockMeta(
+//                            symbol = document.data["stockSymbol"].toString(),
+//                            name = document.data["stockName"].toString(),
+//                            exchange = document.data["stockExchange"].toString()
+//                        )
+//                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+//                            viewModel.addFavorite(stock)
+//
+//                            Log.d("XXX", "add from siginInLauncher")
+//                        }
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.w("read", "Error getting documents.", exception)
+//                }
+            getStocks()
         } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
-
-            println("break here")
-
+            // Sign in failed
             Log.d("MainActivity", "sign in failed ${result}")
         }
     }
@@ -117,14 +103,12 @@ class MainActivity : AppCompatActivity() {
 //        viewModel.isLoading.value
 //        }
 
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //enable darkmode
+        //enable dark-mode
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
 
         AuthInit(viewModel, signInLauncher)
         viewModel.updateTest()
@@ -146,20 +130,34 @@ class MainActivity : AppCompatActivity() {
         }
         true
     }
+    }
 
-//    val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
-//    val color1 = R.color.purple_200
-//    val color2 = R.color.black
-//
-//    val colors = intArrayOf(
-//        color1,
-//        color2
-//    )
-//    val myColorList = ColorStateList(states, colors)
-//    binding.bottomNavigation.itemIconTintList = myColorList
-//    binding.bottomNavigation.itemIconTintList
+    private fun getStocks() {
+        db.collection("Favorites")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(
+                        "read",
+                        "${document.id} => ${document.data}, ${document.data["stockName"]}"
+                    )
+                    val stock: StockMeta = StockMeta(
+                        symbol = document.data["stockSymbol"].toString(),
+                        name = document.data["stockName"].toString(),
+                        exchange = document.data["stockExchange"].toString()
+                    )
 
-
+                    if (document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid) {
+                        if (!viewModel.isFavorite(stock)) {
+                            viewModel.addFavorite(stock)
+                            Log.d("XXX", "add from initial fetch")
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("read", "Error getting documents.", exception)
+            }
     }
 }
 

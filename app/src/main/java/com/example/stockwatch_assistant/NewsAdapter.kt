@@ -64,9 +64,6 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
         } else {
             newsBinding.bannerImage.visibility = View.GONE
 
-//            val param = newsBinding.title.layoutParams as ViewGroup.MarginLayoutParams
-//            param.setMargins(32, 8, 8, 0)
-//            newsBinding.title.layoutParams = param
         }
 
         newsBinding.root.setOnClickListener {
@@ -88,13 +85,13 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
         // Item contents are the same, but the object might have changed
         override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
             return oldItem == newItem
-            return oldItem.title == newItem.title
-                    && oldItem.url == newItem.url
-                    && oldItem.time_published == newItem.time_published
-                    && oldItem.authors == newItem.authors
-                    && oldItem.summary == newItem.summary
-                    && oldItem.banner_image == newItem.banner_image
-                    && oldItem.source == newItem.source
+//            return oldItem.title == newItem.title
+//                    && oldItem.url == newItem.url
+//                    && oldItem.time_published == newItem.time_published
+//                    && oldItem.authors == newItem.authors
+//                    && oldItem.summary == newItem.summary
+//                    && oldItem.banner_image == newItem.banner_image
+//                    && oldItem.source == newItem.source
         }
     }
 }

@@ -46,67 +46,9 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private lateinit var adapter: StockRowAdapter
 
     val db = Firebase.firestore
-    private lateinit var auth: FirebaseAuth
 
     private var initialFetch = true
     private val changeNameFragment = ChangeNameFragment()
-    private val changeThemeFragment = ChangeThemeFragment()
-
-    companion object {
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
-
-    val signInLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) { result ->
-
-
-        if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.updateUser()
-            viewModel.setUserLoggedIn(true)
-            val user = FirebaseAuth.getInstance().currentUser!!.displayName
-            viewModel.updateUserName(user!!)
-
-            db.collection("Favorites")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
-                        val stock: StockMeta = StockMeta(
-                            symbol = document.data["stockSymbol"].toString(),
-                            name = document.data["stockName"].toString(),
-                            exchange = document.data["stockExchange"].toString()
-                        )
-                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
-                            viewModel.addFavorite(stock)
-
-                            Log.d("XXX", "add from siginInLauncher")
-                        }
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("read", "Error getting documents.", exception)
-                }
-
-
-        } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
-
-            println("break here")
-
-            Log.d("MainActivity", "sign in failed ${result}")
-        }
-    }
 
 
 
@@ -121,51 +63,44 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.placeholder.visibility = View.INVISIBLE
         binding.noNews.visibility = View.INVISIBLE
 
+        val signInLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
 
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.updateUser()
+                viewModel.setUserLoggedIn(true)
+                val user = FirebaseAuth.getInstance().currentUser!!.displayName
+                viewModel.updateUserName(user!!)
+                viewModel.emptyFavorite()
 
-//        val signInLauncher = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()) { result ->
-//
-//
-//            if (result.resultCode == Activity.RESULT_OK) {
-//                viewModel.updateUser()
-//                viewModel.setUserLoggedIn(true)
-//                val user = FirebaseAuth.getInstance().currentUser!!.displayName
-//                viewModel.updateUserName(user!!)
-//
-//                db.collection("Favorites")
-//                    .get()
-//                    .addOnSuccessListener { result ->
-//                        for (document in result) {
-//                            Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
-//                            val stock: StockMeta = StockMeta(
-//                                symbol = document.data["stockSymbol"].toString(),
-//                                name = document.data["stockName"].toString(),
-//                                exchange = document.data["stockExchange"].toString()
-//                            )
-//                            if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+//            db.collection("Favorites")
+//                .get()
+//                .addOnSuccessListener { result ->
+//                    for (document in result) {
+//                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+//                        val stock: StockMeta = StockMeta(
+//                            symbol = document.data["stockSymbol"].toString(),
+//                            name = document.data["stockName"].toString(),
+//                            exchange = document.data["stockExchange"].toString()
+//                        )
+//                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+//                            if (!viewModel.isFavorite(stock)){
 //                                viewModel.addFavorite(stock)
-//
 //                                Log.d("XXX", "add from siginInLauncher")
 //                            }
 //                        }
 //                    }
-//                    .addOnFailureListener { exception ->
-//                        Log.w("read", "Error getting documents.", exception)
-//                    }
-//
-//
-//            } else {
-//                // Sign in failed. If response is null the user canceled the
-//                // sign-in flow using the back button. Otherwise check
-//                // response.getError().getErrorCode() and handle the error.
-//                // ...
-//
-//                println("break here")
-//
-//                Log.d("MainActivity", "sign in failed ${result}")
-//            }
-//        }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.w("read", "Error getting documents.", exception)
+//                }
+
+                getStocks()
+            } else {
+                // Sign in failed
+                Log.d("MainActivity", "sign in failed ${result}")
+            }
+        }
 
         fun showPopup(view: View) {
             val popup = PopupMenu(requireContext(), view)
@@ -209,7 +144,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         FirebaseAuth.getInstance().signOut()
                         viewModel.setUserLoggedIn(false)
                         AuthInit(viewModel, signInLauncher)
-                        viewModel.emptyFavorite()
+
                     }
                 }
                 true
@@ -221,32 +156,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             showPopup(binding.logoutBut)
         }
 
-//        binding.logInBut.setOnClickListener {
-//            AuthInit(viewModel, signInLauncher)
-//        }
-
-
-
-
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        if(viewModel.isUserLoggedIn()){
-//            binding.hello.text = ""
-//            binding.logInBut.visibility = View.VISIBLE
-//
-//        } else {
-//            viewModel.observeUserName().observe(viewLifecycleOwner) {
-//                binding.hello.text = "Hello $it!"
-////            binding.hello.text =
-////                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
-//                Log.d("XXX", "userName: $it")
-//            }
-//            binding.logInBut.visibility = View.INVISIBLE
-//        }
 
         viewModel.observeUserLoggedIn().observe(viewLifecycleOwner){
             if(it){
@@ -274,12 +188,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         (activity as MainActivity).initRecyclerViewDividers(binding.recyclerViewFavorite)
 
-//        viewModel.favoritesListLiveData.observe(viewLifecycleOwner) {
-//                list -> adapter.submitList(list)
-//
-//            adapter.notifyDataSetChanged()
-//        }
-
         viewModel.favoritesListLiveData.observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
 
@@ -294,39 +202,43 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 Log.d("XXX", "fav list size: " + it.size)
                 Log.d("XXX", "fav list: " + it)
                 adapter.notifyDataSetChanged()
-
             }
         }
 
         Log.d("XXX", "$initialFetch")
 
-        if (initialFetch) {
-            db.collection("Favorites")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d(
-                            "read",
-                            "${document.id} => ${document.data}, ${document.data["stockName"]}"
-                        )
-                        val stock: StockMeta = StockMeta(
-                            symbol = document.data["stockSymbol"].toString(),
-                            name = document.data["stockName"].toString(),
-                            exchange = document.data["stockExchange"].toString()
-                        )
-                        if (document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid) {
-                            if (!viewModel.isFavorite(stock)) {
-                                viewModel.addFavorite(stock)
-                                Log.d("XXX", "add from initial fetch")
-                            }
-                        }
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("read", "Error getting documents.", exception)
-                }
-        }
-        initialFetch = false
+//        if (initialFetch) {
+//            db.collection("Favorites")
+//                .get()
+//                .addOnSuccessListener { result ->
+//                    for (document in result) {
+//                        Log.d(
+//                            "read",
+//                            "${document.id} => ${document.data}, ${document.data["stockName"]}"
+//                        )
+//                        val stock: StockMeta = StockMeta(
+//                            symbol = document.data["stockSymbol"].toString(),
+//                            name = document.data["stockName"].toString(),
+//                            exchange = document.data["stockExchange"].toString()
+//                        )
+//                        if (document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid) {
+//                            if (!viewModel.isFavorite(stock)) {
+//                                viewModel.addFavorite(stock)
+//                                Log.d("XXX", "add from initial fetch")
+//                            }
+//                        }
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.w("read", "Error getting documents.", exception)
+//                }
+
+//            getStocks()
+
+//        }
+//        initialFetch = false
+
+        getStocks()
 
         viewModel.portfolioLiveData.observe(viewLifecycleOwner){
 
@@ -349,35 +261,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 Log.d("XXX", "porto list called")
             }
         }
-        //spinner stuff
-//        binding.monthPickerBtn.adapter = ArrayAdapter.createFromResource(
-//            requireContext(),
-//            R.array.month,
-//            android.R.layout.simple_spinner_item
-//        )
-//
-//        binding.monthPickerBtn?.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onNothingSelected(parent: AdapterView<*>?) {
-//                }
-//
-//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                    var str = when (position) {
-//                        0 ->  viewModel.netPortfolio("2022-10")
-//                        1 -> viewModel.netPortfolio("2022-09")
-//                        2 -> viewModel.netPortfolio("2022-08")
-//                        3 -> viewModel.netPortfolio("2022-07")
-//                        4 -> viewModel.netPortfolio("2022-06")
-//                        5 -> viewModel.netPortfolio("2022-05")
-//                        6 -> viewModel.netPortfolio("2022-04")
-//                        7 -> viewModel.netPortfolio("2022-03")
-//                        8 -> viewModel.netPortfolio("2022-02")
-//                        9 ->  viewModel.netPortfolio("2022-01")
-//                        else -> viewModel.netPortfolio("2022-10")
-//                    }
-//                }
-//            }
 
+        //portofolio stuff
         var selectedItemIndex = 0
         fun showConfirmationDialog() {
             val choice =
@@ -425,5 +310,35 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
         return str.dropLast(2)
     }
+
+    private fun getStocks() {
+        db.collection("Favorites")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(
+                        "read",
+                        "${document.id} => ${document.data}, ${document.data["stockName"]}"
+                    )
+                    val stock: StockMeta = StockMeta(
+                        symbol = document.data["stockSymbol"].toString(),
+                        name = document.data["stockName"].toString(),
+                        exchange = document.data["stockExchange"].toString()
+                    )
+
+                    if (document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid) {
+                        if (!viewModel.isFavorite(stock)) {
+                            viewModel.addFavorite(stock)
+                            Log.d("XXX", "add from initial fetch")
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("read", "Error getting documents.", exception)
+            }
+    }
 }
+
+
 

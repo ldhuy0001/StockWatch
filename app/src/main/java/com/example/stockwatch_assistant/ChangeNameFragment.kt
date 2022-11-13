@@ -25,7 +25,6 @@ class ChangeNameFragment: Fragment(R.layout.fragment_change_name) {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-//    private val homeFragment = HomeFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,16 +55,17 @@ class ChangeNameFragment: Fragment(R.layout.fragment_change_name) {
             }
             else{
                 val user = FirebaseAuth.getInstance().currentUser
-
                 val update = UserProfileChangeRequest.Builder()
                     .setDisplayName(newName)
                     .build()
                 user!!.updateProfile(update)
 
                 viewModel.updateUserName(newName)
+
                 (activity as MainActivity).replaceFragment(HomeFragment())
             }
         }
+
         }
     }
 

@@ -189,10 +189,10 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
         // Item contents are the same, but the object might have changed
         override fun areContentsTheSame(oldItem: StockMeta, newItem: StockMeta): Boolean {
-            return return oldItem == newItem
-            return oldItem.symbol == newItem.symbol
-                    && oldItem.name == newItem.name
-                    && oldItem.exchange == newItem.exchange
+            return oldItem == newItem
+//            return oldItem.symbol == newItem.symbol
+//                    && oldItem.name == newItem.name
+//                    && oldItem.exchange == newItem.exchange
         }
     }
 }
