@@ -59,15 +59,25 @@ class LoginActivity : AppCompatActivity() {
         val bool = FirebaseAuth.getInstance().currentUser
         Log.d("MMM","this called1,user $bool")
 
-        if (bool==null) {
+//        if (bool==null) {
+//            Log.d("MMM","this called2")
+//            AuthInit(viewModel, signInLauncher)
+//        }
+//        else{
+//            Log.d("MMM","this called3")
+//            val i = Intent(this, MainActivity::class.java)
+//            startActivity(i)
+//            finish()
+//        }
+
+        if (bool!=null) {
             Log.d("MMM","this called2")
-            AuthInit(viewModel, signInLauncher)
-        }
-        else{
-            Log.d("MMM","this called3")
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
             finish()
+        }
+        else{
+            Log.d("MMM","this called3")
         }
     }
 

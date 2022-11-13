@@ -74,7 +74,7 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
 
 
         binding.btnTechnology.setOnClickListener {
-            viewModel.netNewsWithCategory("earnings")
+            viewModel.netNewsWithCategory("technology")
         }
         binding.btnLifeSciences.setOnClickListener {
             viewModel.netNewsWithCategory("life_sciences")

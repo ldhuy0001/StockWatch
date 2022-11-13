@@ -50,7 +50,7 @@
                     android:textSize="12sp"
                     android:textColor="#EBE8D8"
                     android:layout_margin="6dp"
-                    android:text="earnings">
+                    android:text="technology">
 
                 </Button>
 
