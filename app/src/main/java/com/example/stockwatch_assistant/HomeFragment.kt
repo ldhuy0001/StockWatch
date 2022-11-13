@@ -64,6 +64,50 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     }
 
+    val signInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+
+
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.updateUser()
+            viewModel.setUserLoggedIn(true)
+            val user = FirebaseAuth.getInstance().currentUser!!.displayName
+            viewModel.updateUserName(user!!)
+
+            db.collection("Favorites")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+                        val stock: StockMeta = StockMeta(
+                            symbol = document.data["stockSymbol"].toString(),
+                            name = document.data["stockName"].toString(),
+                            exchange = document.data["stockExchange"].toString()
+                        )
+                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+                            viewModel.addFavorite(stock)
+
+                            Log.d("XXX", "add from siginInLauncher")
+                        }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("read", "Error getting documents.", exception)
+                }
+
+
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            // ...
+
+            println("break here")
+
+            Log.d("MainActivity", "sign in failed ${result}")
+        }
+    }
+
 
 
     override fun onCreateView(
@@ -79,44 +123,49 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
 
 
-        val signInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                viewModel.updateUser()
-                viewModel.setUserLoggedIn(true)
-                val user = FirebaseAuth.getInstance().currentUser!!.displayName
-                viewModel.updateUserName(user!!)
-
-                db.collection("Favorites")
-                    .get()
-                    .addOnSuccessListener { result ->
-                        for (document in result) {
-                            Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
-                            val stock: StockMeta = StockMeta(
-                                symbol = document.data["stockSymbol"].toString(),
-                                name = document.data["stockName"].toString(),
-                                exchange = document.data["stockExchange"].toString()
-                            )
-                            if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
-                                viewModel.addFavorite(stock)
-
-                                Log.d("XXX", "add from siginInLauncher")
-                            }
-                        }
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.w("read", "Error getting documents.", exception)
-                    }
-
-
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-                Log.d("MainActivity", "sign in failed ${result}")
-            }
-        }
+//        val signInLauncher = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()) { result ->
+//
+//
+//            if (result.resultCode == Activity.RESULT_OK) {
+//                viewModel.updateUser()
+//                viewModel.setUserLoggedIn(true)
+//                val user = FirebaseAuth.getInstance().currentUser!!.displayName
+//                viewModel.updateUserName(user!!)
+//
+//                db.collection("Favorites")
+//                    .get()
+//                    .addOnSuccessListener { result ->
+//                        for (document in result) {
+//                            Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+//                            val stock: StockMeta = StockMeta(
+//                                symbol = document.data["stockSymbol"].toString(),
+//                                name = document.data["stockName"].toString(),
+//                                exchange = document.data["stockExchange"].toString()
+//                            )
+//                            if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+//                                viewModel.addFavorite(stock)
+//
+//                                Log.d("XXX", "add from siginInLauncher")
+//                            }
+//                        }
+//                    }
+//                    .addOnFailureListener { exception ->
+//                        Log.w("read", "Error getting documents.", exception)
+//                    }
+//
+//
+//            } else {
+//                // Sign in failed. If response is null the user canceled the
+//                // sign-in flow using the back button. Otherwise check
+//                // response.getError().getErrorCode() and handle the error.
+//                // ...
+//
+//                println("break here")
+//
+//                Log.d("MainActivity", "sign in failed ${result}")
+//            }
+//        }
 
         fun showPopup(view: View) {
             val popup = PopupMenu(requireContext(), view)
@@ -156,7 +205,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         showConfirmationDialog()
                     }
                     R.id.header3 -> {
-//                        Toast.makeText(requireContext(), item.title, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(requireContext(), "log out" Toast.LENGTH_SHORT).show()
                         FirebaseAuth.getInstance().signOut()
                         viewModel.setUserLoggedIn(false)
                         AuthInit(viewModel, signInLauncher)
@@ -172,9 +221,9 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             showPopup(binding.logoutBut)
         }
 
-        binding.logInBut.setOnClickListener {
-            AuthInit(viewModel, signInLauncher)
-        }
+//        binding.logInBut.setOnClickListener {
+//            AuthInit(viewModel, signInLauncher)
+//        }
 
 
 
@@ -206,11 +255,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 //            binding.hello.text =
 //                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
                     Log.d("XXX", "userName: $it")
+                    Log.d("YYY", "${FirebaseAuth.getInstance().currentUser}")
+                    Log.d("YYY", "${FirebaseAuth.getInstance().currentUser?.displayName}")
                 }
-                binding.logInBut.visibility = View.INVISIBLE
+//                binding.logInBut.visibility = View.INVISIBLE
                 binding.logoutBut.visibility = View.VISIBLE
             }else{
-                binding.logInBut.visibility = View.VISIBLE
+//                binding.logInBut.visibility = View.VISIBLE
                 binding.hello.text = ""
                 binding.logoutBut.visibility = View.INVISIBLE
             }

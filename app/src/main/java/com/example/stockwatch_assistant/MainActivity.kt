@@ -1,24 +1,33 @@
 package com.example.stockwatch_assistant
 
 import android.R.color
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: StockRowAdapter
+
+    val db = Firebase.firestore
 
     private val homeFragment = HomeFragment()
     private val allStocksFragment = AllStocksFragment()
@@ -32,9 +41,55 @@ class MainActivity : AppCompatActivity() {
 
 
 //Set up signInLauncher
-    private val signInLauncher =
-        registerForActivityResult(FirebaseAuthUIActivityResultContract()){
+//    private val signInLauncher =
+//        registerForActivityResult(FirebaseAuthUIActivityResultContract()){
+//        }
+
+    val signInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.updateUser()
+            viewModel.setUserLoggedIn(true)
+            val user = FirebaseAuth.getInstance().currentUser!!.displayName
+            viewModel.updateUserName(user!!)
+
+            db.collection("Favorites")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
+                        val stock: StockMeta = StockMeta(
+                            symbol = document.data["stockSymbol"].toString(),
+                            name = document.data["stockName"].toString(),
+                            exchange = document.data["stockExchange"].toString()
+                        )
+                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
+                            viewModel.addFavorite(stock)
+
+                            Log.d("XXX", "add from siginInLauncher")
+                        }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("read", "Error getting documents.", exception)
+                }
+
+
+
+
+
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            // ...
+
+            println("break here")
+
+            Log.d("MainActivity", "sign in failed ${result}")
         }
+    }
 
 //add simple divider
     fun initRecyclerViewDividers(rv: RecyclerView) {

@@ -56,12 +56,7 @@
                 android:id="@+id/hello"
                 android:text=""
                 android:textSize="20sp" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log IN"
-                android:id="@+id/logInBut"
-                />
+
 
         </LinearLayout>
 
