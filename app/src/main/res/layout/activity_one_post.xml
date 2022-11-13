@@ -268,7 +268,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:textColor="?android:textColorPrimary"
                     android:layout_weight="2"
                     android:gravity="right"
                     android:text="p/e ratio"
