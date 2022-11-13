@@ -64,9 +64,9 @@ class NewsAdapter(private val viewModel: MainViewModel, private val context: Con
         } else {
             newsBinding.bannerImage.visibility = View.GONE
 
-            val param = newsBinding.title.layoutParams as ViewGroup.MarginLayoutParams
-            param.setMargins(32, 8, 8, 0)
-            newsBinding.title.layoutParams = param
+//            val param = newsBinding.title.layoutParams as ViewGroup.MarginLayoutParams
+//            param.setMargins(32, 8, 8, 0)
+//            newsBinding.title.layoutParams = param
         }
 
         newsBinding.root.setOnClickListener {
