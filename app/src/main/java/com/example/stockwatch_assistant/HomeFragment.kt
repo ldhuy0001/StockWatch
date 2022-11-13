@@ -176,22 +176,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             AuthInit(viewModel, signInLauncher)
         }
 
-        viewModel.observeUserLoggedIn().observe(viewLifecycleOwner){
-            if(it){
-                viewModel.observeUserName().observe(viewLifecycleOwner) {
-                    binding.hello.text = "Hello $it!"
-//            binding.hello.text =
-//                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
-                    Log.d("XXX", "userName: $it")
-                }
-                binding.logInBut.visibility = View.INVISIBLE
-                binding.logoutBut.visibility = View.VISIBLE
-            }else{
-                binding.logInBut.visibility = View.VISIBLE
-                binding.hello.text = ""
-                binding.logoutBut.visibility = View.INVISIBLE
-            }
-        }
+
+
 
         return root
     }
@@ -213,6 +199,22 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 //            binding.logInBut.visibility = View.INVISIBLE
 //        }
 
+        viewModel.observeUserLoggedIn().observe(viewLifecycleOwner){
+            if(it){
+                viewModel.observeUserName().observe(viewLifecycleOwner) {
+                    binding.hello.text = "Hello $it!"
+//            binding.hello.text =
+//                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
+                    Log.d("XXX", "userName: $it")
+                }
+                binding.logInBut.visibility = View.INVISIBLE
+                binding.logoutBut.visibility = View.VISIBLE
+            }else{
+                binding.logInBut.visibility = View.VISIBLE
+                binding.hello.text = ""
+                binding.logoutBut.visibility = View.INVISIBLE
+            }
+        }
 
         adapter = StockRowAdapter(viewModel, requireContext())
         binding.recyclerViewFavorite.layoutManager =

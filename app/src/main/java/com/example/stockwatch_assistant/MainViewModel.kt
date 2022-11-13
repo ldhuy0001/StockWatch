@@ -66,10 +66,10 @@ class MainViewModel : ViewModel(){
         get() = portfolio
 
 //Create LiveData for isUserLoggedIn
-    private var userLoggedInLiveData = MutableLiveData<Boolean>()
+    private var userLoggedInLiveData = MutableLiveData<Boolean>(FirebaseAuth.getInstance().currentUser != null)
 
     fun setUserLoggedIn(s: Boolean){
-        userLoggedInLiveData.value = s
+        userLoggedInLiveData.postValue(s)
     }
 
     fun observeUserLoggedIn(): LiveData<Boolean>{
