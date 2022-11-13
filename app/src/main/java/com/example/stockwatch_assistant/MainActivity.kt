@@ -117,10 +117,10 @@ class MainActivity : AppCompatActivity() {
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
 //        AuthInit(viewModel, signInLauncher)
-//        viewModel.updateTest()
-//        viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
-//        viewModel.netGeneralNews() //Fetch General News
-//        viewModel.netPortfolio("2022-10") //Fetch Default Porto
+        viewModel.updateTest()
+        viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
+        viewModel.netGeneralNews() //Fetch General News
+        viewModel.netPortfolio("2022-10") //Fetch Default Porto
         replaceFragment(homeFragment)
 
 //Test

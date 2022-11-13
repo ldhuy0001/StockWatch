@@ -49,12 +49,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //fetch-data
-        viewModel.updateTest()
-        viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
-        viewModel.netGeneralNews() //Fetch General News
-        viewModel.netPortfolio("2022-10") //Fetch Default Porto
-
         binding.button2.setOnClickListener {
             AuthInit(viewModel, signInLauncher)
         }
