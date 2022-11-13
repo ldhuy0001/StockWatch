@@ -1,6 +1,7 @@
 package com.example.stockwatch_assistant
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -143,7 +145,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 //                        Toast.makeText(requireContext(), "log out" Toast.LENGTH_SHORT).show()
                         FirebaseAuth.getInstance().signOut()
                         viewModel.setUserLoggedIn(false)
-                        AuthInit(viewModel, signInLauncher)
+//                        AuthInit(viewModel, signInLauncher)
+
+                        activity?.finish()
+
+                        val i = Intent(requireContext(), LoginActivity::class.java)
+                        startActivity(i)
 
                     }
                 }
@@ -265,7 +272,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
         }
 
-        //portofolio stuff
+        //porto folio stuff
         var selectedItemIndex = 0
         fun showConfirmationDialog() {
             val choice =
@@ -345,6 +352,35 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 Log.w("read", "Error getting documents.", exception)
             }
     }
+
+
+//    onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
+//        /* override back pressing */
+//        fun handleOnBackPressed() {
+//            //Your code here
+//        }
+//    })
+
+//
+//    override fun onSupportNavigateUp(): Boolean {
+//        onBackPressed()
+//        return false
+//    }
+
+// override fun onBackPressed() {
+//  val frameLayout = parentFragmentManager.findFragmentById(R.id.fragment_container)
+//  if (frameLayout == null) {
+//      super.onBackPressed()
+//  }
+// }
+
+
+
+
+
+
+
+
 }
 
 

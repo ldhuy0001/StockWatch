@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 class AuthInit(viewModel: MainViewModel, signInLauncher: ActivityResultLauncher<Intent>) {
     init {
         val user = FirebaseAuth.getInstance().currentUser
+        Log.d("MMM","User from authinit $user")
         if (user == null){
             val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
 
@@ -19,7 +20,12 @@ class AuthInit(viewModel: MainViewModel, signInLauncher: ActivityResultLauncher<
                 .build()
             signInLauncher.launch(signInIntent)
 
+            Log.d("MMM"," authinit null called")
+
         } else{
+
+            Log.d("MMM"," authinit not null called")
+
             Log.d("ck", "XXX user ${user.displayName} email ${user.email}")
             viewModel.updateUser()
         }

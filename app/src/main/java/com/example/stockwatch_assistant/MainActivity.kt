@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
     private val allStocksFragment = AllStocksFragment()
     private val newsFragment = NewsFragment()
 
+
+    var canGoBack = false
+
     fun replaceFragment(fragment: Fragment) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, fragment)
@@ -71,6 +74,9 @@ class MainActivity : AppCompatActivity() {
 //                    Log.w("read", "Error getting documents.", exception)
 //                }
             getStocks()
+
+
+
         } else {
             // Sign in failed
             Log.d("MainActivity", "sign in failed ${result}")
@@ -110,16 +116,17 @@ class MainActivity : AppCompatActivity() {
         //enable dark-mode
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-        AuthInit(viewModel, signInLauncher)
+//        AuthInit(viewModel, signInLauncher)
         viewModel.updateTest()
         viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
         viewModel.netGeneralNews() //Fetch General News
         viewModel.netPortfolio("2022-10") //Fetch Default Porto
+        replaceFragment(homeFragment)
 
 //Test
 //    viewModel.netNewsWithCategory("technology")
 
-    replaceFragment(homeFragment)
+
 
     //youtube method
     binding.bottomNavigation.setOnNavigationItemSelectedListener {
@@ -159,6 +166,14 @@ class MainActivity : AppCompatActivity() {
                 Log.w("read", "Error getting documents.", exception)
             }
     }
+
+
+
+//    override fun onBackPressed() {
+//        if(viewModel.observeUserName().value.isNullOrEmpty())
+//            super.onBackPressed()
+//    }
+
 }
 
 //Example API call for symbol=TSLA and interval=5min
