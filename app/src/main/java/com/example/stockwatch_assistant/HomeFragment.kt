@@ -269,6 +269,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     private fun getStocks() {
+        Log.d("XXX","getStocks from HomeFrag")
         db.collection("Favorites")
             .get()
             .addOnSuccessListener { result ->

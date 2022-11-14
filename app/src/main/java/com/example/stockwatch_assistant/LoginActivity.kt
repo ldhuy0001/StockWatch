@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.setUserLoggedIn(true)
             val user = FirebaseAuth.getInstance().currentUser!!.displayName
             viewModel.updateUserName(user!!)
-            getStocks()
+//            getStocks()
 
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
@@ -79,6 +79,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getStocks() {
+        Log.d("XXX","getStocks from LoginActivity")
         db.collection("Favorites")
             .get()
             .addOnSuccessListener { result ->
