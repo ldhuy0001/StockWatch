@@ -172,7 +172,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         viewModel.observeUserLoggedIn().observe(viewLifecycleOwner){
             if(it){
                 viewModel.observeUserName().observe(viewLifecycleOwner) {
-                    binding.hello.text = "Hello $it!"
+                    binding.hello.text = "Hello $it"
 //            binding.hello.text =
 //                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
                     Log.d("XXX", "userName: $it")

@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -99,6 +100,15 @@ class MainActivity : AppCompatActivity() {
 
     fun hideBottomNavBar() {
         binding.bottomNavigation.visibility = View.INVISIBLE
+//        window.decorView.apply {
+//            systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+//        }
+
+        window.decorView.apply {
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+//            WindowInsetsController.OnControllableInsetsChangedListener()
+        }
+
     }
 
 //onCreate function

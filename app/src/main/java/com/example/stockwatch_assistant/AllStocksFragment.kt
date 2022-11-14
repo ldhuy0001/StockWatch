@@ -61,7 +61,7 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
 //            if (!it.isNullOrEmpty()) adapter.submitList(it)
             adapter.submitList(it)
             if(it.isNullOrEmpty())
-                Snackbar.make(binding.searchBar,"There is no Result!",500).show()
+                Snackbar.make(binding.searchBar,"No stock found",500).show()
 //                list -> adapter.submitList(list)
             //no need
 //            adapter.notifyDataSetChanged()
@@ -75,6 +75,9 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+
+//                (activity as MainActivity).hideBottomNavBar()
+
                 binding.searchBar.clearFocus()
                 return viewModel.searchStock(query.toString())
 
@@ -82,6 +85,9 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+
+//                (activity as MainActivity).hideBottomNavBar()
+
                 if (newText.toString().isEmpty())
             {
                 (activity as MainActivity).hideKeyboard()

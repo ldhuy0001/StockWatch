@@ -60,7 +60,7 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
                 adapter.submitList(it)
                 binding.indeterminateBar.visibility = View.GONE
                 if(it.isNullOrEmpty())
-                    Snackbar.make(binding.searchBar,"There is no Result!",500).show()
+                    Snackbar.make(binding.searchBar,"No news found",500).show()
 //            }
 //                list -> adapter.submitList(list)
             Log.d("generalNews","observe called, Here is list in generalNews \n $it")
