@@ -32,15 +32,21 @@ interface AlphaVantageAPI {
         @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
     ) : StockDetails
 
-//https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY
-    // &symbol=TSLA&datatype=csv&interval=5min&apikey=CUZFO32ID30TEUX6
-    @GET("query?function=TIME_SERIES_INTRADAY")
-//    @GET("query?function=TIME_SERIES_DAILY_ADJUSTED")
+//https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&datatype=csv&interval=1min&apikey=DCXKD7J70IWCLMET
+//    @GET("query?function=TIME_SERIES_INTRADAY")
+//    suspend fun getStockGraphInfo(
+//        @Query("symbol") symbol: String,
+//        @Query("datatype") datatype : String = "csv",
+//        @Query("interval") interval : String = "1min",
+//        @Query("apikey") apikey: String = BOOSTED_API_KEY
+//    ) : ResponseBody
+
+//https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=TSLA&datatype=csv&apikey=DCXKD7J70IWCLMET
+    @GET("query?function=TIME_SERIES_DAILY_ADJUSTED")
     suspend fun getStockGraphInfo(
         @Query("symbol") symbol: String,
         @Query("datatype") datatype : String = "csv",
-        @Query("interval") interval : String = "5min",
-        @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
+        @Query("apikey") apikey: String = BOOSTED_API_KEY
     ) : ResponseBody
 
 //https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=MY7UOXNLMVAJOBL6
@@ -99,6 +105,8 @@ interface AlphaVantageAPI {
 //
 //        const val API_KEY_FOR_ALL_STOCKS = "9UF22PMWEV9BPYJ9"
 //        const val API_KEY_FOR_CATEGORY_NEWS = "Z7B9H271PNLIOWHP"
+
+        const val BOOSTED_API_KEY = "DCXKD7J70IWCLMET"
 
         var count = (0..34).random()
         var numberOfAPIKEY = 35

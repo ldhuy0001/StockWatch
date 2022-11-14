@@ -1,22 +1,28 @@
 package com.example.stockwatch_assistant
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.snackbar.Snackbar
 import java.math.RoundingMode
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OnePost : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -108,7 +114,7 @@ class OnePost : AppCompatActivity() {
             onePostBinding.lineChart.setTouchEnabled(true)
             onePostBinding.lineChart.setPinchZoom(true)
 
-            onePostBinding.lineChart.description.text = "Minute"
+            onePostBinding.lineChart.description.text = "Date"
 
             onePostBinding.lineChart.animateX(1800, Easing.EaseInExpo)
 
@@ -132,6 +138,35 @@ class OnePost : AppCompatActivity() {
             onePostBinding.lineChart.axisLeft.axisLineColor = Color.GRAY
             onePostBinding.lineChart.axisLeft.textSize = 11.5f
 
+//Setting for Axis
+            var XAxis = onePostBinding.lineChart.xAxis
+            var yAxis = onePostBinding.lineChart.axisLeft
+
+            //move XAxis to bottom
+            XAxis.position = XAxisPosition.BOTTOM
+//
+//            //Show date in Axis instead of number
+//            val xLabel = ArrayList<String>()
+//            val calendar = Calendar.getInstance()
+//            val dateFormat = SimpleDateFormat("dd-MMM")
+//
+//            for (i in 0..100) {
+//                calendar.add(Calendar.DAY_OF_YEAR, i)
+//                val date = calendar.time
+//                val txtDate = dateFormat.format(date)
+//
+//                xLabel.add(txtDate)
+//            }
+//
+//            // or use some other logic to save your data in list. For ex.
+//            var i = 1
+//            while (i < 50) {
+//                xLabel.add("" + 3 * i)
+//                i += 2
+//            }
+//
+//            XAxis.setDrawGridLines(false)
+//            XAxis.valueFormatter = IndexAxisValueFormatter(xLabel)
 
 
 //            onePostBinding.lineChart.axisRight.axisLineColor =
