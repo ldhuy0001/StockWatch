@@ -75,29 +75,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 viewModel.updateUserName(user!!)
                 viewModel.emptyFavorite()
 
-//            db.collection("Favorites")
-//                .get()
-//                .addOnSuccessListener { result ->
-//                    for (document in result) {
-//                        Log.d("read", "${document.id} => ${document.data}, ${document.data["stockName"]}")
-//                        val stock: StockMeta = StockMeta(
-//                            symbol = document.data["stockSymbol"].toString(),
-//                            name = document.data["stockName"].toString(),
-//                            exchange = document.data["stockExchange"].toString()
-//                        )
-//                        if(document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid){
-//                            if (!viewModel.isFavorite(stock)){
-//                                viewModel.addFavorite(stock)
-//                                Log.d("XXX", "add from siginInLauncher")
-//                            }
-//                        }
-//                    }
-//                }
-//                .addOnFailureListener { exception ->
-//                    Log.w("read", "Error getting documents.", exception)
-//                }
-
-                getStocks()
+//                getStocks()
             } else {
                 // Sign in failed
                 Log.d("MainActivity", "sign in failed ${result}")
@@ -173,11 +151,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             if(it){
                 viewModel.observeUserName().observe(viewLifecycleOwner) {
                     binding.hello.text = "Hello $it"
-//            binding.hello.text =
-//                Html.fromHtml("<b> <h1 style=font-size:20em>" + "Hello" + "</h1></b>" )
+
                     Log.d("XXX", "userName: $it")
                     Log.d("YYY", "${FirebaseAuth.getInstance().currentUser}")
                     Log.d("YYY", "${FirebaseAuth.getInstance().currentUser?.displayName}")
+
                 }
 //                binding.logInBut.visibility = View.INVISIBLE
                 binding.logoutBut.visibility = View.VISIBLE
@@ -195,60 +173,25 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         (activity as MainActivity).initRecyclerViewDividers(binding.recyclerViewFavorite)
 
+        getStocks()
+
         viewModel.favoritesListLiveData.observe(viewLifecycleOwner) {
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-
-                binding.indeterminateBar2.visibility = View.GONE
-
-                if (!it.isNullOrEmpty()) {
-                    adapter.submitList(it)
-                    binding.noNews.visibility = View.INVISIBLE
-                }
-                else {
-                    binding.noNews.text = "No stocks found, add watchlist stocks from Stocks tab"
-                    binding.noNews.visibility = View.VISIBLE
-                }
-
-                Log.d("XXX", "fav list size: " + it.size)
-                Log.d("XXX", "fav list: " + it)
-                adapter.notifyDataSetChanged()
+            if (!it.isNullOrEmpty()) {
+                adapter.submitList(it)
+                binding.noNews.visibility = View.INVISIBLE
             }
+            else {
+                binding.noNews.text = "No stocks found, add watchlist stocks from Stocks tab"
+                binding.noNews.visibility = View.VISIBLE
+            }
+            Log.d("XXX", "fav list size: " + it.size)
+            Log.d("XXX", "fav list: " + it)
+            adapter.notifyDataSetChanged()
         }
 
         Log.d("XXX", "$initialFetch")
 
-//        if (initialFetch) {
-//            db.collection("Favorites")
-//                .get()
-//                .addOnSuccessListener { result ->
-//                    for (document in result) {
-//                        Log.d(
-//                            "read",
-//                            "${document.id} => ${document.data}, ${document.data["stockName"]}"
-//                        )
-//                        val stock: StockMeta = StockMeta(
-//                            symbol = document.data["stockSymbol"].toString(),
-//                            name = document.data["stockName"].toString(),
-//                            exchange = document.data["stockExchange"].toString()
-//                        )
-//                        if (document.data["userId"] == FirebaseAuth.getInstance().currentUser!!.uid) {
-//                            if (!viewModel.isFavorite(stock)) {
-//                                viewModel.addFavorite(stock)
-//                                Log.d("XXX", "add from initial fetch")
-//                            }
-//                        }
-//                    }
-//                }
-//                .addOnFailureListener { exception ->
-//                    Log.w("read", "Error getting documents.", exception)
-//                }
 
-//            getStocks()
-
-//        }
-//        initialFetch = false
-
-        getStocks()
 
         viewModel.portfolioLiveData.observe(viewLifecycleOwner){
 
@@ -351,36 +294,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             .addOnFailureListener { exception ->
                 Log.w("read", "Error getting documents.", exception)
             }
+        binding.indeterminateBar2.visibility = View.GONE
+        binding.noNews.text = "No stocks found, add watchlist stocks from Stocks tab"
+        binding.noNews.visibility = View.VISIBLE
     }
-
-
-//    onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
-//        /* override back pressing */
-//        fun handleOnBackPressed() {
-//            //Your code here
-//        }
-//    })
-
-//
-//    override fun onSupportNavigateUp(): Boolean {
-//        onBackPressed()
-//        return false
-//    }
-
-// override fun onBackPressed() {
-//  val frameLayout = parentFragmentManager.findFragmentById(R.id.fragment_container)
-//  if (frameLayout == null) {
-//      super.onBackPressed()
-//  }
-// }
-
-
-
-
-
-
-
-
 }
 
 
