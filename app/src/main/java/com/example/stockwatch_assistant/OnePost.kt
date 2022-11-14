@@ -66,10 +66,12 @@ class OnePost : AppCompatActivity() {
         var count = 0
         viewModel.stockPriceListLiveData.observe(this){
             val entries = ArrayList<Entry>()
+            val priceArray = mutableListOf<String>()
             Log.d("testchart","ck1")
-            for (i in it){
+            for (i in 99 downTo 0){
                 count++
-                entries.add(Entry(count.toFloat(),i.low.toFloat()))
+                entries.add(Entry(count.toFloat(),it[i].low.toFloat()))
+                priceArray.add(it[i].low)
 //                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
             }
 
@@ -84,7 +86,7 @@ class OnePost : AppCompatActivity() {
 
             lineDataSet.lineWidth = 2f
             if (it.isNotEmpty()){
-                if (it[0].low < it[it.size-1].low ) {
+                if (it[0].low > it[it.size-1].low ) {
 //                    lineDataSet.fillColor = Color.GREEN
                     lineDataSet.color = Color.GREEN
                     lineDataSet.setCircleColor(Color.GREEN)
@@ -97,10 +99,32 @@ class OnePost : AppCompatActivity() {
                     lineDataSet.fillDrawable = fillGradient
                 }
 
-                onePostBinding.openValue.text = roundOffDecimal(number= it[0].open)
-                onePostBinding.highValue.text = roundOffDecimal(number= it[0].high)
-                onePostBinding.lowValue.text = roundOffDecimal(number= it[0].low)
-                onePostBinding.volumeValue.text = roundOffDecimal(number= it[0].volume)
+                onePostBinding.openValue.text = roundOffDecimal(number= it[99].low)
+                onePostBinding.highValue.text = roundOffDecimal(number= priceArray.max())
+                onePostBinding.lowValue.text = roundOffDecimal(number= priceArray.min())
+                onePostBinding.closeValue.text = roundOffDecimal(number= it[0].low)
+
+                //Show date in Axis instead of number
+                val xLabel = ArrayList<String>()
+//                val calendar = Calendar.getInstance()
+//                val dateFormat = SimpleDateFormat("dd-MMM")
+
+//            for (i in 0..100) {
+//                calendar.add(Calendar.DAY_OF_YEAR, i)
+//                val date = calendar.time
+//                val txtDate = dateFormat.format(date)
+//
+//                xLabel.add(txtDate)
+//            }
+
+                for (i in 99 downTo 0){
+                    xLabel.add(it[i].timeStamp.drop(5))
+//                    val txtDate = dateFormat.format(it[i].timeStamp)
+//                    xLabel.add(txtDate)
+                }
+
+                onePostBinding.lineChart.xAxis.setDrawGridLines(false)
+                onePostBinding.lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(xLabel)
             }
 
 
@@ -138,35 +162,10 @@ class OnePost : AppCompatActivity() {
             onePostBinding.lineChart.axisLeft.axisLineColor = Color.GRAY
             onePostBinding.lineChart.axisLeft.textSize = 11.5f
 
-//Setting for Axis
-            var XAxis = onePostBinding.lineChart.xAxis
-            var yAxis = onePostBinding.lineChart.axisLeft
-
             //move XAxis to bottom
-            XAxis.position = XAxisPosition.BOTTOM
-//
-//            //Show date in Axis instead of number
-//            val xLabel = ArrayList<String>()
-//            val calendar = Calendar.getInstance()
-//            val dateFormat = SimpleDateFormat("dd-MMM")
-//
-//            for (i in 0..100) {
-//                calendar.add(Calendar.DAY_OF_YEAR, i)
-//                val date = calendar.time
-//                val txtDate = dateFormat.format(date)
-//
-//                xLabel.add(txtDate)
-//            }
-//
-//            // or use some other logic to save your data in list. For ex.
-//            var i = 1
-//            while (i < 50) {
-//                xLabel.add("" + 3 * i)
-//                i += 2
-//            }
-//
-//            XAxis.setDrawGridLines(false)
-//            XAxis.valueFormatter = IndexAxisValueFormatter(xLabel)
+            onePostBinding.lineChart.xAxis.position = XAxisPosition.BOTTOM
+
+
 
 
 //            onePostBinding.lineChart.axisRight.axisLineColor =

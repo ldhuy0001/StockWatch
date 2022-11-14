@@ -204,19 +204,19 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:text="VOLUME"
+                    android:text="CLOSE"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/volume_value"
+                    android:id="@+id/close_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="Volume"
+                    android:text="Close"
                     android:textSize="14sp" />
 
                 <TextView
