@@ -68,6 +68,7 @@ class OnePost : AppCompatActivity() {
             val entries = ArrayList<Entry>()
             val priceArray = mutableListOf<String>()
             val volumeArray = mutableListOf<String>()
+            val dateArray = mutableListOf<String>()
 
             Log.d("testchart","ck1")
             for (i in 99 downTo 0){
@@ -75,11 +76,12 @@ class OnePost : AppCompatActivity() {
                 entries.add(Entry(count.toFloat(),it[i].low.toFloat()))
                 priceArray.add(roundOffDecimal(it[i].low))
                 volumeArray.add(makeVolumeShorter(it[i].volume))
+                dateArray.add(it[i].timeStamp)
 //                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
             }
 
 //            val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
-            val marker = CustomMarker(this@OnePost, R.layout.custom_marker_view, priceArray,volumeArray)
+            val marker = CustomMarker(this@OnePost, R.layout.custom_marker_view, priceArray,volumeArray,dateArray)
             onePostBinding.lineChart.marker = marker
 
             val lineDataSet = LineDataSet(entries,"$stockName ( $stockSymbol )")

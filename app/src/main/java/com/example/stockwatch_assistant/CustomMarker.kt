@@ -10,13 +10,16 @@ import com.github.mikephil.charting.utils.MPPointF
 class CustomMarker(context: Context,
                    layoutResource: Int,
                    private val priceDataToDisplay: MutableList<String>,
-                   private val volumeDataToDisplay: MutableList<String>
+                   private val volumeDataToDisplay: MutableList<String>,
+                   private val dateDataToDisplay: MutableList<String>
 ):  MarkerView(context, layoutResource) {
 
     private var priceMarker: TextView? = null
     private var volumeMarker: TextView? = null
+    private var dateMarker: TextView? = null
 
     init {
+        dateMarker = findViewById(R.id.dateMarker)
         priceMarker = findViewById(R.id.priceMarker)
         volumeMarker = findViewById(R.id.volumeMarker)
     }
@@ -24,6 +27,7 @@ class CustomMarker(context: Context,
     override fun refreshContent(e: Entry?, highlight: Highlight?) {
         try {
             val xAxis = e?.x?.toInt() ?: 0
+            dateMarker?.text = "Date: " + dateDataToDisplay[xAxis].drop(5)
             priceMarker?.text = "Price: $" + priceDataToDisplay[xAxis]
             volumeMarker?.text = "Volume: " + volumeDataToDisplay[xAxis]
         } catch (e: IndexOutOfBoundsException) { }
