@@ -30,7 +30,7 @@ class StockPriceRepository(private val alphaVantageAPI: AlphaVantageAPI) {
                     val high = line.getOrNull(2)
                     val low = line.getOrNull(3)
                     val close = line.getOrNull(4)
-                    val volume = line.getOrNull(5)
+                    val volume = line.getOrNull(6)
                     StockPrice(
                         timeStamp = timeStamp ?: return@mapNotNull null,
                         open =  open ?: return@mapNotNull null,

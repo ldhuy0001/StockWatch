@@ -73,9 +73,8 @@ class OnePost : AppCompatActivity() {
             for (i in 99 downTo 0){
                 count++
                 entries.add(Entry(count.toFloat(),it[i].low.toFloat()))
-                priceArray.add(it[i].low)
-//                volumeArray.add(String.format("%.2", it[i].volume.toFloat()))
-                volumeArray.add(roundOffDecimal(it[i].volume))
+                priceArray.add(roundOffDecimal(it[i].low))
+                volumeArray.add(makeVolumeShorter(it[i].volume))
 //                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
             }
 
@@ -259,5 +258,29 @@ class OnePost : AppCompatActivity() {
 
     fun roundOffDecimal(number: String): String{
         return number.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+    }
+
+    fun makeVolumeShorter(number: String): String{
+        var n = number.toFloat()
+        var str: String = ""
+//        if (n>1000000000) {
+//            str = (n / 1000000000).toString() + "B"
+//            return str
+//        }
+//        if (n>1000000F) {
+//            str = (n/1000000).toString() + "M"
+//            return str
+//        }
+        if (n>1000000000F) {
+            str = roundOffDecimal((n/1000000000F).toString()) + "B"
+        } else
+            if (n>1000000F) {
+                str = roundOffDecimal((n/1000000F).toString()) + "M"
+            } else
+                if (n>1000F) {
+                    str = roundOffDecimal((n / 1000F).toString()) + "K"
+                }
+
+        return str
     }
 }
