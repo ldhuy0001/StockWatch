@@ -67,6 +67,7 @@ class OnePost : AppCompatActivity() {
         viewModel.stockPriceListLiveData.observe(this){
             val entries = ArrayList<Entry>()
             val priceArray = mutableListOf<String>()
+
             Log.d("testchart","ck1")
             for (i in 99 downTo 0){
                 count++
@@ -75,7 +76,10 @@ class OnePost : AppCompatActivity() {
 //                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
             }
 
-//            TODO
+//            val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
+            val marker = CustomMarker(this@OnePost, R.layout.custom_marker_view, priceArray)
+            onePostBinding.lineChart.marker = marker
+
             val lineDataSet = LineDataSet(entries,"$stockName ( $stockSymbol )")
 
             lineDataSet.setDrawValues(false)
