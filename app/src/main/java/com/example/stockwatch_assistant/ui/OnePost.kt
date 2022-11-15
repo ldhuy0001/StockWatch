@@ -1,4 +1,4 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,19 +9,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.stockwatch_assistant.MainViewModel
+import com.example.stockwatch_assistant.ui.adapter.NewsAdapter
+import com.example.stockwatch_assistant.R
 import com.example.stockwatch_assistant.databinding.ActivityOnePostBinding
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.snackbar.Snackbar
 import java.math.RoundingMode
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class OnePost : AppCompatActivity() {

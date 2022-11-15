@@ -1,4 +1,4 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stockwatch_assistant.MainViewModel
+import com.example.stockwatch_assistant.R
+import com.example.stockwatch_assistant.ui.adapter.StockRowAdapter
 import com.example.stockwatch_assistant.databinding.FragmentAllStocksBinding
-import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
 
-//import com.example.stockwatch_assistant.MainActivity.hideKeyboard
+//import com.example.stockwatch_assistant.ui.MainActivity.hideKeyboard
 
 //import package com.example.stockwatch_assistant.*
 

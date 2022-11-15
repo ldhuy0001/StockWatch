@@ -1,11 +1,11 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.example.stockwatch_assistant.R
 
 import com.example.stockwatch_assistant.databinding.ActivityOneNewsBinding
 

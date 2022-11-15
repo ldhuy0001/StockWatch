@@ -1,4 +1,4 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -7,9 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.example.stockwatch_assistant.AuthInit
+import com.example.stockwatch_assistant.MainViewModel
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 import com.example.stockwatch_assistant.databinding.ActivityLoginBinding
-import com.example.stockwatch_assistant.databinding.ActivitySplashScreenBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,14 +16,14 @@
         android:theme="@style/Theme.StockWatchAssistant"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".ui.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
@@ -36,14 +37,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".OneNews"
+            android:name=".ui.OneNews"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".OnePost"
+            android:name=".ui.OnePost"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -55,7 +56,7 @@
             android:value="@string/alpha_vantage_key" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.StockWatchAssistant">
             <meta-data

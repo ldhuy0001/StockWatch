@@ -1,4 +1,4 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
+import com.example.stockwatch_assistant.MainViewModel
+import com.example.stockwatch_assistant.R
 
 import com.example.stockwatch_assistant.databinding.FragmentChangeNameBinding
-import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 

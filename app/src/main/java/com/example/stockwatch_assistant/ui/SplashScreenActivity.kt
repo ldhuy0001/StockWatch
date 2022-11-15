@@ -1,9 +1,8 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.stockwatch_assistant.databinding.ActivityMainBinding
 import com.example.stockwatch_assistant.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {

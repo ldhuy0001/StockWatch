@@ -1,8 +1,7 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
+import com.example.stockwatch_assistant.MainViewModel
 import com.example.stockwatch_assistant.alphaVantageAPI.AlphaVantageAPI
 import com.example.stockwatch_assistant.alphaVantageAPI.News
 import com.example.stockwatch_assistant.alphaVantageAPI.NewsRepository
 import com.example.stockwatch_assistant.databinding.NewsRowBinding
+import com.example.stockwatch_assistant.ui.OneNews
 import java.time.Month
 
 class NewsAdapter(private val viewModel: MainViewModel, private val context: Context) :

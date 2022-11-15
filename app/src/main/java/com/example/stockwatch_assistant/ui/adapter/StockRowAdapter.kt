@@ -1,4 +1,4 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -6,25 +6,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stockwatch_assistant.MainViewModel
+import com.example.stockwatch_assistant.R
 import com.example.stockwatch_assistant.alphaVantageAPI.AlphaVantageAPI
-import com.example.stockwatch_assistant.alphaVantageAPI.StockDetails
 import com.example.stockwatch_assistant.alphaVantageAPI.StockDetailsRepository
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
 import com.example.stockwatch_assistant.databinding.StockRowBinding
+import com.example.stockwatch_assistant.ui.OnePost
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.tasks.await
 
 class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context) :
     ListAdapter<StockMeta, StockRowAdapter.ViewHolder>(StockDiff()) {

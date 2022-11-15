@@ -1,40 +1,32 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.stockwatch_assistant.MainViewModel
+import com.example.stockwatch_assistant.R
+import com.example.stockwatch_assistant.ui.adapter.StockRowAdapter
 import com.example.stockwatch_assistant.alphaVantageAPI.Portfolio
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 
 
 import com.example.stockwatch_assistant.databinding.FragmentHomeBinding
-import com.example.stockwatch_assistant.model.Stock
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.NonDisposableHandle.parent
-import kotlinx.coroutines.launch
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
 

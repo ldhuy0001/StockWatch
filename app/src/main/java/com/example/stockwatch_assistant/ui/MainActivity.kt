@@ -1,8 +1,6 @@
-package com.example.stockwatch_assistant
+package com.example.stockwatch_assistant.ui
 
-import android.R.color
 import android.app.Activity
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,9 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stockwatch_assistant.MainViewModel
+import com.example.stockwatch_assistant.R
+import com.example.stockwatch_assistant.ui.adapter.StockRowAdapter
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
