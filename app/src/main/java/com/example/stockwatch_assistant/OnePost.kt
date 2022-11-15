@@ -72,11 +72,11 @@ class OnePost : AppCompatActivity() {
 
             Log.d("testchart","ck1")
             for (i in 99 downTo 0){
-                count++
                 entries.add(Entry(count.toFloat(),it[i].low.toFloat()))
                 priceArray.add(roundOffDecimal(it[i].low))
                 volumeArray.add(makeVolumeShorter(it[i].volume))
                 dateArray.add(it[i].timeStamp)
+                count++
 //                Log.d("testchart","ck2 low === ${i.low.toFloat()} || high === ${i.high.toFloat()}")
             }
 

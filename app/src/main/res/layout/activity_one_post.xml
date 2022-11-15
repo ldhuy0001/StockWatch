@@ -173,7 +173,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:text="HIGH"
+                    android:text="HIGHEST"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -225,7 +225,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:text="LOW"
+                    android:text="LOWEST"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
