@@ -8,11 +8,10 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
+import com.example.stockwatch_assistant.SQLite.SQLiteHelper
 import com.example.stockwatch_assistant.alphaVantageAPI.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta as StockMeta
 
 class MainViewModel : ViewModel(){
 
@@ -98,23 +97,45 @@ class MainViewModel : ViewModel(){
     }
 
 //Fetch data all stock from Alpha Vantage API
-    fun netPosts() = viewModelScope.launch(
+    fun netPosts(db: SQLiteHelper) = viewModelScope.launch(
         context = viewModelScope.coroutineContext
             + Dispatchers.IO)  {
-            stockListFetchedFromAPI = stockMetaRepository.getStocks().toMutableList()
 
-            for (i in stockListFetchedFromAPI){
-                if (i.exchange == "NASDAQ" || i.exchange == "NYSE")
-//                    stockListFetchedFromAPI.remove(i)
-//                Log.d("netPosts","here is stock detail \n $i")
-                  stockListOnlyNASDAQandNYSE.add(i)
+            //this boolean to check if AllStocks table in local is exist or not
+            var isAllStocksTableExist: Boolean = db.isTableExist(db,"ALLSTOCKS")
+
+            if(isAllStocksTableExist){
+                //If yes, then fetch data from local database
+                Log.d("sqlite","Found Table")
+//                var cur = db.getAllStocks()
+//                var symbol :String = cur.getString(cur.getColumnIndexOrThrow("symbol"))
+//                var name = cur.getString(cur.getColumnIndexOrThrow("name"))
+//                var exchange = cur.getString(cur.getColumnIndexOrThrow("exchange"))
+//                var newStock: StockMeta(symbol,name,exchange)
+//                stockListOnlyNASDAQandNYSE.add()
+            } else {
+                //If no, then fetch data from Alpha Vantage API
+                Log.d("sqlite","Can not find Table")
+                stockListFetchedFromAPI = stockMetaRepository.getStocks().toMutableList()
+
+                for (i in stockListFetchedFromAPI) {
+                    if (i.exchange == "NASDAQ" || i.exchange == "NYSE") {
+//                        stockListFetchedFromAPI.remove(i)
+//                        Log.d("netPosts","here is stock detail \n $i")
+                    stockListOnlyNASDAQandNYSE.add(i)
+//                        db.addStock(i.symbol,i.name,i.exchange)
+                    }
+                }
             }
 
-        stockMetaList.postValue(stockListOnlyNASDAQandNYSE)
-        Log.d("ck","here is stock list \n $stockListOnlyNASDAQandNYSE")
-    }
+            stockMetaList.postValue(stockListOnlyNASDAQandNYSE)
 
-//Need to store list of all stocks in local storage
+            //call addAllStock after postValue to run it in background
+            if (!isAllStocksTableExist)
+                db.addAllStocks(stockListOnlyNASDAQandNYSE)
+
+            Log.d("ck","here is stock list \n $stockListOnlyNASDAQandNYSE")
+    }
 
 //searchStock
     fun searchStock(searchTerm : String):Boolean {

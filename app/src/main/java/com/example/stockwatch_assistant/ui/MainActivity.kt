@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockwatch_assistant.MainViewModel
 import com.example.stockwatch_assistant.R
+import com.example.stockwatch_assistant.SQLite.SQLiteHelper
 import com.example.stockwatch_assistant.ui.adapter.StockRowAdapter
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
 import com.example.stockwatch_assistant.databinding.ActivityMainBinding
@@ -128,7 +129,9 @@ class MainActivity : AppCompatActivity() {
 
 //        AuthInit(viewModel, signInLauncher)
         viewModel.updateTest()
-        viewModel.netPosts() //Fetch data all stock from Alpha Vantage API
+
+        val db = SQLiteHelper(this,null)
+        viewModel.netPosts(db) //Fetch data all stock from Alpha Vantage API
         viewModel.netGeneralNews() //Fetch General News
         viewModel.netPortfolio("2022-10") //Fetch Default Porto
         replaceFragment(homeFragment)
