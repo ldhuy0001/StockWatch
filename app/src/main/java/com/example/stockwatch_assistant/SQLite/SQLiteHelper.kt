@@ -50,32 +50,13 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun getAllStocks(): Cursor {
+    fun getAllStocks(): Cursor{
         val db = this.readableDatabase
 
         return db.rawQuery("SELECT * FROM $TABLE_NAME",null)
     }
 
     fun isTableExist(db: SQLiteHelper?, table: String?): Boolean {
-
-//        val sqLiteDatabase = db?.writableDatabase
-//
-//        if (sqLiteDatabase == null || !sqLiteDatabase.isOpen || table == null) {
-//            return false
-//        }
-//        var count = 0
-//        val args = arrayOf("table", table)
-//        val cursor = sqLiteDatabase.rawQuery(
-//            "SELECT COUNT(*) FROM sqlite_master WHERE type=? AND name=?",
-//            args,
-//            null
-//        )
-//        if (cursor.moveToFirst()) {
-//            count = cursor.getInt(0)
-////            count++
-//        }
-//        cursor.close()
-//        return count > 0
 
         val sqLiteDatabase = db?.writableDatabase
 
