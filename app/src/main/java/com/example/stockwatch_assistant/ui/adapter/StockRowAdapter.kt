@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockwatch_assistant.MainViewModel
 import com.example.stockwatch_assistant.R
+import com.example.stockwatch_assistant.SQLite.SQLiteHelper
 import com.example.stockwatch_assistant.alphaVantageAPI.AlphaVantageAPI
 import com.example.stockwatch_assistant.alphaVantageAPI.StockDetailsRepository
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
@@ -23,8 +24,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context) :
+class StockRowAdapter(private val viewModel: MainViewModel, private val context: Context, private val isFav: Boolean) :
     ListAdapter<StockMeta, StockRowAdapter.ViewHolder>(StockDiff()) {
 
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
@@ -36,6 +41,9 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 //    val database = Firebase.database.reference
 
     var db = FirebaseFirestore.getInstance()
+    var sqLiteDB = SQLiteHelper(context,null)
+    val scope = MainScope()
+    var job: Job? =null
 
     private fun getPos(holder: ViewHolder): Int {
         val position = holder.adapterPosition
@@ -85,6 +93,20 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
             stockRowBinding.rowFav.visibility = View.INVISIBLE
         }
 
+        if (isFav) {
+            sqLiteDB.createNewTableStock(item.symbol)
+//            stopUpdates()
+            var count = 0
+            job = scope.launch {
+                while (true){
+                    stockRowBinding.stockPrice.text = sqLiteDB.getStockPriceAtMin(item.symbol,count++.toString())
+                    delay(1000)
+                }
+            }
+        } else {
+            stockRowBinding.stockPrice.text = ""
+        }
+
         stockRowBinding.rowFav.setOnClickListener {
 
 //            val item = getItem(position)
@@ -98,6 +120,7 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
                     Log.d("isFav", "before click: ${viewModel.isFavorite(it)}")
                     if (viewModel.isFavorite(it)) {
                         viewModel.removeFavorite(it)
+                        sqLiteDB.deleteTable(it.symbol)
 //                    stockRowBinding.rowFav.setImageResource(R.drawable.ic_baseline_check)
                         Log.d("isFav", "removeItem")
 
@@ -177,7 +200,10 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
         }
     }
 
-
+    fun stopUpdates() {
+        job?.cancel()
+        job = null
+    }
 
     class StockDiff : DiffUtil.ItemCallback<StockMeta>() {
         //item identity

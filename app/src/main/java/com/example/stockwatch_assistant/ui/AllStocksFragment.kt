@@ -51,7 +51,7 @@ class AllStocksFragment: Fragment(R.layout.fragment_all_stocks) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = StockRowAdapter(viewModel = viewModel, context = requireContext())
+        adapter = StockRowAdapter(viewModel = viewModel, context = requireContext(), false)
         binding.recyclerView.layoutManager = LinearLayoutManager(binding.recyclerView.context)
         binding.recyclerView.adapter = adapter
 

@@ -158,7 +158,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
         }
 
-        adapter = StockRowAdapter(viewModel, requireContext())
+        adapter = StockRowAdapter(viewModel, requireContext(), true)
         binding.recyclerViewFavorite.layoutManager =
             LinearLayoutManager(binding.recyclerViewFavorite.context)
         binding.recyclerViewFavorite.adapter = adapter

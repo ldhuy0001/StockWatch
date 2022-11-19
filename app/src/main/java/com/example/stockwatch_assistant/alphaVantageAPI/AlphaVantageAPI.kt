@@ -78,6 +78,16 @@ interface AlphaVantageAPI {
         @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
     ) : ListingPortfolio
 
+//https://www.alphavantage.co/query?function=MIDPRICE&symbol=TSLA&datatype=csv&interval=1min&time_period=10&apikey=demo
+    @GET("query?function=MIDPRICE")
+    suspend fun getStockPriceInMin(
+        @Query("symbol") symbol: String,
+        @Query("datatype") datatype: String = "csv",
+        @Query("interval") interval: String = "1min",
+        @Query("time_period") time_period: String = "10",
+        @Query("apikey") apikey: String = BOOSTED_API_KEY
+    ) : ResponseBody
+
     class ListingFeed(
         val feed: List<News>
     )

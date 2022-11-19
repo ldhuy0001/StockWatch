@@ -8,6 +8,36 @@ import okhttp3.ResponseBody
 import java.io.InputStreamReader
 
 class StockPriceRepository(private val alphaVantageAPI: AlphaVantageAPI) {
+
+    suspend fun getStockPriceInMin(symbol: String): List<StockPriceInMin>{
+        val response = alphaVantageAPI.getStockPriceInMin(symbol)
+        Log.d(
+            "priceInMin", "here is response in byteStream \n" +
+                    " ${response.byteStream()}"
+        )
+        return unpackStockPriceInMin(response)
+    }
+
+    suspend fun unpackStockPriceInMin(response: ResponseBody) : List<StockPriceInMin>{
+        val csvReader = CSVReader(InputStreamReader(response.byteStream()))
+        return withContext(Dispatchers.IO){
+            csvReader
+                .readAll()
+                .drop(1)
+                .mapNotNull { line->
+                    val timestamp = line.getOrNull(0)
+                    val midPrice = line.getOrNull(1)
+                    StockPriceInMin(
+                        timestamp = timestamp?: return@mapNotNull null,
+                        midPrice = midPrice?: return@mapNotNull null
+                    )
+                }
+                .also {
+                    csvReader.close()
+                }
+        }
+    }
+
     suspend fun getStockPrice(symbol : String) : List<StockPrice> {
         val response = alphaVantageAPI.getStockGraphInfo(symbol)
         Log.d("ck", "here is response $response")
