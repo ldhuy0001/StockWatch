@@ -45,10 +45,13 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val db = this.writableDatabase
         val newTableName = re.replace(tableName,"")
 
-        db.execSQL("DROP TABLE IF EXISTS $newTableName")
+//        db.execSQL("DROP TABLE IF EXISTS $newTableName")
         Log.d("tabForSym","before creating table")
-        val query = ("CREATE TABLE $newTableName (" +
+//        val query = ("CREATE TABLE $newTableName (" +
+//                "$DATE_COL TEXT, $TIME_COL TEXT, $PRICE_COL INT )")
+        val query = ("CREATE TABLE IF NOT EXISTS $newTableName (" +
                 "$DATE_COL TEXT, $TIME_COL TEXT, $PRICE_COL INT )")
+
         db.execSQL(query)
 
         var newStockPrice = ContentValues()
@@ -66,11 +69,14 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun getStockPriceAtMin(symbol: String, time: String): String{
         val newSymbol = re.replace(symbol,"")
         val db = this.readableDatabase
-//        val cur = db.rawQuery("IF (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = $DATABASE_NAME AND TABLE_NAME = $newSymbol))" +
+        var price =""
+//        val cur = db.rawQuery("IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TheSchema' AND TABLE_NAME = $newSymbol)" +
 //                "BEGIN SELECT * FROM $newSymbol WHERE $TIME_COL = $time END",null)
         val cur = db.rawQuery("SELECT * FROM $newSymbol WHERE $TIME_COL = $time", null)
-        cur.moveToNext()
-        return cur.getString(cur.getColumnIndexOrThrow("price"))
+        while (cur.moveToNext()){
+            price = cur.getString(cur.getColumnIndexOrThrow("price"))
+        }
+        return price
     }
 
     fun deleteTable(tableName: String){
@@ -139,3 +145,8 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     }
 }
+
+//IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TheSchema' AND TABLE_NAME = $newSymbol)
+//BEGIN
+//SELECT * FROM A WHERE time == 2
+//END
