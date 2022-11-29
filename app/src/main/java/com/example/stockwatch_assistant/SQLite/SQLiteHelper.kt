@@ -54,12 +54,16 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         db.execSQL(query)
 
-        var newStockPrice = ContentValues()
-        for (i in 0..10){
-            newStockPrice.put(DATE_COL,"11/16/2022")
-            newStockPrice.put(TIME_COL,i.toString())
-            newStockPrice.put(PRICE_COL,i*25+17)
-            db.insert(newTableName,null,newStockPrice)
+//    Adding stock price right here
+        if(!isTableExist(this,tableName)) {
+            var newStockPrice = ContentValues()
+            for (i in 0..10) {
+                newStockPrice.put(DATE_COL, "11/16/2022")
+                newStockPrice.put(TIME_COL, i.toString())
+                newStockPrice.put(PRICE_COL, i * 25 + 17)
+                db.insert(newTableName, null, newStockPrice)
+            }
+
         }
 
         Log.d("tabForSym","after creating table")
@@ -72,6 +76,8 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         var price =""
 //        val cur = db.rawQuery("IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TheSchema' AND TABLE_NAME = $newSymbol)" +
 //                "BEGIN SELECT * FROM $newSymbol WHERE $TIME_COL = $time END",null)
+
+
         val cur = db.rawQuery("SELECT * FROM $newSymbol WHERE $TIME_COL = $time", null)
         while (cur.moveToNext()){
             price = cur.getString(cur.getColumnIndexOrThrow("price"))
@@ -110,10 +116,10 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     fun isTableExist(db: SQLiteHelper?, table: String?): Boolean {
-
+        val newTable = table?.let { re.replace(it,"") }
         val sqLiteDatabase = db?.writableDatabase
 
-        var count = "SELECT count(*) FROM $table"
+        var count = "SELECT count(*) FROM $newTable"
         val mcursor = sqLiteDatabase!!.rawQuery(count, null);
         mcursor.moveToFirst()
         var icount : Int = mcursor.getInt(0)
