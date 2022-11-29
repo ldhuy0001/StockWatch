@@ -15,6 +15,7 @@ import com.example.stockwatch_assistant.SQLite.SQLiteHelper
 import com.example.stockwatch_assistant.alphaVantageAPI.AlphaVantageAPI
 import com.example.stockwatch_assistant.alphaVantageAPI.StockDetailsRepository
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
+import com.example.stockwatch_assistant.alphaVantageAPI.StockPriceRepository
 
 
 import com.example.stockwatch_assistant.databinding.StockRowBinding
@@ -34,6 +35,7 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
 
     private val alphaVantageAPIForJSON = AlphaVantageAPI.createURLForJSON()
     private val stockDetailsRepository = StockDetailsRepository(alphaVantageAPIForJSON)
+    private val stockPriceRepository = StockPriceRepository(alphaVantageAPIForJSON)
     private val FavoriteCollectionRef = Firebase.firestore.collection("Favorites")
 
 //    private val reference = FirebaseFirestore.getInstance().getReference()
@@ -93,19 +95,27 @@ class StockRowAdapter(private val viewModel: MainViewModel, private val context:
             stockRowBinding.rowFav.visibility = View.INVISIBLE
         }
 
-        if (isFav) {
-            sqLiteDB.createNewTableStock(item.symbol)
-//            stopUpdates()
-            var count = 0
-            job = scope.launch {
-                while (true){
-                    stockRowBinding.stockPrice.text = sqLiteDB.getStockPriceAtMin(item.symbol,count++.toString())
-                    delay(1000)
-                }
-            }
-        } else {
+//        if (isFav) {
+//
+////            sqLiteDB.createNewTableStock(item.symbol)
+////            stopUpdates()
+//            var count = 0
+//            job = scope.launch {
+//                if (!sqLiteDB.isTableExist(sqLiteDB, item.symbol)) {
+//                    var stockPriceList = stockPriceRepository
+//                        .getStockPriceInMin(item.symbol)
+//                    sqLiteDB.createNewTableStock(item.symbol,stockPriceList)
+//                } else {
+//                    while (true) {
+//                        stockRowBinding.stockPrice.text =
+//                            sqLiteDB.getStockPriceAtMin(item.symbol, count++.toString())
+//                        delay(1000)
+//                    }
+//                }
+//            }
+//        } else {
             stockRowBinding.stockPrice.text = ""
-        }
+//        }
 
         stockRowBinding.rowFav.setOnClickListener {
 

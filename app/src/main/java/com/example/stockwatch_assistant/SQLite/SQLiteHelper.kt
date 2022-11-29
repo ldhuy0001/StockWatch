@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.example.stockwatch_assistant.alphaVantageAPI.StockMeta
+import com.example.stockwatch_assistant.alphaVantageAPI.StockPriceInMin
 
 class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -41,7 +42,7 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun createNewTableStock(tableName: String){
+    fun createNewTableStock(tableName: String, stockPrice: List<StockPriceInMin>){
         val db = this.writableDatabase
         val newTableName = re.replace(tableName,"")
 
@@ -51,19 +52,26 @@ class SQLiteHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 //                "$DATE_COL TEXT, $TIME_COL TEXT, $PRICE_COL INT )")
         val query = ("CREATE TABLE IF NOT EXISTS $newTableName (" +
                 "$DATE_COL TEXT, $TIME_COL TEXT, $PRICE_COL INT )")
-
         db.execSQL(query)
 
 //    Adding stock price right here
         if(!isTableExist(this,tableName)) {
-            var newStockPrice = ContentValues()
-            for (i in 0..10) {
-                newStockPrice.put(DATE_COL, "11/16/2022")
-                newStockPrice.put(TIME_COL, i.toString())
-                newStockPrice.put(PRICE_COL, i * 25 + 17)
-                db.insert(newTableName, null, newStockPrice)
-            }
 
+//            var newStockPrice = ContentValues()
+//            for (i in 0..10) {
+//                newStockPrice.put(DATE_COL, "11/16/2022")
+//                newStockPrice.put(TIME_COL, i.toString())
+//                newStockPrice.put(PRICE_COL, i * 25 + 17)
+//                db.insert(newTableName, null, newStockPrice)
+//            }
+
+            var newStockPrice = ContentValues()
+            for(i in stockPrice) {
+                newStockPrice.put(DATE_COL,i.timestamp.take(10))
+                newStockPrice.put(TIME_COL,i.timestamp.takeLast(10))
+                newStockPrice.put(PRICE_COL,i.midPrice)
+                db.insert(newTableName,null,newStockPrice)
+            }
         }
 
         Log.d("tabForSym","after creating table")

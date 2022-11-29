@@ -106,7 +106,7 @@ class MainViewModel : ViewModel(){
 
             if(isAllStocksTableExist){
                 //If yes, then fetch data from local database
-                Log.d("sqlite","Found Table")
+                Log.d("sqlite","Fetched all stock from SQLite DB")
                 var cur = db.getAllStocks()
                 while (cur.moveToNext()) {
                     var symbol: String = cur.getString(cur.getColumnIndexOrThrow("symbol"))
@@ -117,7 +117,7 @@ class MainViewModel : ViewModel(){
                 }
             } else {
                 //If no, then fetch data from Alpha Vantage API
-                Log.d("sqlite","Can not find Table")
+                Log.d("sqlite","Fetched all stock from API")
                 stockListFetchedFromAPI = stockMetaRepository.getStocks().toMutableList()
 
                 for (i in stockListFetchedFromAPI) {
@@ -191,6 +191,36 @@ class MainViewModel : ViewModel(){
                 + Dispatchers.IO) {
         stockNews.postValue(stockNewsRepository.getStockNews(symbol))
     }
+
+//Fetch Stock Price in Min
+//    fun netStockPriceInMin(db: SQLiteHelper, symbol: String) = viewModelScope.launch (
+//        context = viewModelScope.coroutineContext
+//            + Dispatchers.IO) {
+//        if (!db.isTableExist(db,symbol)){
+//            var cur = db.createNewTableStock(symbol)
+//        }
+//    }
+
+//
+
+//    fun netPosts(db: SQLiteHelper) = viewModelScope.launch(
+//        context = viewModelScope.coroutineContext
+//                + Dispatchers.IO)  {
+//
+//        //this boolean to check if AllStocks table in local is exist or not
+//        var isAllStocksTableExist: Boolean = db.isTableExist(db,"ALLSTOCKS")
+//
+//        if(isAllStocksTableExist){
+//            //If yes, then fetch data from local database
+//            Log.d("sqlite","Fetched all stock from SQLite DB")
+//            var cur = db.getAllStocks()
+//            while (cur.moveToNext()) {
+//                var symbol: String = cur.getString(cur.getColumnIndexOrThrow("symbol"))
+//                var name = cur.getString(cur.getColumnIndexOrThrow("name"))
+//                var exchange = cur.getString(cur.getColumnIndexOrThrow("exchange"))
+//                var newStock = StockMeta(symbol, name, exchange)
+//                stockListOnlyNASDAQandNYSE.add(newStock)
+//            }
 
 //searchNews
     fun searchNews(searchTerm : String):Boolean {
