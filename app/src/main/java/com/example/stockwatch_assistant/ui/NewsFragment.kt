@@ -1,5 +1,6 @@
 package com.example.stockwatch_assistant.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -74,18 +75,43 @@ class NewsFragment: Fragment(R.layout.fragment_news) {
 
         binding.btnTechnology.setOnClickListener {
             viewModel.netNewsWithCategory("technology")
+            binding.btnTechnology.setBackgroundColor(Color.parseColor("#808080"))
+            binding.btnLifeSciences.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnFinance.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnManufacturing.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnEconomy.setBackgroundColor(Color.parseColor("#FF6200EE"))
         }
         binding.btnLifeSciences.setOnClickListener {
             viewModel.netNewsWithCategory("life_sciences")
+            binding.btnTechnology.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnLifeSciences.setBackgroundColor(Color.parseColor("#808080"))
+            binding.btnFinance.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnManufacturing.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnEconomy.setBackgroundColor(Color.parseColor("#FF6200EE"))
         }
         binding.btnFinance.setOnClickListener {
             viewModel.netNewsWithCategory("finance")
+            binding.btnTechnology.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnLifeSciences.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnFinance.setBackgroundColor(Color.parseColor("#808080"))
+            binding.btnManufacturing.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnEconomy.setBackgroundColor(Color.parseColor("#FF6200EE"))
         }
         binding.btnManufacturing.setOnClickListener {
             viewModel.netNewsWithCategory("manufacturing")
+            binding.btnTechnology.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnLifeSciences.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnFinance.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnManufacturing.setBackgroundColor(Color.parseColor("#808080"))
+            binding.btnEconomy.setBackgroundColor(Color.parseColor("#FF6200EE"))
         }
         binding.btnEconomy.setOnClickListener {
             viewModel.netNewsWithCategory("economy_fiscal")
+            binding.btnTechnology.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnLifeSciences.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnFinance.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnManufacturing.setBackgroundColor(Color.parseColor("#FF6200EE"))
+            binding.btnEconomy.setBackgroundColor(Color.parseColor("#808080"))
         }
 
         binding.searchBar.queryHint = "Search News"
