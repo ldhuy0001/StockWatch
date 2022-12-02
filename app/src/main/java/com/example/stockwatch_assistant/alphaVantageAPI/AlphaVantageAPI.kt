@@ -29,7 +29,7 @@ interface AlphaVantageAPI {
     @GET("/query?function=OVERVIEW")
     suspend fun getStockDetailsFromAPI(
         @Query("symbol") symbol: String,
-        @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
+        @Query("apikey") apikey: String = BOOSTED_API_KEY
     ) : StockDetails
 
 //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&datatype=csv&interval=1min&apikey=DCXKD7J70IWCLMET
@@ -52,7 +52,7 @@ interface AlphaVantageAPI {
 //https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=MY7UOXNLMVAJOBL6
     @GET("query?function=NEWS_SENTIMENT")
     suspend fun getGeneralNews (
-        @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
+        @Query("apikey") apikey: String = BOOSTED_API_KEY
     ) : ListingFeed
 
 //https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&limit=10&apikey=MY7UOXNLMVAJOBL6
@@ -60,14 +60,14 @@ interface AlphaVantageAPI {
     suspend fun getNewsForStock (
         @Query("tickers") tickers : String,
         @Query("limit") limit : String = "10",
-        @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
+        @Query("apikey") apikey: String = BOOSTED_API_KEY
     ) : ListingFeed
 
 //https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&limit=10&apikey=MY7UOXNLMVAJOBL6
     @GET("query?function=NEWS_SENTIMENT")
     suspend fun getNewsWithCategory (
         @Query("topics") topics : String,
-        @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
+        @Query("apikey") apikey: String = BOOSTED_API_KEY
 //            API_KEY_FOR_CATEGORY_NEWS
     ) : ListingFeed
 
@@ -75,7 +75,7 @@ interface AlphaVantageAPI {
     @GET("query?function=TOURNAMENT_PORTFOLIO")
     suspend fun getTournamentPortfolio (
         @Query("season") season: String,
-        @Query("apikey") apikey: String = findAPIKeyAt(count++%numberOfAPIKEY)
+        @Query("apikey") apikey: String = BOOSTED_API_KEY
     ) : ListingPortfolio
 
 //https://www.alphavantage.co/query?function=MIDPRICE&symbol=TSLA&datatype=csv&interval=1min&time_period=10&apikey=demo

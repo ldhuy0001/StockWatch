@@ -68,11 +68,13 @@ class OnePost : AppCompatActivity() {
             val priceArray = mutableListOf<String>()
             val volumeArray = mutableListOf<String>()
             val dateArray = mutableListOf<String>()
+            val priceArrayFloat = mutableListOf<Float>()
 
             Log.d("testchart","ck1")
             for (i in 99 downTo 0){
                 entries.add(Entry(count.toFloat(),it[i].low.toFloat()))
                 priceArray.add(roundOffDecimal(it[i].low))
+                priceArrayFloat.add(it[i].low.toFloat())
                 volumeArray.add(makeVolumeShorter(it[i].volume))
                 dateArray.add(it[i].timeStamp)
                 count++
@@ -93,7 +95,7 @@ class OnePost : AppCompatActivity() {
 
             lineDataSet.lineWidth = 2f
             if (it.isNotEmpty()){
-                if (it[0].low > it[it.size-1].low ) {
+                if (it[0].low.toFloat() > it[99].low.toFloat() ) {
 //                    lineDataSet.fillColor = Color.GREEN
                     lineDataSet.color = Color.GREEN
                     lineDataSet.setCircleColor(Color.GREEN)
@@ -106,13 +108,14 @@ class OnePost : AppCompatActivity() {
                     lineDataSet.fillDrawable = fillGradient
                 }
 
-                onePostBinding.openValue.text = roundOffDecimal(number= it[99].low)
-                onePostBinding.highValue.text = roundOffDecimal(number= priceArray.max())
-                onePostBinding.lowValue.text = roundOffDecimal(number= priceArray.min())
-                onePostBinding.closeValue.text = roundOffDecimal(number= it[0].low)
+                onePostBinding.openValue.text = "$"+roundOffDecimal(number= it[99].low)
+                onePostBinding.highValue.text = "$"+roundOffDecimal(number= priceArrayFloat.max().toString())
+                onePostBinding.lowValue.text = "$"+roundOffDecimal(number= priceArrayFloat.min().toString())
+                onePostBinding.closeValue.text = "$"+roundOffDecimal(number= it[0].low)
 
                 //Show date in Axis instead of number
                 val xLabel = ArrayList<String>()
+                val yLabel = ArrayList<String>()
 //                val calendar = Calendar.getInstance()
 //                val dateFormat = SimpleDateFormat("dd-MMM")
 
@@ -128,10 +131,12 @@ class OnePost : AppCompatActivity() {
                     xLabel.add(it[i].timeStamp.drop(5))
 //                    val txtDate = dateFormat.format(it[i].timeStamp)
 //                    xLabel.add(txtDate)
+                    yLabel.add("$"+priceArray[i])
                 }
 
                 onePostBinding.lineChart.xAxis.setDrawGridLines(false)
                 onePostBinding.lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(xLabel)
+//                onePostBinding.lineChart.yAxis .valueFormatter = IndexAxisValueFormatter(xLabel)
             }
 
 
@@ -219,19 +224,19 @@ class OnePost : AppCompatActivity() {
 
                 if (it.dividendYield == "None" || it.dividendYield == "0") {
                     onePostBinding.divYieldValue.text = "N/A"
-                } else onePostBinding.divYieldValue.text = it.dividendYield
+                } else onePostBinding.divYieldValue.text = "$"+it.dividendYield
 
                 if (it.peRatio == "None" || it.peRatio == "0") {
                     onePostBinding.peValue.text = "N/A"
-                } else onePostBinding.peValue.text = it.peRatio
+                } else onePostBinding.peValue.text = "$"+it.peRatio
 
                 if (it.weekHigh52 == "None" || it.weekHigh52 == "0") {
                     onePostBinding.wkHigh52Value.text = "N/A"
-                } else onePostBinding.wkHigh52Value.text = it.weekHigh52
+                } else onePostBinding.wkHigh52Value.text = "$"+it.weekHigh52
 
                 if (it.weekLow52 == "None" || it.weekLow52 == "0") {
                     onePostBinding.wkLow52Value.text = "N/A"
-                } else onePostBinding.wkLow52Value.text = it.weekLow52
+                } else onePostBinding.wkLow52Value.text = "$"+it.weekLow52
             } else {
                 Snackbar.make(onePostBinding.root
                     ,"API call reachs limitation. \nPlease try again in next minute!!"
