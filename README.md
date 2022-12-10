@@ -13,13 +13,13 @@ List of API:
  + Firestore API: Using this API, our app allows users to save their login information using email and passwords. Moreover, it stores user's favorites/watchlist stocks. Therefore, allowing users to save and retrieve the information from the cloud. 
 
 Third-party libraries:
+ + Splashscreen. This library allows the app to display a loading image when starting the app. In addition, splashscreen gives our application extra time to load data from the network in the beginning.
  + MPAndroidChart. This library allows our app to handle stock graphs. This library enables users to zoom in and out to see more details. Moreover, it has a feature  to show more stock chart details such as date, price, and volume. This library is open-source and fairly easy to use, thus we decided to use this library for our app.
  + Google Gson. This library allows the app to parse data from JSON format into List<data> in Kotlin. This library was fairly easy to use since we learned it in class.
  + CSVReader. Thí library allows the app to read data from CSV file into List<data> in Kotlin. This is new thing, we have to learn outside of class.
  + OkHttp3. This library allows the app to connect user devices and Alpha Vantage API. Similar to Gson, this library was straightforward to use as it was explained in the lecture.
  + Retrofit2. This library allows the app to send and receive data from Alpha Vantage. This tool is used together with OkHttp3.
  + Glide. This library allows the app to parse an URL and display it to the phone screen as an image. We decided to use this library since we learned it in class.
- + Splashscreen. This library allows the app to display a loading image when starting the app. In addition, splashscreen gives our application extra time to load data from the network in the beginning.
 
 Third-party services:
  + Firebase Authentication allows users to use email and passwords to log in.
